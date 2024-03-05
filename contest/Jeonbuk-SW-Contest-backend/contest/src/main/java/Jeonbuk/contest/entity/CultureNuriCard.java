@@ -8,29 +8,19 @@ import lombok.Data;
 
 @Entity
 @Data
-public class GoodPriceRestaurant {
+public class CultureNuriCard {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String foodType;
-
     private String storeName;
 
-    private String ownerName;
+    private String storeType;
 
     private String roadAddress;
 
-    private String mainFood;
+    private boolean isOnline;
 
-    private String mainFoodPrice;
-
-    private String openingHours;
-
-    private boolean supportsDelivery;
-
-    private boolean isParkable;
-
-    private String promotion;
+    private String phoneNumber;
 
 }

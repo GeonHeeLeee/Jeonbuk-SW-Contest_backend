@@ -13,6 +13,7 @@ public class ContestApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		csvService.saveModelRestaurant();
 		csvService.saveGoodPriceRestaurant();
+		csvService.saveCultureNuriCard();
 	}
 
 	private final CSVService csvService;
