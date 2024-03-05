@@ -1,10 +1,21 @@
 package Jeonbuk.contest;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ContestApplication {
+@RequiredArgsConstructor
+public class ContestApplication implements CommandLineRunner {
+	@Override
+	public void run(String... args) throws Exception {
+		csvService.saveModelRestaurant();
+		csvService.saveGoodPriceRestaurant();
+	}
+
+	private final CSVService csvService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ContestApplication.class, args);
