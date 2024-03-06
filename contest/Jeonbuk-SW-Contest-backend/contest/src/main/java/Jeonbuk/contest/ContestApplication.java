@@ -15,6 +15,7 @@ public class ContestApplication implements CommandLineRunner {
 		csvService.saveGoodPriceRestaurant();
 		csvService.saveCultureNuriCard();
 		csvService.saveChildMealCard();
+		csvService.saveChildLikeCard();
 	}
 
 	private final CSVService csvService;

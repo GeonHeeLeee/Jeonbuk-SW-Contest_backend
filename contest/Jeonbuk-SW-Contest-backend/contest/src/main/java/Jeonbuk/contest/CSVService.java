@@ -1,13 +1,7 @@
 package Jeonbuk.contest;
 
-import Jeonbuk.contest.entity.ChildMealCard;
-import Jeonbuk.contest.entity.CultureNuriCard;
-import Jeonbuk.contest.entity.GoodPriceRestaurant;
-import Jeonbuk.contest.entity.ModelRestaurant;
-import Jeonbuk.contest.repository.ChildMealCardRepository;
-import Jeonbuk.contest.repository.CultureNuriCardRepository;
-import Jeonbuk.contest.repository.GoodPriceRestaurantRepository;
-import Jeonbuk.contest.repository.ModelRestaurantRepository;
+import Jeonbuk.contest.entity.*;
+import Jeonbuk.contest.repository.*;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import lombok.RequiredArgsConstructor;
@@ -31,10 +25,12 @@ public class CSVService {
     private static String GOOD_PRICE_RESTAURANT_LOCATION = BASIC_FILE_LOCATION + "good_price_restaurant.csv";
     private static String CULTURE_NURI_CARD_LOCATION = BASIC_FILE_LOCATION + "culture_nuri_card.csv";
     private static String CHILD_MEAL_CARD = BASIC_FILE_LOCATION + "child_meal_card.csv";
+    private static String CHILD_LIKE_CARD = BASIC_FILE_LOCATION + "child_like_card.csv";
     private final ModelRestaurantRepository modelRestaurantRepository;
     private final GoodPriceRestaurantRepository goodPriceRestaurantRepository;
     private final CultureNuriCardRepository cultureNuriCardRepository;
     private final ChildMealCardRepository childMealCardRepository;
+    private final ChildLikeCardRepository childLikeCardRepository;
 
 
     @Transactional
@@ -88,7 +84,7 @@ public class CSVService {
     @Transactional
     public void saveChildMealCard() throws IOException, CsvException {
         List<String[]> rows = readCSV(CHILD_MEAL_CARD);
-        for(String[] row : rows) {
+        for (String[] row : rows) {
             ChildMealCard childMealCard = new ChildMealCard();
             childMealCard.setStoreName(row[2]);
             childMealCard.setRoadName(row[3]);
@@ -96,9 +92,24 @@ public class CSVService {
         }
     }
 
+    @Transactional
+    public void saveChildLikeCard() throws IOException, CsvException {
+        List<String[]> rows = readCSV(CHILD_LIKE_CARD);
+        for(String[] row : rows) {
+            ChildLikeCard childLikeCard = new ChildLikeCard();
+            childLikeCard.setBusinessType(row[2]);
+            childLikeCard.setStoreName(row[3]);
+            childLikeCard.setRoadName(row[4]);
+            childLikeCard.setPhoneNumber(row[5]);
+            childLikeCard.setPromotion(row[6]);
+            childLikeCardRepository.save(childLikeCard);
+        }
+    }
+
     public List<String[]> readCSV(String fileLocation) throws IOException, CsvException {
         try (CSVReader reader = new CSVReader(
                 new InputStreamReader(new FileInputStream(fileLocation), StandardCharsets.UTF_8))) {
+            reader.readNext(); //컬럼 패스
             return reader.readAll();
         }
     }
