@@ -1,4 +1,4 @@
-package Jeonbuk.contest;
+package Jeonbuk.contest.csv;
 
 import Jeonbuk.contest.entity.*;
 import Jeonbuk.contest.repository.*;
@@ -15,17 +15,13 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import static Jeonbuk.contest.csv.FILE_LOCATION.*;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class CSVService {
 
-    private static String BASIC_FILE_LOCATION = "C:\\Users\\LeeGeonHee\\Desktop\\after_school\\24년상반기 SW개발공모전\\data\\2\\";
-    private static String MODEL_RESTAURANT_LOCATION = BASIC_FILE_LOCATION + "model_restaurant.csv";
-    private static String GOOD_PRICE_RESTAURANT_LOCATION = BASIC_FILE_LOCATION + "good_price_restaurant.csv";
-    private static String CULTURE_NURI_CARD_LOCATION = BASIC_FILE_LOCATION + "culture_nuri_card.csv";
-    private static String CHILD_MEAL_CARD = BASIC_FILE_LOCATION + "child_meal_card.csv";
-    private static String CHILD_LIKE_CARD = BASIC_FILE_LOCATION + "child_like_card.csv";
     private final ModelRestaurantRepository modelRestaurantRepository;
     private final GoodPriceRestaurantRepository goodPriceRestaurantRepository;
     private final CultureNuriCardRepository cultureNuriCardRepository;
@@ -35,7 +31,7 @@ public class CSVService {
 
     @Transactional
     public void saveModelRestaurant() throws IOException, CsvException {
-        List<String[]> rows = readCSV(MODEL_RESTAURANT_LOCATION);
+        List<String[]> rows = readCSV(MODEL_RESTAURANT.getLocation());
         for (String[] row : rows) {
             ModelRestaurant modelRestaurant = new ModelRestaurant();
             modelRestaurant.setStoreName(row[5]);
@@ -50,7 +46,7 @@ public class CSVService {
 
     @Transactional
     public void saveGoodPriceRestaurant() throws IOException, CsvException {
-        List<String[]> rows = readCSV(GOOD_PRICE_RESTAURANT_LOCATION);
+        List<String[]> rows = readCSV(GOOD_PRICE_RESTAURANT.getLocation());
         for (String[] row : rows) {
             GoodPriceRestaurant goodPriceRestaurant = new GoodPriceRestaurant();
             goodPriceRestaurant.setFoodType(row[1]);
@@ -69,7 +65,7 @@ public class CSVService {
 
     @Transactional
     public void saveCultureNuriCard() throws IOException, CsvException {
-        List<String[]> rows = readCSV(CULTURE_NURI_CARD_LOCATION);
+        List<String[]> rows = readCSV(CULTURE_NURI_CARD.getLocation());
         for (String[] row : rows) {
             CultureNuriCard cultureNuriCard = new CultureNuriCard();
             cultureNuriCard.setStoreName(row[2]);
@@ -83,7 +79,7 @@ public class CSVService {
 
     @Transactional
     public void saveChildMealCard() throws IOException, CsvException {
-        List<String[]> rows = readCSV(CHILD_MEAL_CARD);
+        List<String[]> rows = readCSV(CHILD_MEAL_CARD.getLocation());
         for (String[] row : rows) {
             ChildMealCard childMealCard = new ChildMealCard();
             childMealCard.setStoreName(row[2]);
@@ -94,8 +90,8 @@ public class CSVService {
 
     @Transactional
     public void saveChildLikeCard() throws IOException, CsvException {
-        List<String[]> rows = readCSV(CHILD_LIKE_CARD);
-        for(String[] row : rows) {
+        List<String[]> rows = readCSV(CHILD_LIKE_CARD.getLocation());
+        for (String[] row : rows) {
             ChildLikeCard childLikeCard = new ChildLikeCard();
             childLikeCard.setBusinessType(row[2]);
             childLikeCard.setStoreName(row[3]);
