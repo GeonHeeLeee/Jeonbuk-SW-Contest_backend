@@ -1,8 +1,10 @@
 package Jeonbuk.contest;
 
+import Jeonbuk.contest.entity.ChildMealCard;
 import Jeonbuk.contest.entity.CultureNuriCard;
 import Jeonbuk.contest.entity.GoodPriceRestaurant;
 import Jeonbuk.contest.entity.ModelRestaurant;
+import Jeonbuk.contest.repository.ChildMealCardRepository;
 import Jeonbuk.contest.repository.CultureNuriCardRepository;
 import Jeonbuk.contest.repository.GoodPriceRestaurantRepository;
 import Jeonbuk.contest.repository.ModelRestaurantRepository;
@@ -28,9 +30,12 @@ public class CSVService {
     private static String MODEL_RESTAURANT_LOCATION = BASIC_FILE_LOCATION + "model_restaurant.csv";
     private static String GOOD_PRICE_RESTAURANT_LOCATION = BASIC_FILE_LOCATION + "good_price_restaurant.csv";
     private static String CULTURE_NURI_CARD_LOCATION = BASIC_FILE_LOCATION + "culture_nuri_card.csv";
+    private static String CHILD_MEAL_CARD = BASIC_FILE_LOCATION + "child_meal_card.csv";
     private final ModelRestaurantRepository modelRestaurantRepository;
     private final GoodPriceRestaurantRepository goodPriceRestaurantRepository;
     private final CultureNuriCardRepository cultureNuriCardRepository;
+    private final ChildMealCardRepository childMealCardRepository;
+
 
     @Transactional
     public void saveModelRestaurant() throws IOException, CsvException {
@@ -77,6 +82,17 @@ public class CSVService {
             cultureNuriCard.setOnline(Boolean.parseBoolean(row[5]));
             cultureNuriCard.setPhoneNumber(row[6]);
             cultureNuriCardRepository.save(cultureNuriCard);
+        }
+    }
+
+    @Transactional
+    public void saveChildMealCard() throws IOException, CsvException {
+        List<String[]> rows = readCSV(CHILD_MEAL_CARD);
+        for(String[] row : rows) {
+            ChildMealCard childMealCard = new ChildMealCard();
+            childMealCard.setStoreName(row[2]);
+            childMealCard.setRoadName(row[3]);
+            childMealCardRepository.save(childMealCard);
         }
     }
 
