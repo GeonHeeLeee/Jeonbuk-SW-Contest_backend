@@ -1,6 +1,6 @@
 package Jeonbuk.contest.csv;
 
-import Jeonbuk.contest.entity.*;
+import Jeonbuk.contest.entity.restaurant.type.*;
 import Jeonbuk.contest.repository.*;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
@@ -33,7 +33,7 @@ public class CSVService {
     public void saveModelRestaurant() throws IOException, CsvException {
         List<String[]> rows = readCSV(MODEL_RESTAURANT.getLocation());
         for (String[] row : rows) {
-            ModelRestaurant modelRestaurant = new ModelRestaurant();
+            Model modelRestaurant = new Model();
             modelRestaurant.setStoreName(row[5]);
             modelRestaurant.setRoadAddress(row[7]);
             modelRestaurant.setLocationAddress(row[8]);
@@ -48,7 +48,7 @@ public class CSVService {
     public void saveGoodPriceRestaurant() throws IOException, CsvException {
         List<String[]> rows = readCSV(GOOD_PRICE_RESTAURANT.getLocation());
         for (String[] row : rows) {
-            GoodPriceRestaurant goodPriceRestaurant = new GoodPriceRestaurant();
+            GoodPrice goodPriceRestaurant = new GoodPrice();
             goodPriceRestaurant.setFoodType(row[1]);
             goodPriceRestaurant.setStoreName(row[2]);
             goodPriceRestaurant.setOwnerName(row[3]);
@@ -83,7 +83,7 @@ public class CSVService {
         for (String[] row : rows) {
             ChildMealCard childMealCard = new ChildMealCard();
             childMealCard.setStoreName(row[2]);
-            childMealCard.setRoadName(row[3]);
+            childMealCard.setRoadAddress(row[3]);
             childMealCardRepository.save(childMealCard);
         }
     }
@@ -95,7 +95,7 @@ public class CSVService {
             ChildLikeCard childLikeCard = new ChildLikeCard();
             childLikeCard.setBusinessType(row[2]);
             childLikeCard.setStoreName(row[3]);
-            childLikeCard.setRoadName(row[4]);
+            childLikeCard.setRoadAddress(row[4]);
             childLikeCard.setPhoneNumber(row[5]);
             childLikeCard.setPromotion(row[6]);
             childLikeCardRepository.save(childLikeCard);

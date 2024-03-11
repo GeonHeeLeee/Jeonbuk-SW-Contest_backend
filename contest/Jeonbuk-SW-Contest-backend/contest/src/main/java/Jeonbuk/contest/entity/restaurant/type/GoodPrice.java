@@ -1,25 +1,16 @@
-package Jeonbuk.contest.entity;
+package Jeonbuk.contest.entity.restaurant.type;
 
+import Jeonbuk.contest.entity.restaurant.Restaurant;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.Data;
 
 @Entity
 @Data
-public class GoodPriceRestaurant {
-
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class GoodPrice extends Restaurant {
 
     private String foodType;
 
-    private String storeName;
-
     private String ownerName;
-
-    private String roadAddress;
 
     private String mainFood;
 

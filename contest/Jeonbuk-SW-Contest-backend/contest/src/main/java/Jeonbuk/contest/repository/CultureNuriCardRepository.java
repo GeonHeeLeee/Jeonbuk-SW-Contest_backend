@@ -1,6 +1,6 @@
 package Jeonbuk.contest.repository;
 
-import Jeonbuk.contest.entity.CultureNuriCard;
+import Jeonbuk.contest.entity.restaurant.type.CultureNuriCard;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

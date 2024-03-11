@@ -1,6 +1,6 @@
 package Jeonbuk.contest.repository;
 
-import Jeonbuk.contest.entity.ChildLikeCard;
+import Jeonbuk.contest.entity.restaurant.type.ChildLikeCard;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
