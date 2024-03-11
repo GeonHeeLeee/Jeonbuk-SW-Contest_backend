@@ -9,19 +9,19 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 @RequiredArgsConstructor
 public class ContestApplication implements CommandLineRunner {
-	@Override
-	public void run(String... args) throws Exception {
-		csvService.saveModelRestaurant();
-		csvService.saveGoodPriceRestaurant();
-		csvService.saveCultureNuriCard();
-		csvService.saveChildMealCard();
-		csvService.saveChildLikeCard();
-	}
+    private final CSVService csvService;
 
-	private final CSVService csvService;
+    public static void main(String[] args) {
+        SpringApplication.run(ContestApplication.class, args);
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(ContestApplication.class, args);
-	}
+    @Override
+    public void run(String... args) throws Exception {
+        csvService.saveModelRestaurant();
+        csvService.saveGoodPriceRestaurant();
+        csvService.saveCultureNuriCard();
+        csvService.saveChildMealCard();
+        csvService.saveChildLikeCard();
+    }
 
 }
