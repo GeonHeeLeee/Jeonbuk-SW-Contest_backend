@@ -9,7 +9,7 @@ import lombok.Data;
 @DiscriminatorColumn(name = "RestaurantType")
 public class Restaurant {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     private String storeName;

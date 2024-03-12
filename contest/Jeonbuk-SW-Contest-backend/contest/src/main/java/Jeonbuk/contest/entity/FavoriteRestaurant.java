@@ -10,7 +10,7 @@ import lombok.Data;
 public class FavoriteRestaurant {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @ManyToOne
@@ -22,7 +22,7 @@ public class FavoriteRestaurant {
     private Restaurant restaurant;
 
     //Member가 해당 식당에 대한 Comment를 달 수 있도록
-    private String comment;
+    private String review;
 
     //유저 별점
     @Size(min = 1, max = 5)

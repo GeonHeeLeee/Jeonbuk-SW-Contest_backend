@@ -26,11 +26,12 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
 	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5' //application.properties 암호화
+	implementation 'org.springframework.boot:spring-boot-starter-security' //spring security
 	implementation 'com.opencsv:opencsv:5.5' //csv 읽기
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2' //Swagger
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
+	runtimeOnly 'com.oracle.database.jdbc:ojdbc11:21.3.0.0'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
