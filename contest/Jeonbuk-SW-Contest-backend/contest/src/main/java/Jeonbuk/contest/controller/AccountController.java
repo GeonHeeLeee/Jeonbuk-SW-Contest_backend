@@ -1,5 +1,6 @@
 package Jeonbuk.contest.controller;
 
+import Jeonbuk.contest.domain.MemberInfoDTO;
 import Jeonbuk.contest.domain.MemberRegisterDTO;
 import Jeonbuk.contest.service.AccountService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -47,6 +48,16 @@ public class AccountController {
     @GetMapping("/register/{memberId}")
     public ResponseEntity checkDuplicateId(@Parameter(description = "검사할 ID") @PathVariable(value = "memberId") String memberId) {
         return accountService.checkDuplicateId(memberId);
+    }
+
+    @Operation(summary = "이름, 전화번호, 비상연락망 등록")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "정보 등록 성공", content = @Content(schema = @Schema(hidden = true)))
+
+    })
+    @PostMapping("/register/info")
+    public ResponseEntity registerInfo(@RequestBody MemberInfoDTO memberInfoDTO) {
+        return accountService.registerMemberInfo(memberInfoDTO);
     }
 }
 
