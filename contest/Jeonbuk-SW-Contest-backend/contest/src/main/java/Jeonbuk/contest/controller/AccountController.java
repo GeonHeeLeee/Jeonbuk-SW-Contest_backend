@@ -3,18 +3,17 @@ package Jeonbuk.contest.controller;
 import Jeonbuk.contest.domain.MemberRegisterDTO;
 import Jeonbuk.contest.service.AccountService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.Map;
@@ -40,4 +39,15 @@ public class AccountController {
         String memberId = accountService.registerMember(memberRegisterDTO);
         return ResponseEntity.ok(Collections.singletonMap("memberId", memberId));
     }
+
+    @Operation(summary = "중복 아이디 검사")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "중복 아이디 존재하지 않음", content = @Content(schema = @Schema(hidden = true))),
+            @ApiResponse(responseCode = "409", description = "중복 아이디 존재", content = @Content(schema = @Schema(hidden = true)))})
+    @GetMapping("/register/{memberId}")
+    public ResponseEntity checkDuplicateId(@Parameter(description = "검사할 ID") @PathVariable(value = "memberId") String memberId) {
+        return accountService.checkDuplicateId(memberId);
+    }
 }
+
+

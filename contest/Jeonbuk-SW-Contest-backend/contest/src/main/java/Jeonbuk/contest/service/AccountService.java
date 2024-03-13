@@ -1,10 +1,11 @@
 package Jeonbuk.contest.service;
 
-import Jeonbuk.contest.domain.MemberDTO;
 import Jeonbuk.contest.domain.MemberRegisterDTO;
 import Jeonbuk.contest.entity.Member;
 import Jeonbuk.contest.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,5 +23,13 @@ public class AccountService {
                 .build();
         memberRepository.save(member);
         return memberRegisterDTO.getId();
+    }
+
+    public ResponseEntity checkDuplicateId(String memberId) {
+        if (memberRepository.existsById(memberId)) {
+            return new ResponseEntity(HttpStatus.CONFLICT);
+        } else {
+            return new ResponseEntity(HttpStatus.OK);
+        }
     }
 }
