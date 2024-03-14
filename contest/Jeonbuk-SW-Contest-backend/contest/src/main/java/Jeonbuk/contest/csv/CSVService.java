@@ -4,6 +4,7 @@ import Jeonbuk.contest.entity.restaurant.type.*;
 import Jeonbuk.contest.repository.*;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,9 +19,10 @@ import java.util.List;
 
 import static Jeonbuk.contest.csv.FILE_LOCATION.*;
 
-@Service
+
 @Slf4j
 @RequiredArgsConstructor
+@Service
 public class CSVService {
 
     private final ModelRestaurantRepository modelRestaurantRepository;

@@ -51,9 +51,7 @@ public class AccountController {
     @Operation(summary = "이름, 전화번호, 비상연락망 등록")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "정보 등록 성공", content = @Content(schema = @Schema(hidden = true))),
-            @ApiResponse(responseCode = "404", description = "해당 ID의 사용자 존재하지 않음", content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
-
-    })
+            @ApiResponse(responseCode = "404", description = "해당 ID의 사용자 존재하지 않음", content = @Content(schema = @Schema(implementation = ErrorDTO.class)))})
     @PostMapping("/register/info")
     public ResponseEntity<MemberInfoDTO> registerInfo(@RequestBody MemberInfoDTO memberInfoDTO) {
         return accountService.registerMemberInfo(memberInfoDTO);
