@@ -1,6 +1,7 @@
 package Jeonbuk.contest.controller;
 
 import Jeonbuk.contest.csv.CSVService;
+import Jeonbuk.contest.domain.MemberInfoDTO;
 import Jeonbuk.contest.domain.MemberRegisterDTO;
 import Jeonbuk.contest.service.AccountService;
 import com.google.gson.Gson;
@@ -94,5 +95,59 @@ public class AccountControllerTest {
                 .andDo(print());
 
         verify(accountService).checkDuplicateId(memberId);
+    }
+
+    @Test
+    @DisplayName("사용자 정보 입력 성공 테스트")
+    @WithMockUser("member")
+    void registerMemberInfoSuccessTest() throws Exception {
+        given(accountService.registerMemberInfo(new MemberInfoDTO("testId", "testName", "01012341234", "01043214321")))
+                .willReturn(new ResponseEntity(HttpStatus.OK));
+
+        MemberInfoDTO memberInfoDTO = MemberInfoDTO.builder()
+                .id("testId")
+                .name("testName")
+                .phoneNumber("01012341234")
+                .emergencyNumber("01043214321")
+                .build();
+
+        Gson gson = new Gson();
+        String requestBody = gson.toJson(memberInfoDTO);
+
+        mockMvc.perform(post("/account/register/info")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isOk())
+                .andDo(print());
+
+        verify(accountService).registerMemberInfo(memberInfoDTO);
+    }
+
+    @Test
+    @DisplayName("사용자 정보 입력 실패 테스트")
+    @WithMockUser("member")
+    void registerMemberInfoFailTest() throws Exception {
+        given(accountService.registerMemberInfo(new MemberInfoDTO("notExistingId", "testName", "01012341234", "01043214321")))
+                .willReturn(new ResponseEntity(HttpStatus.NO_CONTENT));
+
+        MemberInfoDTO memberInfoDTO = MemberInfoDTO.builder()
+                .id("notExistingId")
+                .name("testName")
+                .phoneNumber("01012341234")
+                .emergencyNumber("01043214321")
+                .build();
+
+        Gson gson = new Gson();
+        String requestBody = gson.toJson(memberInfoDTO);
+
+        mockMvc.perform(post("/account/register/info")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isNoContent())
+                .andDo(print());
+
+        verify(accountService).registerMemberInfo(memberInfoDTO);
     }
 }

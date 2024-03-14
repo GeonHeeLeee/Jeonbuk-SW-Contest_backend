@@ -32,7 +32,7 @@ public class AccountService {
     @Transactional
     public ResponseEntity registerMemberInfo(MemberInfoDTO memberInfoDTO) {
         Member member = memberRepository.findById(memberInfoDTO.getId())
-                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, ErrorCode.MEMBER_NOT_FOUND_ID));
+                .orElseThrow(() -> new CustomException(HttpStatus.NO_CONTENT, ErrorCode.MEMBER_NOT_FOUND_ID));
         member.setName(memberInfoDTO.getName());
         member.setEmergencyNumber(memberInfoDTO.getEmergencyNumber());
         member.setPhoneNumber(memberInfoDTO.getPhoneNumber());
