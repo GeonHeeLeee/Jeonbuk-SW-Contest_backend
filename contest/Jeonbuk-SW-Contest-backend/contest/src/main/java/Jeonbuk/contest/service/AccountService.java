@@ -41,7 +41,7 @@ public class AccountService {
 
     public ResponseEntity checkDuplicateId(String memberId) {
         if (memberRepository.existsById(memberId)) {
-            return new ResponseEntity(HttpStatus.CONFLICT);
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity(HttpStatus.OK);
         }
