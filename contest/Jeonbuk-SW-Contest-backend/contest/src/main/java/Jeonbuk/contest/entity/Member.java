@@ -1,8 +1,8 @@
 package Jeonbuk.contest.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,8 +20,8 @@ public class Member {
     private String password;
     private String name;
 
-    @Size(min = 8, max = 8, message = "전화번호는 '-'을 제외한 8자리여야 합니다")
+    @Column(length = 11)
     private String phoneNumber;
-    @Size(min = 8, max = 8, message = "전화번호는 '-'을 제외한 8자리여야 합니다")
+    @Column(length = 11)
     private String emergencyNumber;
 }

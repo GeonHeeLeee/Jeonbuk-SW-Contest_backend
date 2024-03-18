@@ -56,12 +56,10 @@ public class AccountController {
     @Operation(summary = "이름, 전화번호, 비상연락망 등록")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "정보 등록 성공", content = @Content(schema = @Schema(hidden = true))),
-            @ApiResponse(responseCode = "400", description = "해당 ID의 사용자 존재하지 않음", content = @Content(schema = @Schema(implementation = ErrorDTO.class))),
-            @ApiResponse(responseCode = "400", description = "핸드폰 번호, 비상 연락망 형식 일치 않음", content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
+            @ApiResponse(responseCode = "400", description = "핸드폰 번호, 비상 연락망 형식 일치하지 않거나 해당 Id의 사용자가 존재하지 않음", content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
     })
     @PostMapping("/register/info")
-    public ResponseEntity<MemberInfoDTO> registerInfo(@Valid @RequestBody MemberInfoDTO memberInfoDTO,
-                                                      BindingResult bindingResult) {
+    public ResponseEntity<MemberInfoDTO> registerInfo(@Valid @RequestBody MemberInfoDTO memberInfoDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.PHONE_NUMBER_NOT_VALID);
         }
