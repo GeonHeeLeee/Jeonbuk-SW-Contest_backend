@@ -1,5 +1,6 @@
 package Jeonbuk.contest.config;
 
+import Jeonbuk.contest.jwt.JWTUtils;
 import Jeonbuk.contest.jwt.LoginFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,7 @@ public class SecurityConfig {
 
     //AuthenticationManager가 인자로 받을 AuthenticationConfiguraion 객체 생성자 주입
     private final AuthenticationConfiguration authenticationConfiguration;
+    private final JWTUtils jwtUtils;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -46,17 +48,21 @@ public class SecurityConfig {
         httpSecurity
                 .formLogin((auth) -> auth.disable());
 
+
         httpSecurity
                 .httpBasic((auth) -> auth.disable());
 
         httpSecurity
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/login", "/", "/join").permitAll()
+                        .requestMatchers("/", "/account/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated());
 
         //필터 추가 LoginFilter()는 인자를 받음 (AuthenticationManager() 메소드에 authenticationConfiguration 객체를 넣어야 함) 따라서 등록 필요
-        http
-                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration)), UsernamePasswordAuthenticationFilter.class);
+        LoginFilter loginFilter = new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtils);
+        loginFilter.setUsernameParameter("memberId");
+        loginFilter.setFilterProcessesUrl("/account/login");
+        httpSecurity
+                .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class);
 
         httpSecurity
                 .sessionManagement((session) -> session

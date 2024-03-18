@@ -65,6 +65,15 @@ public class AccountController {
         }
         return accountService.registerMemberInfo(memberInfoDTO);
     }
+
+    @Operation(summary = "사용자 로그인")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "로그인 성공-Authorization Header에 JWT 응답", content = @Content(schema = @Schema(hidden = true))),
+            @ApiResponse(responseCode = "401", description = "로그인 실패", content = @Content(schema = @Schema(hidden = true)))})
+    @PostMapping("/login")
+    public void Login(@RequestBody MemberRegisterDTO memberRegisterDTO) {
+        //Login은 Security Filter에서 처리
+    }
 }
 
 
