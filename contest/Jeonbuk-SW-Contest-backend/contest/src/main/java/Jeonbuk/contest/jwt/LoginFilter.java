@@ -1,9 +1,8 @@
 package Jeonbuk.contest.jwt;
 
-import Jeonbuk.contest.domain.MemberRegisterDTO;
+import Jeonbuk.contest.domain.MemberAuthDTO;
 import com.google.gson.Gson;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -27,14 +26,14 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
-        MemberRegisterDTO memberRegisterDTO;
+        MemberAuthDTO memberAuthDTO;
         try {
-            memberRegisterDTO = gson.fromJson(request.getReader(), MemberRegisterDTO.class);
+            memberAuthDTO = gson.fromJson(request.getReader(), MemberAuthDTO.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        String memberId = memberRegisterDTO.getId();
-        String password = memberRegisterDTO.getPassword();
+        String memberId = memberAuthDTO.getId();
+        String password = memberAuthDTO.getPassword();
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(memberId, password, null);
 
         //token에 담은 검증을 위한 AuthenticationManager로 전달
@@ -43,11 +42,11 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     //로그인 성공 시 실행
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) {
 
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         String memberId = customUserDetails.getUsername();
-        String token = jwtUtils.createJwt(memberId, 60 * 60 * 10L);
+        String token = jwtUtils.createJwt(memberId, 30 * 60 * 60 * 10L);
         log.info("로그인 성공 - url: {}, memberId: {}", request.getRequestURL(), memberId);
         response.addHeader("Authorization", "Bearer " + token);
 
@@ -55,8 +54,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     //로그인 실패 시 실행
     @Override
-    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) {
         log.info("로그인 실패 - url: {}", request.getRequestURL());
         response.setStatus(401);
     }

@@ -1,7 +1,7 @@
 package Jeonbuk.contest.controller;
 
 import Jeonbuk.contest.domain.MemberInfoDTO;
-import Jeonbuk.contest.domain.MemberRegisterDTO;
+import Jeonbuk.contest.domain.MemberAuthDTO;
 import Jeonbuk.contest.exception.CustomException;
 import Jeonbuk.contest.exception.ErrorCode;
 import Jeonbuk.contest.exception.ErrorDTO;
@@ -39,8 +39,8 @@ public class AccountController {
                             examples = @ExampleObject(name = "회원가입 응답 예시", value = "{\"memberId\": \"value\"}")
                     ))})
     @PostMapping("/register")
-    public ResponseEntity<Object> registerUser(@RequestBody MemberRegisterDTO memberRegisterDTO) {
-        String memberId = accountService.registerMember(memberRegisterDTO);
+    public ResponseEntity<Object> registerUser(@RequestBody MemberAuthDTO memberAuthDTO) {
+        String memberId = accountService.registerMember(memberAuthDTO);
         return ResponseEntity.ok(Collections.singletonMap("memberId", memberId));
     }
 
@@ -71,7 +71,7 @@ public class AccountController {
             @ApiResponse(responseCode = "200", description = "로그인 성공-Authorization Header에 JWT 응답", content = @Content(schema = @Schema(hidden = true))),
             @ApiResponse(responseCode = "401", description = "로그인 실패", content = @Content(schema = @Schema(hidden = true)))})
     @PostMapping("/login")
-    public void Login(@RequestBody MemberRegisterDTO memberRegisterDTO) {
+    public void Login(@RequestBody MemberAuthDTO memberAuthDTO) {
         //Login은 Security Filter에서 처리
     }
 }

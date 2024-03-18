@@ -1,6 +1,7 @@
-package Jeonbuk.contest.jwt;
+package Jeonbuk.contest.service;
 
 import Jeonbuk.contest.entity.Member;
+import Jeonbuk.contest.jwt.CustomUserDetails;
 import Jeonbuk.contest.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

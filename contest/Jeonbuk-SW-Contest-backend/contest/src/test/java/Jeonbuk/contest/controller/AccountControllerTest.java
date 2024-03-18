@@ -2,7 +2,7 @@ package Jeonbuk.contest.controller;
 
 import Jeonbuk.contest.csv.CSVService;
 import Jeonbuk.contest.domain.MemberInfoDTO;
-import Jeonbuk.contest.domain.MemberRegisterDTO;
+import Jeonbuk.contest.domain.MemberAuthDTO;
 import Jeonbuk.contest.service.AccountService;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.DisplayName;
@@ -41,16 +41,16 @@ class AccountControllerTest {
     @DisplayName("회원가입 테스트")
     @WithMockUser("member")
     void registerUserTest() throws Exception {
-        given(accountService.registerMember(new MemberRegisterDTO("testId", "testPassword")))
+        given(accountService.registerMember(new MemberAuthDTO("testId", "testPassword")))
                 .willReturn("testId");
 
-        MemberRegisterDTO memberRegisterDTO = MemberRegisterDTO.builder()
+        MemberAuthDTO memberAuthDTO = MemberAuthDTO.builder()
                 .id("testId")
                 .password("testPassword")
                 .build();
 
         Gson gson = new Gson();
-        String requestBody = gson.toJson(memberRegisterDTO);
+        String requestBody = gson.toJson(memberAuthDTO);
 
         mockMvc.perform(post("/account/register")
                         .with(csrf())
@@ -60,7 +60,7 @@ class AccountControllerTest {
                 .andExpect(jsonPath("$.memberId").value("testId"))
                 .andDo(print());
 
-        verify(accountService).registerMember(new MemberRegisterDTO("testId", "testPassword"));
+        verify(accountService).registerMember(new MemberAuthDTO("testId", "testPassword"));
     }
 
     @Test

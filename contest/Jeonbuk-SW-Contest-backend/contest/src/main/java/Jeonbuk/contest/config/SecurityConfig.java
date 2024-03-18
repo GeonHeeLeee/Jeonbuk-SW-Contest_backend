@@ -1,5 +1,6 @@
 package Jeonbuk.contest.config;
 
+import Jeonbuk.contest.jwt.JWTFilter;
 import Jeonbuk.contest.jwt.JWTUtils;
 import Jeonbuk.contest.jwt.LoginFilter;
 import lombok.RequiredArgsConstructor;
@@ -37,11 +38,6 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-//        httpSecurity.csrf(http -> http.disable());
-//        httpSecurity.authorizeHttpRequests(http -> http
-//                .anyRequest().permitAll());
-//        httpSecurity.formLogin(http -> http.disable());
-//        return httpSecurity.build();
         httpSecurity
                 .csrf((auth) -> auth.disable());
 
@@ -56,6 +52,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/", "/account/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated());
+
+        httpSecurity
+                .addFilterBefore(new JWTFilter(jwtUtils), LoginFilter.class);
+
 
         //필터 추가 LoginFilter()는 인자를 받음 (AuthenticationManager() 메소드에 authenticationConfiguration 객체를 넣어야 함) 따라서 등록 필요
         LoginFilter loginFilter = new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtils);

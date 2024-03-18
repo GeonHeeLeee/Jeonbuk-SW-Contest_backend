@@ -1,7 +1,7 @@
 package Jeonbuk.contest.service;
 
 import Jeonbuk.contest.domain.MemberInfoDTO;
-import Jeonbuk.contest.domain.MemberRegisterDTO;
+import Jeonbuk.contest.domain.MemberAuthDTO;
 import Jeonbuk.contest.entity.Member;
 import Jeonbuk.contest.exception.CustomException;
 import Jeonbuk.contest.exception.ErrorCode;
@@ -20,13 +20,13 @@ public class AccountService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public String registerMember(MemberRegisterDTO memberRegisterDTO) {
+    public String registerMember(MemberAuthDTO memberAuthDTO) {
         Member member = Member.builder()
-                .id(memberRegisterDTO.getId())
-                .password(passwordEncoder.encode(memberRegisterDTO.getPassword()))
+                .id(memberAuthDTO.getId())
+                .password(passwordEncoder.encode(memberAuthDTO.getPassword()))
                 .build();
         memberRepository.save(member);
-        return memberRegisterDTO.getId();
+        return memberAuthDTO.getId();
     }
 
     @Transactional
