@@ -39,17 +39,15 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .csrf((auth) -> auth.disable());
+                .csrf(auth -> auth.disable());
+        httpSecurity
+                .formLogin(auth -> auth.disable());
 
         httpSecurity
-                .formLogin((auth) -> auth.disable());
-
-
-        httpSecurity
-                .httpBasic((auth) -> auth.disable());
+                .httpBasic(auth -> auth.disable());
 
         httpSecurity
-                .authorizeHttpRequests((auth) -> auth
+                .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/account/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated());
 
@@ -59,13 +57,12 @@ public class SecurityConfig {
 
         //필터 추가 LoginFilter()는 인자를 받음 (AuthenticationManager() 메소드에 authenticationConfiguration 객체를 넣어야 함) 따라서 등록 필요
         LoginFilter loginFilter = new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtils);
-        loginFilter.setUsernameParameter("memberId");
         loginFilter.setFilterProcessesUrl("/account/login");
         httpSecurity
                 .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class);
 
         httpSecurity
-                .sessionManagement((session) -> session
+                .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return httpSecurity.build();

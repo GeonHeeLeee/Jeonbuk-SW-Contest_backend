@@ -19,7 +19,6 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
-
     private final JWTUtils jwtUtils;
     private final Gson gson = new Gson();
 

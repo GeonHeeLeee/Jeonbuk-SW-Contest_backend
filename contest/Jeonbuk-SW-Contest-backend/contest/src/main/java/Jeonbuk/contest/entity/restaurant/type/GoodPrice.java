@@ -14,15 +14,15 @@ public class GoodPrice extends Restaurant {
 
     private String foodType;
 
-    private String ownerName;
+    private String ownerName; //
 
     private String mainFood;
 
-    private String mainFoodPrice;
+    private String mainFoodPrice; //
 
     private String openingHours;
 
-    private boolean supportsDelivery;
+    private boolean supportsDelivery; //
 
     private boolean isParkable;
 
