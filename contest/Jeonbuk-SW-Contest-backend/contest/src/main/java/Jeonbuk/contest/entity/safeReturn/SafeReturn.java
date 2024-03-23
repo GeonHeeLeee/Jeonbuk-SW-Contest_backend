@@ -1,10 +1,14 @@
 package Jeonbuk.contest.entity.safeReturn;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Entity
+@SuperBuilder
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "FacilityType")
+@DiscriminatorColumn(name = "type")
+@NoArgsConstructor
 public class SafeReturn {
 
     @Id

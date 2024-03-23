@@ -17,11 +17,7 @@ public class ContestApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        csvService.saveModelRestaurant();
-        csvService.saveGoodPriceRestaurant();
-        csvService.saveCultureNuriCard();
-        csvService.saveChildMealCard();
-        csvService.saveChildLikeCard();
+
     }
 
 }

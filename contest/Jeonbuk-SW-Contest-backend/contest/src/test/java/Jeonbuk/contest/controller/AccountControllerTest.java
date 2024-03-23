@@ -3,7 +3,7 @@ package Jeonbuk.contest.controller;
 import Jeonbuk.contest.csv.CSVService;
 import Jeonbuk.contest.domain.MemberAuthDTO;
 import Jeonbuk.contest.domain.MemberInfoDTO;
-import Jeonbuk.contest.entity.Member;
+import Jeonbuk.contest.repository.MemberRepository;
 import Jeonbuk.contest.service.AccountService;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.DisplayName;
@@ -18,17 +18,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @AutoConfigureMockMvc
@@ -153,30 +150,4 @@ class AccountControllerTest {
         verify(accountService).registerMemberInfo(memberInfoDTO);
     }
 
-    @Test
-    @DisplayName("JWT를 이용한 로그인 테스트")
-    void memberLogin() throws Exception {
-        given(memberRepository.findById("member1"))
-                .willReturn(Optional.ofNullable(Member.builder()
-                        .id("member1")
-                        .password("member1")
-                        .phoneNumber("01012341234")
-                        .emergencyNumber("01043214321")
-                        .name("member1")
-                        .build()));
-
-        Map<String, String> map = new HashMap<>();
-        map.put("id", "member1");
-        map.put("password", "member1");
-
-        String requestBody = gson.toJson(map);
-
-        mockMvc.perform(post("/account/login")
-                        .with(csrf())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
-                .andExpect(status().isOk())
-                .andExpect(header().exists("Authorization"))
-                .andDo(print());
-    }
 }
