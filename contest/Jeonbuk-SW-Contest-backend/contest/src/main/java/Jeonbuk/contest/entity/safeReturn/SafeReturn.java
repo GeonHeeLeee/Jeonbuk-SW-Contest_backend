@@ -1,11 +1,11 @@
-package Jeonbuk.contest.entity;
+package Jeonbuk.contest.entity.safeReturn;
 
 import jakarta.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "FacilityType")
-public class Facilities {
+public class SafeReturn {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,4 +1,4 @@
-package Jeonbuk.contest.entity;
+package Jeonbuk.contest.entity.safeReturn;
 
 
 import jakarta.persistence.Entity;
@@ -12,7 +12,7 @@ import java.util.Date;
 @Entity
 @SuperBuilder
 @NoArgsConstructor
-public class CCTV extends Facilities {
+public class CCTV extends SafeReturn {
 
     private String roadAddress;
 
@@ -26,6 +26,6 @@ public class CCTV extends Facilities {
 
     private Integer storageDays;
 
-    private Date installationDate;
+    private Date installDate;
 
 }
