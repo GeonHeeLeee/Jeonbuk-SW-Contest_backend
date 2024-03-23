@@ -5,7 +5,6 @@ import Jeonbuk.contest.domain.MemberAuthDTO;
 import Jeonbuk.contest.entity.Member;
 import Jeonbuk.contest.exception.CustomException;
 import Jeonbuk.contest.exception.ErrorCode;
-import Jeonbuk.contest.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

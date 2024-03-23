@@ -1,6 +1,5 @@
 package Jeonbuk.contest.entity;
 
-import Jeonbuk.contest.entity.restaurant.Restaurant;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -17,9 +16,7 @@ public class FavoriteRestaurant {
     @JoinColumn(name = "memberId")
     private Member member;
 
-    @ManyToOne
-    @JoinColumn(name = "restaurant_id")
-    private Restaurant restaurant;
+    //To-Do: 식당 Entity Mapping
 
     //Member가 해당 식당에 대한 Comment를 달 수 있도록
     private String review;
