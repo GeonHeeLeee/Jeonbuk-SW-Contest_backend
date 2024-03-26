@@ -13,9 +13,10 @@ import java.time.Year;
 @NoArgsConstructor
 public class WarningBell extends SafeReturn {
 
-    private Integer managementNumber;
+    private String managementNumber;
 
     private String installPurpose;
+    private String installtype;
 
     private String installLocation;
 
@@ -29,7 +30,7 @@ public class WarningBell extends SafeReturn {
 
     private boolean isManagingOfficeLinked;
 
-    private Year installYear;
+    private String installYear;
 
     private String managingOfficeName;
     private String managingOfficePhoneNumber;

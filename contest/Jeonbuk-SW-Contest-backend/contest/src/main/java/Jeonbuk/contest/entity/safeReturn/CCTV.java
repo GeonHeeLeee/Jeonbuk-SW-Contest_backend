@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -16,16 +17,16 @@ public class CCTV extends SafeReturn {
 
     private String roadAddress;
 
-    private String roadNumber;
+    private String localAddress;
 
-    private Integer cameraCount;
+    private int cameraCount;
 
-    private Integer cameraPixels;
+    private int cameraPixels;
 
     private String filmingInformation;
 
-    private Integer storageDays;
+    private int storageDays;
 
-    private Date installDate;
+    private LocalDate installDate;
 
 }

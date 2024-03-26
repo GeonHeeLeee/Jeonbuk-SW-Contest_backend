@@ -17,7 +17,9 @@ public class ContestApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
+        csvService.saveCCTV();
+        csvService.saveStreetLamp();
+        csvService.saveWarningBell();
     }
 
 }
