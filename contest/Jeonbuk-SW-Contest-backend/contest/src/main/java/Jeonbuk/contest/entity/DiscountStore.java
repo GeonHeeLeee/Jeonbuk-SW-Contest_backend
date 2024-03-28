@@ -14,17 +14,17 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Restaurant {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class DiscountStore {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String storeName;
+    private String storeType;
     private String roadAddress;
-
     private float latitude;
     private float longitude;
+    private String category;
+
     private String etc;
 
     private PROMOTION_TYPE promotionType;

@@ -1,19 +1,20 @@
 package Jeonbuk.contest.entity;
 
-public enum RESTAURANT_TYPE {
+public enum PROMOTION_TYPE {
     GOOD_PRICE("착한가격업소"),
     CHILD_LIKE("아이조아카드"),
     CHILD_MEAL("아동급식카드"),
-    MODEL("모범음식점");
+    MODEL("모범음식점"),
+    CULTURE_NURI("문화누리카드");
 
     private String value;
 
-    RESTAURANT_TYPE(String value) {
+    PROMOTION_TYPE(String value) {
         this.value = value;
     }
 
-    public static RESTAURANT_TYPE converte(String input) {
-        for (RESTAURANT_TYPE type : RESTAURANT_TYPE.values()) {
+    public static PROMOTION_TYPE converte(String input) {
+        for (PROMOTION_TYPE type : PROMOTION_TYPE.values()) {
             if (type.value.equals(input)) {
                 return type;
             }
