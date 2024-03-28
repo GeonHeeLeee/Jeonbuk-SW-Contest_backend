@@ -1,11 +1,12 @@
 package Jeonbuk.contest.csv;
 
+import Jeonbuk.contest.entity.DiscountStore;
+import Jeonbuk.contest.entity.PROMOTION_TYPE;
+import Jeonbuk.contest.entity.Restaurant;
 import Jeonbuk.contest.entity.safeReturn.CCTV;
 import Jeonbuk.contest.entity.safeReturn.StreetLamp;
 import Jeonbuk.contest.entity.safeReturn.WarningBell;
-import Jeonbuk.contest.repository.CCTVRepository;
-import Jeonbuk.contest.repository.StreetLampRepository;
-import Jeonbuk.contest.repository.WarningBellRepository;
+import Jeonbuk.contest.repository.*;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +18,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static Jeonbuk.contest.csv.FILE_LOCATION.RELATIVE_PATH;
+import static Jeonbuk.contest.csv.FILE_LOCATION.SAFE_RETURN;
+import static Jeonbuk.contest.csv.FILE_LOCATION.STORE;
 
 
 @Slf4j
@@ -33,10 +34,12 @@ public class CSVService {
     private final CCTVRepository cctvRepository;
     private final StreetLampRepository streetLampRepository;
     private final WarningBellRepository warningBellRepository;
+    private final DiscountStoreRepository discountStoreRepository;
+    private final RestaurantRepository restaurantRepository;
 
     @Transactional
     public void saveCCTV() throws IOException, CsvException {
-        List<String[]> rows = readCSV(RELATIVE_PATH.getLocation() + "cctv.csv");
+        List<String[]> rows = readCSV(SAFE_RETURN.getLocation() + "cctv.csv");
         List<CCTV> cctvList = new ArrayList<>();
         for (String[] row : rows) {
             CCTV cctv = CCTV.builder()
@@ -57,7 +60,7 @@ public class CSVService {
 
     @Transactional
     public void saveWarningBell() throws IOException, CsvException {
-        List<String[]> rows = readCSV(RELATIVE_PATH.getLocation() + "warningBell.csv");
+        List<String[]> rows = readCSV(SAFE_RETURN.getLocation() + "warningBell.csv");
         List<WarningBell> warningBellList = new ArrayList<>();
         for (String[] row : rows) {
             WarningBell warningBell = WarningBell.builder()
@@ -82,7 +85,7 @@ public class CSVService {
     }
 
     public void saveStreetLamp() throws IOException, CsvException {
-        List<String[]> rows = readCSV(RELATIVE_PATH.getLocation() + "streetlamp.csv");
+        List<String[]> rows = readCSV(SAFE_RETURN.getLocation() + "streetlamp.csv");
         List<StreetLamp> streetLampList = new ArrayList<>();
         for (String[] row : rows) {
             StreetLamp streetLamp = StreetLamp.builder()
@@ -93,7 +96,42 @@ public class CSVService {
             streetLampList.add(streetLamp);
         }
         streetLampRepository.saveAll(streetLampList);
+    }
 
+    public void saveRestaurant() throws IOException, CsvException {
+        List<String[]> rows = readCSV(STORE.getLocation() + "restaurant.csv");
+        List<Restaurant> restaurantList = new ArrayList<>();
+        for (String[] row : rows) {
+            Restaurant restaurant = Restaurant.builder()
+                    .storeName(row[1])
+                    .roadAddress(row[2])
+                    .latitude(parseFloatOrDefault(row[3]))
+                    .longitude(parseFloatOrDefault(row[4]))
+                    .etc(row[5])
+                    .promotionType(PROMOTION_TYPE.convert(row[6]))
+                    .build();
+            restaurantList.add(restaurant);
+        }
+        restaurantRepository.saveAll(restaurantList);
+    }
+
+    public void saveDiscountStore() throws IOException, CsvException {
+        List<String[]> rows = readCSV(STORE.getLocation() + "discountStore.csv");
+        List<DiscountStore> discountStoreList = new ArrayList<>();
+        for (String[] row : rows) {
+            DiscountStore discountStore = DiscountStore.builder()
+                    .storeName(row[1])
+                    .storeType(row[2])
+                    .roadAddress(row[3])
+                    .latitude(parseFloatOrDefault(row[4]))
+                    .longitude(parseFloatOrDefault(row[5]))
+                    .category(row[6])
+                    .etc(row[7])
+                    .promotionType(PROMOTION_TYPE.convert(row[8]))
+                    .build();
+            discountStoreList.add(discountStore);
+        }
+        discountStoreRepository.saveAll(discountStoreList);
     }
 
     public List<String[]> readCSV(String fileLocation) throws IOException, CsvException {
@@ -130,9 +168,9 @@ public class CSVService {
     }
 
     public Boolean parseBoolean(String str) {
-        if("Y".equalsIgnoreCase(str)){
+        if ("Y".equalsIgnoreCase(str)) {
             return true;
-        } else if ("N".equalsIgnoreCase(str)){
+        } else if ("N".equalsIgnoreCase(str)) {
             return false;
         }
         throw new IllegalArgumentException("입력은 Y 또는 N 이어야 합니다");

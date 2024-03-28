@@ -20,6 +20,8 @@ public class ContestApplication implements CommandLineRunner {
         csvService.saveCCTV();
         csvService.saveStreetLamp();
         csvService.saveWarningBell();
+        csvService.saveRestaurant();
+        csvService.saveDiscountStore();
     }
 
 }

@@ -13,13 +13,13 @@ public enum PROMOTION_TYPE {
         this.value = value;
     }
 
-    public static PROMOTION_TYPE converte(String input) {
+    public static PROMOTION_TYPE convert(String input) {
         for (PROMOTION_TYPE type : PROMOTION_TYPE.values()) {
             if (type.value.equals(input)) {
                 return type;
             }
         }
-        throw new IllegalArgumentException("알 수 없는 RESTAURANT_TYPE: {}" + input);
+        throw new IllegalArgumentException("알 수 없는 PROMOTION_TYPE: " + input);
     }
 
 
