@@ -30,7 +30,7 @@ public class AccountService {
     }
 
     @Transactional
-    public ResponseEntity registerMemberInfo(MemberInfoDTO memberInfoDTO) {
+    public ResponseEntity<Void> registerMemberInfo(MemberInfoDTO memberInfoDTO) {
         Member member = memberRepository.findById(memberInfoDTO.getId())
                 .orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.MEMBER_NOT_FOUND_ID));
         member.setName(memberInfoDTO.getName());
@@ -39,11 +39,11 @@ public class AccountService {
         return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity checkDuplicateId(String memberId) {
+    public ResponseEntity<Void> checkDuplicateId(String memberId) {
         if (memberRepository.existsById(memberId)) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
     }
 }

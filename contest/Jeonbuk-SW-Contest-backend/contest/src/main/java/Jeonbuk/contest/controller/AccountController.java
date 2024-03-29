@@ -49,7 +49,7 @@ public class AccountController {
             @ApiResponse(responseCode = "200", description = "중복 아이디 존재하지 않음", content = @Content(schema = @Schema(hidden = true))),
             @ApiResponse(responseCode = "409", description = "중복 아이디 존재", content = @Content(schema = @Schema(hidden = true)))})
     @GetMapping("/register/{memberId}")
-    public ResponseEntity<String> checkDuplicateId(@Parameter(description = "검사할 ID") @PathVariable(value = "memberId") String memberId) {
+    public ResponseEntity<Void> checkDuplicateId(@Parameter(description = "검사할 ID") @PathVariable(value = "memberId") String memberId) {
         return accountService.checkDuplicateId(memberId);
     }
 
@@ -59,7 +59,7 @@ public class AccountController {
             @ApiResponse(responseCode = "400", description = "핸드폰 번호, 비상 연락망 형식 일치하지 않거나 해당 Id의 사용자가 존재하지 않음", content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
     })
     @PostMapping("/register/info")
-    public ResponseEntity<MemberInfoDTO> registerInfo(@Valid @RequestBody MemberInfoDTO memberInfoDTO, BindingResult bindingResult) {
+    public ResponseEntity<Void> registerInfo(@Valid @RequestBody MemberInfoDTO memberInfoDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.PHONE_NUMBER_NOT_VALID);
         }
@@ -71,7 +71,7 @@ public class AccountController {
             @ApiResponse(responseCode = "200", description = "로그인 성공-Authorization Header에 JWT 응답", content = @Content(schema = @Schema(hidden = true))),
             @ApiResponse(responseCode = "401", description = "로그인 실패", content = @Content(schema = @Schema(hidden = true)))})
     @PostMapping("/login")
-    public void Login(@RequestBody MemberAuthDTO memberAuthDTO) {
+    public void login(@RequestBody MemberAuthDTO memberAuthDTO) {
         //Login은 Security Filter에서 처리
     }
 }

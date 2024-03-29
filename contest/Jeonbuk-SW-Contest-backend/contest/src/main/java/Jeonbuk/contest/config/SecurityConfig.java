@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -42,17 +43,18 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .csrf(auth -> auth.disable());
-        httpSecurity
-                .formLogin(auth -> auth.disable());
-
-        httpSecurity
-                .httpBasic(auth -> auth.disable());
+                .csrf(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         httpSecurity
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/account/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        .anyRequest().authenticated());
+                        .anyRequest().authenticated())
+                .addFilterBefore(new JWTFilter(jwtUtils), LoginFilter.class);
+
 
         httpSecurity.cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
             CorsConfiguration config = new CorsConfiguration();
@@ -64,9 +66,6 @@ public class SecurityConfig {
             return config;
         }));
 
-        httpSecurity
-                .addFilterBefore(new JWTFilter(jwtUtils), LoginFilter.class);
-
 
         //필터 추가 LoginFilter()는 인자를 받음 (AuthenticationManager() 메소드에 authenticationConfiguration 객체를 넣어야 함) 따라서 등록 필요
         LoginFilter loginFilter = new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtils);
@@ -74,10 +73,7 @@ public class SecurityConfig {
         httpSecurity
                 .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class);
 
-        httpSecurity
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
         return httpSecurity.build();
     }
+
 }

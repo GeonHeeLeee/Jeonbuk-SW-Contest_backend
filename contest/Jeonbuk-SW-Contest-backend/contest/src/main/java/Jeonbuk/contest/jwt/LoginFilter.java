@@ -1,6 +1,7 @@
 package Jeonbuk.contest.jwt;
 
 import Jeonbuk.contest.domain.MemberAuthDTO;
+import Jeonbuk.contest.entity.Member;
 import com.google.gson.Gson;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,10 +44,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) {
 
-        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-        String memberId = customUserDetails.getUsername();
-        String token = jwtUtils.createJwt(memberId, 30 * 60 * 60 * 10L);
-        log.info("로그인 성공 - url: {}, memberId: {}", request.getRequestURL(), memberId);
+        Member member = (Member) authentication.getPrincipal();
+        String memberId = member.getUsername();
+        String token = jwtUtils.createJwt(memberId, 60 * 60 * 1000L);
+        log.info("로그인 성공 - url: {}, memberId: {}, token(앞 6글자): {}", request.getRequestURL(), memberId, token.split(" ")[1].substring(0,4));
         response.addHeader("Authorization", "Bearer " + token);
 
     }
