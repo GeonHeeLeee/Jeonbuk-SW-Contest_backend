@@ -47,7 +47,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         Member member = (Member) authentication.getPrincipal();
         String memberId = member.getUsername();
         String token = jwtUtils.createJwt(memberId, 60 * 60 * 1000L);
-        log.info("로그인 성공 - url: {}, memberId: {}, token(앞 6글자): {}", request.getRequestURL(), memberId, token.split(" ")[1].substring(0,4));
+        log.info("[successfulAuthentication] 로그인 성공 - memberId: {}, token(앞 6글자): {}", memberId, token.substring(0, 4));
         response.addHeader("Authorization", "Bearer " + token);
 
     }
@@ -55,7 +55,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     //로그인 실패 시 실행
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) {
-        log.info("로그인 실패 - url: {}", request.getRequestURL());
+        log.info("[unsuccessfulAuthentication] 로그인 실패 - url: {}", request.getRequestURL());
         response.setStatus(401);
     }
 }
