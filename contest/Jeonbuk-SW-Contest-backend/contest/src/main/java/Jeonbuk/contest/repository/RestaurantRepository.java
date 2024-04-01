@@ -13,7 +13,10 @@ import java.util.List;
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
     Page<Restaurant> findAll(Pageable pageable);
 
+    Page<Restaurant> findAllByPromotionType(PROMOTION_TYPE promotionType, Pageable pageable);
+
     List<Restaurant> findAll();
 
-    Page<Restaurant> findAllByPromotionType(PROMOTION_TYPE promotionType, Pageable pageable);
+
+    List<Restaurant> findAllByPromotionType(PROMOTION_TYPE promotionType);
 }

@@ -35,4 +35,9 @@ public class RestaurantService {
                 restaurantRepository.findAll().stream().collect(Collectors.groupingBy(Restaurant::getPromotionType));
         return ResponseEntity.ok().body(restaurantMap);
     }
+
+    public ResponseEntity<List<Restaurant>> getRestaurantsByPromotionTypeForMap(PROMOTION_TYPE promotionType) {
+        List<Restaurant> restaurantList = restaurantRepository.findAllByPromotionType(promotionType);
+        return ResponseEntity.ok().body(restaurantList);
+    }
 }

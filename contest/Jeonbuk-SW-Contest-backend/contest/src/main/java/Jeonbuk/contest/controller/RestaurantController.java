@@ -49,4 +49,11 @@ public class RestaurantController {
     public ResponseEntity<Map<PROMOTION_TYPE, List<Restaurant>>> getAllRestaurantsForMap() {
         return restaurantService.getAllRestaurantsForMap();
     }
+
+    @Operation(summary = "특정 필터 음식점 조회 - Map",
+            description = "Promotion Type 종류 - 착한가격업소: GOOD_PRICE, 아이조아카드: CHILD_LIKE, 아동급식카드: CHILD_MEAL, 모범음식점: MODEL, 문화누리카드: CULTURE_NURI")
+    @GetMapping("/map/{promotion}")
+    public ResponseEntity<List<Restaurant>> getRestaurantsByPromotionTypeForMap(@Parameter(description = "Promotion Type") @PathVariable(value = "promotion") PROMOTION_TYPE promotionType) {
+        return restaurantService.getRestaurantsByPromotionTypeForMap(promotionType);
+    }
 }
