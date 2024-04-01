@@ -1,6 +1,6 @@
 package Jeonbuk.contest.service;
 
-import Jeonbuk.contest.entity.PROMOTION_TYPE;
+import Jeonbuk.contest.entity.enumType.Promotion;
 import Jeonbuk.contest.entity.Restaurant;
 import Jeonbuk.contest.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,18 +25,18 @@ public class RestaurantService {
         return ResponseEntity.ok().body(restaurantPage);
     }
 
-    public ResponseEntity<Page<Restaurant>> getRestaurantsByPromotionTypeForList(PROMOTION_TYPE promotionType, int page) {
+    public ResponseEntity<Page<Restaurant>> getRestaurantsByPromotionTypeForList(Promotion promotionType, int page) {
         Page<Restaurant> restaurantPage = restaurantRepository.findAllByPromotionType(promotionType, PageRequest.of(page, 10));
         return ResponseEntity.ok().body(restaurantPage);
     }
 
-    public ResponseEntity<Map<PROMOTION_TYPE, List<Restaurant>>> getAllRestaurantsForMap() {
-        Map<PROMOTION_TYPE, List<Restaurant>> restaurantMap =
+    public ResponseEntity<Map<Promotion, List<Restaurant>>> getAllRestaurantsForMap() {
+        Map<Promotion, List<Restaurant>> restaurantMap =
                 restaurantRepository.findAll().stream().collect(Collectors.groupingBy(Restaurant::getPromotionType));
         return ResponseEntity.ok().body(restaurantMap);
     }
 
-    public ResponseEntity<List<Restaurant>> getRestaurantsByPromotionTypeForMap(PROMOTION_TYPE promotionType) {
+    public ResponseEntity<List<Restaurant>> getRestaurantsByPromotionTypeForMap(Promotion promotionType) {
         List<Restaurant> restaurantList = restaurantRepository.findAllByPromotionType(promotionType);
         return ResponseEntity.ok().body(restaurantList);
     }

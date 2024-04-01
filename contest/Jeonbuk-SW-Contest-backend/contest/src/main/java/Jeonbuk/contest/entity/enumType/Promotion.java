@@ -1,6 +1,6 @@
-package Jeonbuk.contest.entity;
+package Jeonbuk.contest.entity.enumType;
 
-public enum PROMOTION_TYPE {
+public enum Promotion {
     GOOD_PRICE("착한가격업소"),
     CHILD_LIKE("아이조아카드"),
     CHILD_MEAL("아동급식카드"),
@@ -9,17 +9,17 @@ public enum PROMOTION_TYPE {
 
     private String value;
 
-    PROMOTION_TYPE(String value) {
+    Promotion(String value) {
         this.value = value;
     }
 
-    public static PROMOTION_TYPE convert(String input) {
-        for (PROMOTION_TYPE type : PROMOTION_TYPE.values()) {
+    public static Promotion convert(String input) {
+        for (Promotion type : Promotion.values()) {
             if (type.value.equals(input)) {
                 return type;
             }
         }
-        throw new IllegalArgumentException("알 수 없는 PROMOTION_TYPE: " + input);
+        throw new IllegalArgumentException("알 수 없는 PromotionType: " + input);
     }
 
 

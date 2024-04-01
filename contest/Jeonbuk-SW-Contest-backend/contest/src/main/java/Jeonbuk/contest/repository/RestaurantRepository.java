@@ -1,6 +1,6 @@
 package Jeonbuk.contest.repository;
 
-import Jeonbuk.contest.entity.PROMOTION_TYPE;
+import Jeonbuk.contest.entity.enumType.Promotion;
 import Jeonbuk.contest.entity.Restaurant;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,10 +13,10 @@ import java.util.List;
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
     Page<Restaurant> findAll(Pageable pageable);
 
-    Page<Restaurant> findAllByPromotionType(PROMOTION_TYPE promotionType, Pageable pageable);
+    Page<Restaurant> findAllByPromotionType(Promotion promotionType, Pageable pageable);
 
     List<Restaurant> findAll();
 
 
-    List<Restaurant> findAllByPromotionType(PROMOTION_TYPE promotionType);
+    List<Restaurant> findAllByPromotionType(Promotion promotionType);
 }

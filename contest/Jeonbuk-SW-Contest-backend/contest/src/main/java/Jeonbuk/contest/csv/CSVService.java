@@ -1,7 +1,8 @@
 package Jeonbuk.contest.csv;
 
 import Jeonbuk.contest.entity.DiscountStore;
-import Jeonbuk.contest.entity.PROMOTION_TYPE;
+import Jeonbuk.contest.entity.enumType.BusinessCategory;
+import Jeonbuk.contest.entity.enumType.Promotion;
 import Jeonbuk.contest.entity.Restaurant;
 import Jeonbuk.contest.entity.safeReturn.CCTV;
 import Jeonbuk.contest.entity.safeReturn.StreetLamp;
@@ -108,7 +109,7 @@ public class CSVService {
                     .latitude(parseFloatOrDefault(row[3]))
                     .longitude(parseFloatOrDefault(row[4]))
                     .etc(row[5])
-                    .promotionType(PROMOTION_TYPE.convert(row[6]))
+                    .promotionType(Promotion.convert(row[6]))
                     .build();
             restaurantList.add(restaurant);
         }
@@ -125,9 +126,9 @@ public class CSVService {
                     .roadAddress(row[3])
                     .latitude(parseFloatOrDefault(row[4]))
                     .longitude(parseFloatOrDefault(row[5]))
-                    .category(row[6])
+                    .category(BusinessCategory.convert(row[6]))
                     .etc(row[7])
-                    .promotionType(PROMOTION_TYPE.convert(row[8]))
+                    .promotionType(Promotion.convert(row[8]))
                     .build();
             discountStoreList.add(discountStore);
         }

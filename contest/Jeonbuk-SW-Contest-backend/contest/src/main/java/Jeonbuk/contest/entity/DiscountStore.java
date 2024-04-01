@@ -1,5 +1,7 @@
 package Jeonbuk.contest.entity;
 
+import Jeonbuk.contest.entity.enumType.BusinessCategory;
+import Jeonbuk.contest.entity.enumType.Promotion;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,9 +25,9 @@ public class DiscountStore {
     private String roadAddress;
     private float latitude;
     private float longitude;
-    private String category;
+    private BusinessCategory category;
 
     private String etc;
 
-    private PROMOTION_TYPE promotionType;
+    private Promotion promotionType;
 }

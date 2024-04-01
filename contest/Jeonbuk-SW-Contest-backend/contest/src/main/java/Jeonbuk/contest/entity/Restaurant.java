@@ -1,5 +1,6 @@
 package Jeonbuk.contest.entity;
 
+import Jeonbuk.contest.entity.enumType.Promotion;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,5 +28,5 @@ public class Restaurant {
     private float longitude;
     private String etc;
 
-    private PROMOTION_TYPE promotionType;
+    private Promotion promotionType;
 }
