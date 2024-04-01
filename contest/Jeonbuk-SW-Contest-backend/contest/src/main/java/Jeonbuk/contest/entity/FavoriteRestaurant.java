@@ -17,6 +17,13 @@ public class FavoriteRestaurant {
     private Member member;
 
     //To-Do: 식당 Entity Mapping
+    @ManyToOne
+    @JoinColumn(name = "restaurantId")
+    private Restaurant restaurant;
+
+    @ManyToOne
+    @JoinColumn(name = "discountStoreId")
+    private DiscountStore discountStore;
 
     //Member가 해당 식당에 대한 Comment를 달 수 있도록
     private String review;
