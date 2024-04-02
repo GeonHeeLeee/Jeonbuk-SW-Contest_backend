@@ -15,4 +15,5 @@ public interface DiscountStoreRepository extends JpaRepository<DiscountStore, Lo
     Page<DiscountStore> findAllByCategory(Pageable pageable, BusinessCategory category);
 
     List<DiscountStore> findAll();
+    List<DiscountStore> findAllByCategory(BusinessCategory category);
 }

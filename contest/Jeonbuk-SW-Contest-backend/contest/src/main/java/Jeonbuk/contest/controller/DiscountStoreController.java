@@ -44,4 +44,11 @@ public class DiscountStoreController {
         return discountStoreService.getAllDiscountStoreForMap();
     }
 
+    @Operation(summary = "특정 필터 할인매장 조회 - Map",
+            description = "Category 종류 - LEISURE: 여가/레저, SERVICES: 서비스업, FOOD: 음식, GOODS: 잡화, ETC: 기타, FOOD_BEVERAGE: 식품/음료, BOOKS_STATIONERY: 도서/문구 RETAIL: 도소매, EDUCATION: 교육, AUTOMOTIVE: 자동차/주유")
+    @GetMapping("/map/{category}")
+    public ResponseEntity<List<DiscountStore>> getDiscountStoreByCategoryForMap(@Parameter(description = "카테고리") @PathVariable(value = "category") BusinessCategory category) {
+        return
+    }
+
 }

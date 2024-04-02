@@ -36,4 +36,8 @@ public class DiscountStoreService {
                 = discountStoreRepository.findAll().stream().collect(Collectors.groupingBy(DiscountStore::getCategory));
         return ResponseEntity.ok().body(discountStoreMap);
     }
+
+    public ResponseEntity<List<DiscountStore>> getDiscountStoreByCategoryForList(BusinessCategory category) {
+        return ResponseEntity.ok().body(discountStoreRepository.findAllByCategory(category));
+    }
 }
