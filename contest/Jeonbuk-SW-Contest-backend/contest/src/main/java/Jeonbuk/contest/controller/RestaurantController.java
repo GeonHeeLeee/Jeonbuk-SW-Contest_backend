@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import java.util.Map;
 
-@Tag(name = "음식점", description = "page 번호 처음엔 0, 이후 pageable의 PageNumber + 1로 요청하면 됨")
+@Tag(name = "음식점", description = "page 번호 처음엔 0, 이후 pageable의 PageNumber + 1로 요청")
 @Slf4j
 @Controller
 @RequestMapping("/restaurant")
