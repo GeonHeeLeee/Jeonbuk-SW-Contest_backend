@@ -10,6 +10,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -25,5 +29,11 @@ public class DiscountStoreService {
     public ResponseEntity<Page<DiscountStore>> getDiscountStoreByCategoryForList(int page, BusinessCategory category) {
         Page<DiscountStore> discountStorePage = discountStoreRepository.findAllByCategory(PageRequest.of(page, 10), category);
         return ResponseEntity.ok().body(discountStorePage);
+    }
+
+    public ResponseEntity<Map<BusinessCategory, List<DiscountStore>>> getAllDiscountStoreForMap() {
+        Map<BusinessCategory, List<DiscountStore>> discountStoreMap
+                = discountStoreRepository.findAll().stream().collect(Collectors.groupingBy(DiscountStore::getCategory));
+        return ResponseEntity.ok().body(discountStoreMap);
     }
 }
