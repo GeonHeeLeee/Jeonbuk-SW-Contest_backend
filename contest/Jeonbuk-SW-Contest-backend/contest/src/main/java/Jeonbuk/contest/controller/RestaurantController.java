@@ -1,7 +1,7 @@
 package Jeonbuk.contest.controller;
 
-import Jeonbuk.contest.entity.enumType.Promotion;
 import Jeonbuk.contest.entity.Restaurant;
+import Jeonbuk.contest.entity.enumType.Promotion;
 import Jeonbuk.contest.service.RestaurantService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -31,29 +31,35 @@ public class RestaurantController {
     //전체 조회
     @Operation(summary = "전체 식당 조회 - List")
     @GetMapping("/list/all")
-    public ResponseEntity<Page<Restaurant>> getAllRestaurantsForList(@Parameter(description = "페이지 번호") @RequestParam(value = "page") int page) {
-        return restaurantService.getAllRestaurantsForList(page);
+    public ResponseEntity<Page<Restaurant>> getAllRestaurantsPage(@Parameter(description = "페이지 번호") @RequestParam(value = "page") int page) {
+        return restaurantService.getAllRestaurantsPage(page);
     }
 
     @Operation(summary = "특정 필터 음식점 조회 - List",
             description = "Promotion Type 종류 - 착한가격업소: GOOD_PRICE, 아이조아카드: CHILD_LIKE, 아동급식카드: CHILD_MEAL, 모범음식점: MODEL, 문화누리카드: CULTURE_NURI")
     @GetMapping("/list/{promotion}")
-    public ResponseEntity<Page<Restaurant>> getRestaurantsByPromotionTypeForList(@Parameter(description = "Promotion Type") @PathVariable(value = "promotion") Promotion promotionType,
-                                                                                 @Parameter(description = "페이지 번호") @RequestParam(value = "page") int page) {
-        return restaurantService.getRestaurantsByPromotionTypeForList(promotionType, page);
+    public ResponseEntity<Page<Restaurant>> getRestaurantsByPromotionPage(@Parameter(description = "Promotion Type") @PathVariable(value = "promotion") Promotion promotionType,
+                                                                          @Parameter(description = "페이지 번호") @RequestParam(value = "page") int page) {
+        return restaurantService.getRestaurantsByPromotionPage(promotionType, page);
     }
 
-    @Operation(summary = "전체 식당 조회 - Map",
-            description = "식당의 Promotion Type(GOOD_PRICE, CHILD_LIKE 등)에 따라 분류하여 전체 반환")
+    @Operation(summary = "기준점(위도, 경도) 반경 내, 전체 식당 조회 - Map",
+            description = "위도, 경도, 반지름(float-meter)내에 있는 식당의 Promotion Type(GOOD_PRICE, CHILD_LIKE 등)에 따라 분류하여 전체 반환")
     @GetMapping("/map/all")
-    public ResponseEntity<Map<Promotion, List<Restaurant>>> getAllRestaurantsForMap() {
-        return restaurantService.getAllRestaurantsForMap();
+    public ResponseEntity<Map<Promotion, List<Restaurant>>> getAllRestaurantsWithinRadius(@Parameter(description = "위도") @RequestParam("latitude") float latitude,
+                                                                                          @Parameter(description = "경도") @RequestParam("longitude") float longitude,
+                                                                                          @Parameter(description = "반지름(미터)") @RequestParam("radius") float radius) {
+        return restaurantService.getAllRestaurantsWithinRadius(latitude, longitude, radius);
     }
 
-    @Operation(summary = "특정 필터 음식점 조회 - Map",
+    @Operation(summary = "기준점(위도, 경도) 반경 내, 특정 필터 음식점 조회 - Map",
             description = "Promotion Type 종류 - 착한가격업소: GOOD_PRICE, 아이조아카드: CHILD_LIKE, 아동급식카드: CHILD_MEAL, 모범음식점: MODEL, 문화누리카드: CULTURE_NURI")
     @GetMapping("/map/{promotion}")
-    public ResponseEntity<List<Restaurant>> getRestaurantsByPromotionTypeForMap(@Parameter(description = "Promotion Type") @PathVariable(value = "promotion") Promotion promotionType) {
-        return restaurantService.getRestaurantsByPromotionTypeForMap(promotionType);
+    public ResponseEntity<List<Restaurant>> getRestaurantsByPromotionTypeWithinRadius(@Parameter(description = "Promotion Type") @PathVariable(value = "promotion") Promotion promotionType,
+                                                                                      @Parameter(description = "위도") @RequestParam("latitude") float latitude,
+                                                                                      @Parameter(description = "경도") @RequestParam("longitude") float longitude,
+                                                                                      @Parameter(description = "반지름(미터)") @RequestParam("radius") float radius) {
+        return restaurantService.getRestaurantsByPromotionTypeWithinRadius(latitude, longitude, radius, promotionType);
     }
+
 }
