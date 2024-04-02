@@ -6,7 +6,7 @@ public enum BusinessCategory {
     SERVICES("서비스업"),
     FOOD("음식"),
     GOODS("잡화"),
-    MISC("기타"),
+    ETC("기타"),
     FOOD_BEVERAGE("식품/음료"),
     BOOKS_STATIONERY("도서/문구"),
     RETAIL("도소매"),

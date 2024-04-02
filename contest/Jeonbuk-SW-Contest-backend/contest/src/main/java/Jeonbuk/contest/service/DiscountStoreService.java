@@ -1,6 +1,7 @@
 package Jeonbuk.contest.service;
 
 import Jeonbuk.contest.entity.DiscountStore;
+import Jeonbuk.contest.entity.enumType.BusinessCategory;
 import Jeonbuk.contest.repository.DiscountStoreRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,12 @@ public class DiscountStoreService {
     private final DiscountStoreRepository discountStoreRepository;
 
     public ResponseEntity<Page<DiscountStore>> getAllDiscountStoreForList(int page) {
-        Page<DiscountStore> discountStoreList = discountStoreRepository.findAll(PageRequest.of(page, 10));
-        return ResponseEntity.ok().body(discountStoreList);
+        Page<DiscountStore> discountStorePage = discountStoreRepository.findAll(PageRequest.of(page, 10));
+        return ResponseEntity.ok().body(discountStorePage);
+    }
+
+    public ResponseEntity<Page<DiscountStore>> getDiscountStoreByCategoryForList(int page, BusinessCategory category) {
+        Page<DiscountStore> discountStorePage = discountStoreRepository.findAllByCategory(PageRequest.of(page, 10), category);
+        return ResponseEntity.ok().body(discountStorePage);
     }
 }
