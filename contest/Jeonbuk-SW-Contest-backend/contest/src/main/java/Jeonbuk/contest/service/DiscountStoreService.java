@@ -37,7 +37,7 @@ public class DiscountStoreService {
         return ResponseEntity.ok().body(discountStoreMap);
     }
 
-    public ResponseEntity<List<DiscountStore>> getDiscountStoreByCategoryForList(BusinessCategory category) {
+    public ResponseEntity<List<DiscountStore>> getDiscountStoreByCategoryForMap(BusinessCategory category) {
         return ResponseEntity.ok().body(discountStoreRepository.findAllByCategory(category));
     }
 }
