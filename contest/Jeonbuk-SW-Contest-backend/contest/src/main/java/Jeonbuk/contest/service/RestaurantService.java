@@ -26,22 +26,22 @@ public class RestaurantService {
     }
 
     public ResponseEntity<Page<Restaurant>> getRestaurantsByPromotionPage(Promotion promotionType, int page) {
-        Page<Restaurant> restaurantPage = restaurantRepository.findAllByPromotionType(promotionType, PageRequest.of(page, 10));
+        Page<Restaurant> restaurantPage = restaurantRepository.findAllByPromotion(promotionType, PageRequest.of(page, 10));
         return ResponseEntity.ok().body(restaurantPage);
     }
 
     public ResponseEntity<Map<Promotion, List<Restaurant>>> getAllRestaurantsWithinRadius(float latitude, float longitude, float radius) {
         Map<Promotion, List<Restaurant>> restaurantMap =
                 restaurantRepository.findWithinRadius(latitude, longitude, radius)
-                        .stream().collect(Collectors.groupingBy(Restaurant::getPromotionType));
+                        .stream().collect(Collectors.groupingBy(Restaurant::getPromotion));
         return ResponseEntity.ok().body(restaurantMap);
     }
 
     public ResponseEntity<List<Restaurant>> getRestaurantsByPromotionTypeWithinRadius(float latitude,
                                                                                       float longitude,
                                                                                       float radius,
-                                                                                      Promotion promotionType) {
-        List<Restaurant> restaurantList = restaurantRepository.findByPromotionWithinRadius(latitude, longitude, radius, promotionType);
+                                                                                      Promotion promotion) {
+        List<Restaurant> restaurantList = restaurantRepository.findByPromotionWithinRadius(latitude, longitude, radius, promotion);
         return ResponseEntity.ok().body(restaurantList);
     }
 }

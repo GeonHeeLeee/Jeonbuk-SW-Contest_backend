@@ -109,7 +109,7 @@ public class CSVService {
                     .latitude(parseFloatOrDefault(row[3]))
                     .longitude(parseFloatOrDefault(row[4]))
                     .etc(row[5])
-                    .promotionType(Promotion.convert(row[6]))
+                    .promotion(Promotion.convert(row[6]))
                     .build();
             restaurantList.add(restaurant);
         }
@@ -128,7 +128,7 @@ public class CSVService {
                     .longitude(parseFloatOrDefault(row[5]))
                     .category(BusinessCategory.convert(row[6]))
                     .etc(row[7])
-                    .promotionType(Promotion.convert(row[8]))
+                    .promotion(Promotion.convert(row[8]))
                     .build();
             discountStoreList.add(discountStore);
         }

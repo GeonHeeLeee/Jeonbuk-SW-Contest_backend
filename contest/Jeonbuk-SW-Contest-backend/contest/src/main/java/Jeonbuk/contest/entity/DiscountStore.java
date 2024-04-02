@@ -29,5 +29,5 @@ public class DiscountStore {
 
     private String etc;
 
-    private Promotion promotionType;
+    private Promotion promotion;
 }

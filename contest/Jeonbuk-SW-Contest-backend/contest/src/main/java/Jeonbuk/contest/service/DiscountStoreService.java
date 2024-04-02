@@ -21,23 +21,24 @@ public class DiscountStoreService {
 
     private final DiscountStoreRepository discountStoreRepository;
 
-    public ResponseEntity<Page<DiscountStore>> getAllDiscountStoreForList(int page) {
+    public ResponseEntity<Page<DiscountStore>> getAllDiscountStorePage(int page) {
         Page<DiscountStore> discountStorePage = discountStoreRepository.findAll(PageRequest.of(page, 10));
         return ResponseEntity.ok().body(discountStorePage);
     }
 
-    public ResponseEntity<Page<DiscountStore>> getDiscountStoreByCategoryForList(int page, BusinessCategory category) {
+    public ResponseEntity<Page<DiscountStore>> getDiscountStoreByCategoryPage(int page, BusinessCategory category) {
         Page<DiscountStore> discountStorePage = discountStoreRepository.findAllByCategory(PageRequest.of(page, 10), category);
         return ResponseEntity.ok().body(discountStorePage);
     }
 
-    public ResponseEntity<Map<BusinessCategory, List<DiscountStore>>> getAllDiscountStoreForMap() {
+    public ResponseEntity<Map<BusinessCategory, List<DiscountStore>>> getAllDiscountStoreWithinRadius(float latitude, float longitude, float radius) {
         Map<BusinessCategory, List<DiscountStore>> discountStoreMap
-                = discountStoreRepository.findAll().stream().collect(Collectors.groupingBy(DiscountStore::getCategory));
+                = discountStoreRepository.findWithinRadius(latitude, longitude, radius)
+                .stream().collect(Collectors.groupingBy(DiscountStore::getCategory));
         return ResponseEntity.ok().body(discountStoreMap);
     }
 
-    public ResponseEntity<List<DiscountStore>> getDiscountStoreByCategoryForMap(BusinessCategory category) {
-        return ResponseEntity.ok().body(discountStoreRepository.findAllByCategory(category));
+    public ResponseEntity<List<DiscountStore>> getDiscountStoreByCategoryWithinRadius(float latitude, float longitude, float radius, BusinessCategory category) {
+        return ResponseEntity.ok().body(discountStoreRepository.findByCategoryWithinRadius(latitude, longitude, radius, category));
     }
 }

@@ -28,5 +28,5 @@ public class Restaurant {
     private float longitude;
     private String etc;
 
-    private Promotion promotionType;
+    private Promotion promotion;
 }

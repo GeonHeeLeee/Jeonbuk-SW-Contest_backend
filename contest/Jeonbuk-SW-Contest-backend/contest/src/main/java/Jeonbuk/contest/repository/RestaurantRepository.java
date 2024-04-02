@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
     Page<Restaurant> findAll(Pageable pageable);
-    Page<Restaurant> findAllByPromotionType(Promotion promotionType, Pageable pageable);
+    Page<Restaurant> findAllByPromotion(Promotion promotion, Pageable pageable);
     List<Restaurant> findAll();
 
 
@@ -22,7 +22,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
     @Query(value = "SELECT r FROM Restaurant r WHERE (6371000 * acos(cos(radians(:latitude)) * cos(radians(r.latitude)) * cos(radians(r.longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(r.latitude)))) <= :radius")
     List<Restaurant> findWithinRadius(@Param("latitude") float latitude, @Param("longitude") float longitude, @Param("radius") float radius);
 
-    @Query(value = "SELECT r FROM Restaurant r WHERE ((6371000 * acos(cos(radians(:latitude)) * cos(radians(r.latitude)) * cos(radians(r.longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(r.latitude)))) <= :radius) AND r.promotionType = :promotion")
+    @Query(value = "SELECT r FROM Restaurant r WHERE ((6371000 * acos(cos(radians(:latitude)) * cos(radians(r.latitude)) * cos(radians(r.longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(r.latitude)))) <= :radius) AND r.promotion = :promotion")
     List<Restaurant> findByPromotionWithinRadius(@Param("latitude") float latitude, @Param("longitude") float longitude, @Param("radius") float radius, @Param("promotion") Promotion promotion);
 
 }
