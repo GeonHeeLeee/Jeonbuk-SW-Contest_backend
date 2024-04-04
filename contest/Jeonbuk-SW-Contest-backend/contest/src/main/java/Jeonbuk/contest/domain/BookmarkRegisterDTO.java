@@ -1,5 +1,6 @@
 package Jeonbuk.contest.domain;
 
+import Jeonbuk.contest.entity.enumType.BookmarkType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,4 +9,5 @@ import lombok.Setter;
 public class BookmarkRegisterDTO {
     private String memberId;
     private Long bookmarkId;
+    private BookmarkType bookmarkType;
 }

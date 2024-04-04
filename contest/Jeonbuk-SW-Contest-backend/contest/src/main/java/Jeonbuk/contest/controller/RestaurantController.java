@@ -1,6 +1,5 @@
 package Jeonbuk.contest.controller;
 
-import Jeonbuk.contest.domain.BookmarkDTO;
 import Jeonbuk.contest.domain.BookmarkRegisterDTO;
 import Jeonbuk.contest.entity.Restaurant;
 import Jeonbuk.contest.entity.enumType.Promotion;
@@ -63,9 +62,9 @@ public class RestaurantController {
         return restaurantService.getRestaurantsByPromotionTypeWithinRadius(latitude, longitude, radius, promotionType);
     }
 
-    @Operation(summary = "식당 북마크 등록", description = "memberId: 사용자ID, bookmarkId: 해당 식당의 Id")
+    @Operation(summary = "할인매장 북마크 등록", description = "memberId: 사용자ID, bookmarkId: 해당 할인매장의 Id, bookmarkType: RESTAURANT(식당), DISCOUNT_STORE(할인매장)")
     @PostMapping("/bookmark")
     public ResponseEntity<?> bookmarkRestaurant(@RequestBody BookmarkRegisterDTO bookmarkRegisterDTO) {
-        return bookmarkService.bookmarkRestaurant(bookmarkRegisterDTO);
+        return bookmarkService.bookmarkStore(bookmarkRegisterDTO);
     }
 }

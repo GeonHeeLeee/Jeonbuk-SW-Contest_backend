@@ -1,6 +1,5 @@
 package Jeonbuk.contest.service;
 
-import Jeonbuk.contest.domain.BookmarkDTO;
 import Jeonbuk.contest.domain.BookmarkRegisterDTO;
 import Jeonbuk.contest.entity.Bookmark;
 import Jeonbuk.contest.entity.Member;
@@ -23,12 +22,12 @@ public class BookmarkService {
     private final BookmarkRepository bookmarkRepository;
     private final MemberRepository memberRepository;
 
-    public ResponseEntity bookmarkRestaurant(BookmarkRegisterDTO bookmarkRegisterDTO) {
+    public ResponseEntity bookmarkStore(BookmarkRegisterDTO bookmarkRegisterDTO) {
         Member member = memberRepository.findById(bookmarkRegisterDTO.getMemberId())
                 .orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, MEMBER_NOT_FOUND_ID));
         Bookmark bookmark = Bookmark.builder()
                 .member(member)
-                .type(BookmarkType.RESTAURANT)
+                .type(bookmarkRegisterDTO.getBookmarkType())
                 .review(null)
                 .rating(0)
                 .build();

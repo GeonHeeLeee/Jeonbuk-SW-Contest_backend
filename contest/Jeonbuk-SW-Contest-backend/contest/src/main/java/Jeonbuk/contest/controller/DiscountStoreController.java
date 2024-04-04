@@ -1,7 +1,9 @@
 package Jeonbuk.contest.controller;
 
+import Jeonbuk.contest.domain.BookmarkRegisterDTO;
 import Jeonbuk.contest.entity.DiscountStore;
 import Jeonbuk.contest.entity.enumType.BusinessCategory;
+import Jeonbuk.contest.service.BookmarkService;
 import Jeonbuk.contest.service.DiscountStoreService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -22,6 +24,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class DiscountStoreController {
     private final DiscountStoreService discountStoreService;
+    private final BookmarkService bookmarkService;
 
     @Operation(summary = "전체 할인매장 조회 - list")
     @GetMapping("/list/all")
@@ -54,6 +57,12 @@ public class DiscountStoreController {
                                                                                       @Parameter(description = "경도") @RequestParam("longitude") float longitude,
                                                                                       @Parameter(description = "반지름(미터)") @RequestParam("radius") float radius) {
         return discountStoreService.getDiscountStoreByCategoryWithinRadius(latitude, longitude, radius, category);
+    }
+
+    @Operation(summary = "할인매장 북마크 등록", description = "memberId: 사용자ID, bookmarkId: 해당 할인매장의 Id, bookmarkType: RESTAURANT(식당), DISCOUNT_STORE(할인매장)")
+    @PostMapping("/bookmark")
+    public ResponseEntity<?> bookmarkDiscountStore(@RequestBody BookmarkRegisterDTO bookmarkRegisterDTO) {
+        return bookmarkService.bookmarkStore(bookmarkRegisterDTO);
     }
 
 }
