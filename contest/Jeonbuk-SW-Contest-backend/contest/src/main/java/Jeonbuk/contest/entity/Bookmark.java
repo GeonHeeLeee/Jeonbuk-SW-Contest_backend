@@ -1,12 +1,13 @@
 package Jeonbuk.contest.entity;
 
+import Jeonbuk.contest.entity.enumType.BookmarkType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Entity
 @Data
-public class FavoriteRestaurant {
+public class Bookmark {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -16,14 +17,9 @@ public class FavoriteRestaurant {
     @JoinColumn(name = "memberId")
     private Member member;
 
-    //To-Do: 식당 Entity Mapping
-    @ManyToOne
-    @JoinColumn(name = "restaurantId")
-    private Restaurant restaurant;
+    private Long bookmarkId;
+    private BookmarkType type;
 
-    @ManyToOne
-    @JoinColumn(name = "discountStoreId")
-    private DiscountStore discountStore;
 
     //Member가 해당 식당에 대한 Comment를 달 수 있도록
     private String review;
