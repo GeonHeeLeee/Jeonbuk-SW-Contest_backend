@@ -100,7 +100,7 @@ public class CSVService {
     }
 
     public void saveRestaurant() throws IOException, CsvException {
-        List<String[]> rows = readCSV(STORE.getLocation() + "restaurant.csv");
+        List<String[]> rows = readCSV(STORE.getLocation() + "restaurant_0403.csv");
         List<Restaurant> restaurantList = new ArrayList<>();
         for (String[] row : rows) {
             Restaurant restaurant = Restaurant.builder()
@@ -117,7 +117,7 @@ public class CSVService {
     }
 
     public void saveDiscountStore() throws IOException, CsvException {
-        List<String[]> rows = readCSV(STORE.getLocation() + "discountStore.csv");
+        List<String[]> rows = readCSV(STORE.getLocation() + "discountStore_0403.csv");
         List<DiscountStore> discountStoreList = new ArrayList<>();
         for (String[] row : rows) {
             DiscountStore discountStore = DiscountStore.builder()

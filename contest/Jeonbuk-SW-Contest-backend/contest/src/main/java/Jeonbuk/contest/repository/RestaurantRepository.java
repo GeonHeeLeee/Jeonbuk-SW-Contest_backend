@@ -1,7 +1,7 @@
 package Jeonbuk.contest.repository;
 
-import Jeonbuk.contest.entity.enumType.Promotion;
 import Jeonbuk.contest.entity.Restaurant;
+import Jeonbuk.contest.entity.enumType.Promotion;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,8 +14,8 @@ import java.util.List;
 @Repository
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
     Page<Restaurant> findAll(Pageable pageable);
+
     Page<Restaurant> findAllByPromotion(Promotion promotion, Pageable pageable);
-    List<Restaurant> findAll();
 
 
     //반경 내에 있는 식당 찾기
