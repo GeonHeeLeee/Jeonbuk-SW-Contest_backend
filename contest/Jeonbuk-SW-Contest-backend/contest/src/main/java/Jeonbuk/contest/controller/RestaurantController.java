@@ -1,7 +1,10 @@
 package Jeonbuk.contest.controller;
 
+import Jeonbuk.contest.domain.BookmarkDTO;
+import Jeonbuk.contest.domain.BookmarkRegisterDTO;
 import Jeonbuk.contest.entity.Restaurant;
 import Jeonbuk.contest.entity.enumType.Promotion;
+import Jeonbuk.contest.service.BookmarkService;
 import Jeonbuk.contest.service.RestaurantService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -11,10 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -27,6 +27,7 @@ import java.util.Map;
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
+    private final BookmarkService bookmarkService;
 
     //전체 조회
     @Operation(summary = "전체 식당 조회 - List")
@@ -62,4 +63,9 @@ public class RestaurantController {
         return restaurantService.getRestaurantsByPromotionTypeWithinRadius(latitude, longitude, radius, promotionType);
     }
 
+    @Operation(summary = "식당 북마크 등록", description = "memberId: 사용자ID, bookmarkId: 해당 식당의 Id")
+    @PostMapping("/bookmark")
+    public ResponseEntity<?> bookmarkRestaurant(@RequestBody BookmarkRegisterDTO bookmarkRegisterDTO) {
+        return bookmarkService.bookmarkRestaurant(bookmarkRegisterDTO);
+    }
 }

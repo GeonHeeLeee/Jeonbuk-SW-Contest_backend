@@ -3,10 +3,16 @@ package Jeonbuk.contest.entity;
 import Jeonbuk.contest.entity.enumType.BookmarkType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class Bookmark {
 
     @Id
@@ -25,6 +31,6 @@ public class Bookmark {
     private String review;
 
     //유저 별점
-    @Size(min = 1, max = 5)
+    @Size(min = 0, max = 5)
     private int rating;
 }
