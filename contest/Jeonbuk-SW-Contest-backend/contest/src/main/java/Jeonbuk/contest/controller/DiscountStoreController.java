@@ -59,7 +59,7 @@ public class DiscountStoreController {
         return discountStoreService.getDiscountStoreByCategoryWithinRadius(latitude, longitude, radius, category);
     }
 
-    @Operation(summary = "할인매장 북마크 등록", description = "memberId: 사용자ID, bookmarkId: 해당 할인매장의 Id, bookmarkType: RESTAURANT(식당), DISCOUNT_STORE(할인매장)")
+    @Operation(summary = "할인매장 즐겨찾기 등록", description = "memberId: 사용자ID, bookmarkId: 해당 할인매장의 Id, bookmarkType: RESTAURANT(식당), DISCOUNT_STORE(할인매장)")
     @PostMapping("/bookmark")
     public ResponseEntity<?> bookmarkDiscountStore(@RequestBody BookmarkRegisterDTO bookmarkRegisterDTO) {
         return bookmarkService.bookmarkStore(bookmarkRegisterDTO);
