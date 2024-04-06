@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 public class BookmarkRegisterDTO {
     private String memberId;
-    private Long bookmarkId;
+    private Long storeId;
     private BookmarkType bookmarkType;
 }

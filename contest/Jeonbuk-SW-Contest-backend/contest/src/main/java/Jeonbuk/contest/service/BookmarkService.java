@@ -2,7 +2,9 @@ package Jeonbuk.contest.service;
 
 import Jeonbuk.contest.domain.BookmarkRegisterDTO;
 import Jeonbuk.contest.entity.Bookmark;
+import Jeonbuk.contest.entity.DiscountStore;
 import Jeonbuk.contest.entity.Member;
+import Jeonbuk.contest.entity.Restaurant;
 import Jeonbuk.contest.entity.enumType.BookmarkType;
 import Jeonbuk.contest.exception.CustomException;
 import Jeonbuk.contest.repository.BookmarkRepository;
@@ -21,6 +23,8 @@ import static Jeonbuk.contest.exception.ErrorCode.MEMBER_NOT_FOUND_ID;
 public class BookmarkService {
     private final BookmarkRepository bookmarkRepository;
     private final MemberRepository memberRepository;
+    private final RestaurantService restaurantService;
+    private final DiscountStoreService discountStoreService;
 
     public ResponseEntity bookmarkStore(BookmarkRegisterDTO bookmarkRegisterDTO) {
         Member member = memberRepository.findById(bookmarkRegisterDTO.getMemberId())
@@ -28,10 +32,24 @@ public class BookmarkService {
         Bookmark bookmark = Bookmark.builder()
                 .member(member)
                 .type(bookmarkRegisterDTO.getBookmarkType())
-                .review(null)
-                .rating(0)
                 .build();
+        setStoreByBookmarkType(bookmarkRegisterDTO, bookmark);
+
         bookmarkRepository.save(bookmark);
         return ResponseEntity.ok().build();
     }
+
+    private void setStoreByBookmarkType(BookmarkRegisterDTO bookmarkRegisterDTO, Bookmark bookmark) {
+        BookmarkType bookmarkType = bookmarkRegisterDTO.getBookmarkType();
+        if (bookmarkType == BookmarkType.RESTAURANT) {
+            Restaurant restaurant = restaurantService.findById(bookmarkRegisterDTO.getStoreId());
+            bookmark.setRestaurant(restaurant);
+            bookmark.setDiscountStore(null);
+        } else if (bookmarkType == BookmarkType.DISCOUNT_STORE) {
+            DiscountStore discountStore = discountStoreService.findById(bookmarkRegisterDTO.getStoreId());
+            bookmark.setDiscountStore(discountStore);
+            bookmark.setRestaurant(null);
+        }
+    }
+
 }

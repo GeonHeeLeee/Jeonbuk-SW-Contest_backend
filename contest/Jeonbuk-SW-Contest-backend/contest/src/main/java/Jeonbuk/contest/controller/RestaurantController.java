@@ -62,7 +62,7 @@ public class RestaurantController {
         return restaurantService.getRestaurantsByPromotionTypeWithinRadius(latitude, longitude, radius, promotionType);
     }
 
-    @Operation(summary = "식당 즐겨찾기 등록", description = "memberId: 사용자ID, bookmarkId: 해당 할인매장의 Id, bookmarkType: RESTAURANT(식당), DISCOUNT_STORE(할인매장)")
+    @Operation(summary = "식당 즐겨찾기 등록", description = "memberId: 사용자ID, storeId: 해당 식당의 Id, bookmarkType: RESTAURANT(식당), DISCOUNT_STORE(할인매장)")
     @PostMapping("/bookmark")
     public ResponseEntity<?> bookmarkRestaurant(@RequestBody BookmarkRegisterDTO bookmarkRegisterDTO) {
         return bookmarkService.bookmarkStore(bookmarkRegisterDTO);
