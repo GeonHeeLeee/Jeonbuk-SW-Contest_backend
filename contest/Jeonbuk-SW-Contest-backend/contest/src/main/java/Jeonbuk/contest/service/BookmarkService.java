@@ -1,5 +1,6 @@
 package Jeonbuk.contest.service;
 
+import Jeonbuk.contest.domain.BookmarkDTO;
 import Jeonbuk.contest.domain.BookmarkRegisterDTO;
 import Jeonbuk.contest.entity.Bookmark;
 import Jeonbuk.contest.entity.DiscountStore;
@@ -14,6 +15,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static Jeonbuk.contest.exception.ErrorCode.MEMBER_NOT_FOUND_ID;
 
@@ -37,6 +42,13 @@ public class BookmarkService {
 
         bookmarkRepository.save(bookmark);
         return ResponseEntity.ok().build();
+    }
+
+    @Transactional
+    public ResponseEntity getMemberBookmarkList(String memberId) {
+        List<BookmarkDTO> bookmarkList = bookmarkRepository.findBookmarkByMember_Id(memberId)
+                .stream().map(BookmarkDTO::new).collect(Collectors.toList());
+        return ResponseEntity.ok().body(bookmarkList);
     }
 
     private void setStoreByBookmarkType(BookmarkRegisterDTO bookmarkRegisterDTO, Bookmark bookmark) {

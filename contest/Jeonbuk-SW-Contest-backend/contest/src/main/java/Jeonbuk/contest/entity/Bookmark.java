@@ -33,10 +33,4 @@ public class Bookmark {
     private DiscountStore discountStore;
 
     //TODO- 별점, 리뷰 남기기
-    //Member가 해당 식당에 대한 Comment를 달 수 있도록
-//    private String review;
-//
-//    //유저 별점
-//    @Size(min = 0, max = 5)
-//    private int rating;
 }
