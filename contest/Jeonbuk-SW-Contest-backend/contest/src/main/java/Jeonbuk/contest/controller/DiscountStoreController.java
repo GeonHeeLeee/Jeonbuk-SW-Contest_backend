@@ -44,8 +44,8 @@ public class DiscountStoreController {
             description = "content에 넣어 전체 반환")
     @GetMapping("/map/all")
     public ResponseEntity<Map<String, List<DiscountStore>>> getAllDiscountStoreWithinRadius(@Parameter(description = "위도") @RequestParam("latitude") float latitude,
-                                                                                                      @Parameter(description = "경도") @RequestParam("longitude") float longitude,
-                                                                                                      @Parameter(description = "반지름(미터)") @RequestParam("radius") float radius) {
+                                                                                            @Parameter(description = "경도") @RequestParam("longitude") float longitude,
+                                                                                            @Parameter(description = "반지름(미터)") @RequestParam("radius") float radius) {
         return discountStoreService.getAllDiscountStoreWithinRadius(latitude, longitude, radius);
     }
 
@@ -53,9 +53,9 @@ public class DiscountStoreController {
             description = "Category 종류 - LEISURE: 여가/레저, SERVICES: 서비스업, FOOD: 음식, GOODS: 잡화, ETC: 기타, FOOD_BEVERAGE: 식품/음료, BOOKS_STATIONERY: 도서/문구 RETAIL: 도소매, EDUCATION: 교육, AUTOMOTIVE: 자동차/주유")
     @GetMapping("/map/{category}")
     public ResponseEntity<Map<String, List<DiscountStore>>> getDiscountStoreByCategoryWithinRadius(@Parameter(description = "카테고리") @PathVariable(value = "category") BusinessCategory category,
-                                                                                      @Parameter(description = "위도") @RequestParam("latitude") float latitude,
-                                                                                      @Parameter(description = "경도") @RequestParam("longitude") float longitude,
-                                                                                      @Parameter(description = "반지름(미터)") @RequestParam("radius") float radius) {
+                                                                                                   @Parameter(description = "위도") @RequestParam("latitude") float latitude,
+                                                                                                   @Parameter(description = "경도") @RequestParam("longitude") float longitude,
+                                                                                                   @Parameter(description = "반지름(미터)") @RequestParam("radius") float radius) {
         return discountStoreService.getDiscountStoreByCategoryWithinRadius(latitude, longitude, radius, category);
     }
 

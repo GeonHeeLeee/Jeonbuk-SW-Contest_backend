@@ -22,7 +22,7 @@ public class BookmarkController {
     private final BookmarkService bookmarkService;
 
     @Operation(summary = "유저의 북마크 리스트 확인", description = "할인매장인 경우 restaurant == null, 식당인 경우 discountStore == null")
-    @GetMapping("/{memberId}/{page}")
+    @GetMapping("/{memberId}")
     public ResponseEntity<?> getMemberBookmarkList(@Parameter(description = "사용자 ID") @PathVariable("memberId") String memberId) {
 
         return bookmarkService.getMemberBookmarkList(memberId);
