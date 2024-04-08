@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -40,14 +41,15 @@ public class DiscountStoreService {
         return ResponseEntity.ok().body(discountStorePage);
     }
 
-    public ResponseEntity<Map<BusinessCategory, List<DiscountStore>>> getAllDiscountStoreWithinRadius(float latitude, float longitude, float radius) {
-        Map<BusinessCategory, List<DiscountStore>> discountStoreMap
-                = discountStoreRepository.findWithinRadius(latitude, longitude, radius)
-                .stream().collect(Collectors.groupingBy(DiscountStore::getCategory));
-        return ResponseEntity.ok().body(discountStoreMap);
+    public ResponseEntity<Map<String, List<DiscountStore>>> getAllDiscountStoreWithinRadius(float latitude, float longitude, float radius) {
+        Map<String, List<DiscountStore>> response = new HashMap<>();
+        response.put("content", discountStoreRepository.findWithinRadius(latitude, longitude, radius));
+        return ResponseEntity.ok().body(response);
     }
 
-    public ResponseEntity<List<DiscountStore>> getDiscountStoreByCategoryWithinRadius(float latitude, float longitude, float radius, BusinessCategory category) {
-        return ResponseEntity.ok().body(discountStoreRepository.findByCategoryWithinRadius(latitude, longitude, radius, category));
+    public ResponseEntity<Map<String, List<DiscountStore>>> getDiscountStoreByCategoryWithinRadius(float latitude, float longitude, float radius, BusinessCategory category) {
+        Map<String, List<DiscountStore>> response = new HashMap<>();
+        response.put("content", discountStoreRepository.findByCategoryWithinRadius(latitude, longitude, radius, category));
+        return ResponseEntity.ok().body(response);
     }
 }

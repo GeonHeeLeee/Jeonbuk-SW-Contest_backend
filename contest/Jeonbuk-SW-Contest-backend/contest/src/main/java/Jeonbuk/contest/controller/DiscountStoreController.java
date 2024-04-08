@@ -41,9 +41,9 @@ public class DiscountStoreController {
     }
 
     @Operation(summary = "기준점(위도, 경도) 반경 내, 전체 할인매장 조회 - Map",
-            description = "식당의 BusinessCategory(LEISURE, SERVICES 등)에 따라 분류하여 전체 반환")
+            description = "content에 넣어 전체 반환")
     @GetMapping("/map/all")
-    public ResponseEntity<Map<BusinessCategory, List<DiscountStore>>> getAllDiscountStoreWithinRadius(@Parameter(description = "위도") @RequestParam("latitude") float latitude,
+    public ResponseEntity<Map<String, List<DiscountStore>>> getAllDiscountStoreWithinRadius(@Parameter(description = "위도") @RequestParam("latitude") float latitude,
                                                                                                       @Parameter(description = "경도") @RequestParam("longitude") float longitude,
                                                                                                       @Parameter(description = "반지름(미터)") @RequestParam("radius") float radius) {
         return discountStoreService.getAllDiscountStoreWithinRadius(latitude, longitude, radius);
@@ -52,7 +52,7 @@ public class DiscountStoreController {
     @Operation(summary = "기준점(위도, 경도) 반경 내, 특정 필터 할인매장 조회 - Map",
             description = "Category 종류 - LEISURE: 여가/레저, SERVICES: 서비스업, FOOD: 음식, GOODS: 잡화, ETC: 기타, FOOD_BEVERAGE: 식품/음료, BOOKS_STATIONERY: 도서/문구 RETAIL: 도소매, EDUCATION: 교육, AUTOMOTIVE: 자동차/주유")
     @GetMapping("/map/{category}")
-    public ResponseEntity<List<DiscountStore>> getDiscountStoreByCategoryWithinRadius(@Parameter(description = "카테고리") @PathVariable(value = "category") BusinessCategory category,
+    public ResponseEntity<Map<String, List<DiscountStore>>> getDiscountStoreByCategoryWithinRadius(@Parameter(description = "카테고리") @PathVariable(value = "category") BusinessCategory category,
                                                                                       @Parameter(description = "위도") @RequestParam("latitude") float latitude,
                                                                                       @Parameter(description = "경도") @RequestParam("longitude") float longitude,
                                                                                       @Parameter(description = "반지름(미터)") @RequestParam("radius") float radius) {

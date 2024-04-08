@@ -12,9 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static Jeonbuk.contest.exception.ErrorCode.RESTAURANT_NOT_FOUND_ID;
 
@@ -39,18 +39,18 @@ public class RestaurantService {
         return ResponseEntity.ok().body(restaurantPage);
     }
 
-    public ResponseEntity<Map<Promotion, List<Restaurant>>> getAllRestaurantsWithinRadius(float latitude, float longitude, float radius) {
-        Map<Promotion, List<Restaurant>> restaurantMap =
-                restaurantRepository.findWithinRadius(latitude, longitude, radius)
-                        .stream().collect(Collectors.groupingBy(Restaurant::getPromotion));
-        return ResponseEntity.ok().body(restaurantMap);
+    public ResponseEntity<Map<String, List<Restaurant>>> getAllRestaurantsWithinRadius(float latitude, float longitude, float radius) {
+        Map<String, List<Restaurant>> response = new HashMap<>();
+        response.put("content", restaurantRepository.findWithinRadius(latitude, longitude, radius));
+        return ResponseEntity.ok().body(response);
     }
 
-    public ResponseEntity<List<Restaurant>> getRestaurantsByPromotionTypeWithinRadius(float latitude,
+    public ResponseEntity<Map<String, List<Restaurant>>> getRestaurantsByPromotionTypeWithinRadius(float latitude,
                                                                                       float longitude,
                                                                                       float radius,
                                                                                       Promotion promotion) {
-        List<Restaurant> restaurantList = restaurantRepository.findByPromotionWithinRadius(latitude, longitude, radius, promotion);
-        return ResponseEntity.ok().body(restaurantList);
+        Map<String, List<Restaurant>> response = new HashMap<>();
+        response.put("content", restaurantRepository.findByPromotionWithinRadius(latitude, longitude, radius, promotion));
+        return ResponseEntity.ok().body(response);
     }
 }
