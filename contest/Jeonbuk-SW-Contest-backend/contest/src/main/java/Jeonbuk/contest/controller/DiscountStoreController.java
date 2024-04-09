@@ -3,10 +3,16 @@ package Jeonbuk.contest.controller;
 import Jeonbuk.contest.domain.BookmarkRegisterDTO;
 import Jeonbuk.contest.entity.DiscountStore;
 import Jeonbuk.contest.entity.enumType.BusinessCategory;
+import Jeonbuk.contest.exception.ErrorDTO;
 import Jeonbuk.contest.service.BookmarkService;
 import Jeonbuk.contest.service.DiscountStoreService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -60,9 +66,16 @@ public class DiscountStoreController {
     }
 
     @Operation(summary = "할인매장 즐겨찾기 등록", description = "memberId: 사용자ID, storeId: 해당 할인매장의 Id, bookmarkType: RESTAURANT(식당), DISCOUNT_STORE(할인매장)")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "북마크 등록 성공",
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = @ExampleObject(name = "북마크 Id", value = "{\"bookmarkId\": \"value\"}")
+                    ))})
+    @ApiResponse(responseCode = "400", description = "북마크 중복 등록/BookmarkType 요청 오류", content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
     @PostMapping("/bookmark")
     public ResponseEntity<?> bookmarkDiscountStore(@RequestBody BookmarkRegisterDTO bookmarkRegisterDTO) {
-        return bookmarkService.bookmarkStore(bookmarkRegisterDTO);
+        return bookmarkService.registerBookmark(bookmarkRegisterDTO);
     }
 
 }

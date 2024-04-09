@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,17 +30,38 @@ public class BookmarkService {
     private final RestaurantService restaurantService;
     private final DiscountStoreService discountStoreService;
 
-    public ResponseEntity bookmarkStore(BookmarkRegisterDTO bookmarkRegisterDTO) {
+    private boolean isBookmarkAlreadyRegistered(BookmarkType bookmarkType, String memberId, Long storeId) {
+        switch (bookmarkType) {
+            case RESTAURANT:
+                return bookmarkRepository.existsByRestaurant_IdAndMember_Id(storeId, memberId);
+            case DISCOUNT_STORE:
+                return bookmarkRepository.existsByDiscountStore_IdAndMember_Id(storeId, memberId);
+            default:
+                throw new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.BOOKMARK_TYPE_UNSUPPORTED);
+        }
+    }
+
+    public ResponseEntity<?> registerBookmark(BookmarkRegisterDTO bookmarkRegisterDTO) {
+        if (isBookmarkAlreadyRegistered(bookmarkRegisterDTO.getBookmarkType(), bookmarkRegisterDTO.getMemberId(), bookmarkRegisterDTO.getStoreId())) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.BOOKMARK_ALREADY_EXISTS);
+        }
+
+        Bookmark bookmark = createAndSaveBookmark(bookmarkRegisterDTO);
+        return ResponseEntity.ok().body(Collections.singletonMap("bookmarkId", bookmark.getId()));
+    }
+
+    private Bookmark createAndSaveBookmark(BookmarkRegisterDTO bookmarkRegisterDTO) {
         Member member = memberService.findById(bookmarkRegisterDTO.getMemberId());
         Bookmark bookmark = Bookmark.builder()
                 .member(member)
                 .type(bookmarkRegisterDTO.getBookmarkType())
                 .build();
-        setStoreByBookmarkType(bookmarkRegisterDTO, bookmark);
 
+        setStoreByBookmarkType(bookmarkRegisterDTO, bookmark);
         bookmarkRepository.save(bookmark);
-        return ResponseEntity.ok().build();
+        return bookmark;
     }
+
 
     @Transactional
     public ResponseEntity getMemberBookmarkList(String memberId) {
