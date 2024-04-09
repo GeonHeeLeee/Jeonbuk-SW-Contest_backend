@@ -84,11 +84,9 @@ public class BookmarkService {
     }
 
     public ResponseEntity<?> deleteMemberBookmark(Long bookmarkId) {
-        try {
-            bookmarkRepository.deleteById(bookmarkId);
-        } catch (Exception e) {
-            throw new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.BOOKMARK_NOT_FOUND_ID);
-        }
+        Bookmark bookmark = bookmarkRepository.findById(bookmarkId)
+                .orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.BOOKMARK_NOT_FOUND_ID));
+        bookmarkRepository.delete(bookmark);
         return ResponseEntity.ok().build();
     }
 

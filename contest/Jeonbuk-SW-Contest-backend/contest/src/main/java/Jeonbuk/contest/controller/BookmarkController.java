@@ -35,6 +35,5 @@ public class BookmarkController {
     public ResponseEntity<?> deleteMemberBookmark(@Parameter(description = "북마크 ID") @PathVariable("bookmarkId") Long bookmarkId) {
         return bookmarkService.deleteMemberBookmark(bookmarkId);
     }
-    
-    //TODO - 북마크 중복 등록 예외 처리
+
 }
