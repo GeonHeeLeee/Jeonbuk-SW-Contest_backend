@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,4 +29,12 @@ public class BookmarkController {
         return bookmarkService.getMemberBookmarkList(memberId);
     }
 
+
+    @Operation(summary = "유저 북마크 삭제")
+    @DeleteMapping("/{bookmarkId}")
+    public ResponseEntity<?> deleteMemberBookmark(@Parameter(description = "북마크 ID") @PathVariable("bookmarkId") Long bookmarkId) {
+        return bookmarkService.deleteMemberBookmark(bookmarkId);
+    }
+    
+    //TODO - 북마크 중복 등록 예외 처리
 }

@@ -8,8 +8,8 @@ import Jeonbuk.contest.entity.Member;
 import Jeonbuk.contest.entity.Restaurant;
 import Jeonbuk.contest.entity.enumType.BookmarkType;
 import Jeonbuk.contest.exception.CustomException;
+import Jeonbuk.contest.exception.ErrorCode;
 import Jeonbuk.contest.repository.BookmarkRepository;
-import Jeonbuk.contest.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,20 +20,17 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static Jeonbuk.contest.exception.ErrorCode.MEMBER_NOT_FOUND_ID;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class BookmarkService {
     private final BookmarkRepository bookmarkRepository;
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
     private final RestaurantService restaurantService;
     private final DiscountStoreService discountStoreService;
 
     public ResponseEntity bookmarkStore(BookmarkRegisterDTO bookmarkRegisterDTO) {
-        Member member = memberRepository.findById(bookmarkRegisterDTO.getMemberId())
-                .orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, MEMBER_NOT_FOUND_ID));
+        Member member = memberService.findById(bookmarkRegisterDTO.getMemberId());
         Bookmark bookmark = Bookmark.builder()
                 .member(member)
                 .type(bookmarkRegisterDTO.getBookmarkType())
@@ -62,6 +59,15 @@ public class BookmarkService {
             bookmark.setDiscountStore(discountStore);
             bookmark.setRestaurant(null);
         }
+    }
+
+    public ResponseEntity<?> deleteMemberBookmark(Long bookmarkId) {
+        try {
+            bookmarkRepository.deleteById(bookmarkId);
+        } catch (Exception e) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.BOOKMARK_NOT_FOUND_ID);
+        }
+        return ResponseEntity.ok().build();
     }
 
 }
