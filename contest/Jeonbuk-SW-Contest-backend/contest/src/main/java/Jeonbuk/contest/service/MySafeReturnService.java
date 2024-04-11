@@ -16,13 +16,10 @@ import java.util.List;
 public class MySafeReturnService {
 
     private final SafeReturnRepository safeReturnRepository;
+
     public ResponseEntity<?> getSafeReturnAround(float latitude, float longitude, float radius) {
         List<SafeReturn> safeReturnList = safeReturnRepository.findWithinRadius(latitude, longitude, radius);
         return ResponseEntity.ok().body(Collections.singletonMap("content", safeReturnList));
     }
 
-    public ResponseEntity<?> test() {
-        SafeReturn list = safeReturnRepository.findById(Long.valueOf(22)).get();
-        return ResponseEntity.ok().body(list);
-    }
 }

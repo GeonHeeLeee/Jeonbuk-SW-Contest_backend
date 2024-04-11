@@ -24,12 +24,8 @@ public class MySafeReturnController {
             description = "content에 넣어 전체 반환 - 추후 type을 이용하여 마커를 다르게 표시(CCTV, StreetLamp, WarningBell")
     @GetMapping("/")
     public ResponseEntity<?> getSafeReturnAround(@Parameter(description = "위도") @RequestParam("latitude") float latitude,
-                                              @Parameter(description = "경도") @RequestParam("longitude") float longitude,
-                                              @Parameter(description = "반지름(미터)") @RequestParam("radius") float radius) {
+                                                 @Parameter(description = "경도") @RequestParam("longitude") float longitude,
+                                                 @Parameter(description = "반지름(미터)") @RequestParam("radius") float radius) {
         return mySafeReturnService.getSafeReturnAround(latitude, longitude, radius);
-    }
-    @GetMapping("/hi")
-    public ResponseEntity<?> getSafeReturnAround() {
-        return mySafeReturnService.test();
     }
 }
