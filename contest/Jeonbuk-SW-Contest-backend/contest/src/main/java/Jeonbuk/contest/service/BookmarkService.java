@@ -90,4 +90,11 @@ public class BookmarkService {
         return ResponseEntity.ok().build();
     }
 
+    public ResponseEntity<?> checkMemberBookmark(String memberId, BookmarkType bookmarkType, Long storeId) {
+        Bookmark bookmark = bookmarkRepository.findByMember_IdAndTypeAndId(memberId, bookmarkType, storeId)
+                .orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.BOOKMARK_NOT_FOUND_ID));
+
+        return ResponseEntity.ok().body(Collections.singletonMap("bookmarkId", bookmark.getId()));
+    }
+
 }

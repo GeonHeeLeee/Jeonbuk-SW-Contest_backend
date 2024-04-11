@@ -74,8 +74,9 @@ public class RestaurantController {
                     content = @Content(
                             mediaType = "application/json",
                             examples = @ExampleObject(name = "북마크 Id", value = "{\"bookmarkId\": \"value\"}")
-                    ))})
-    @ApiResponse(responseCode = "400", description = "북마크 중복 등록/BookmarkType 요청 오류", content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
+                    )),
+            @ApiResponse(responseCode = "400", description = "북마크 중복 등록/BookmarkType 요청 오류", content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
+    })
     @PostMapping("/bookmark")
     public ResponseEntity<?> bookmarkRestaurant(@RequestBody BookmarkRegisterDTO bookmarkRegisterDTO) {
         return bookmarkService.registerBookmark(bookmarkRegisterDTO);

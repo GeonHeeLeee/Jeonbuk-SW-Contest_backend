@@ -1,18 +1,22 @@
 package Jeonbuk.contest.controller;
 
 
+import Jeonbuk.contest.entity.enumType.BookmarkType;
+import Jeonbuk.contest.exception.ErrorDTO;
 import Jeonbuk.contest.service.BookmarkService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "북마크")
 @Slf4j
@@ -22,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class BookmarkController {
     private final BookmarkService bookmarkService;
 
-    @Operation(summary = "유저의 북마크 리스트 확인", description = "할인매장인 경우 restaurant == null, 식당인 경우 discountStore == null")
+    @Operation(summary = "사용자의 북마크 리스트 확인", description = "할인매장인 경우 restaurant == null, 식당인 경우 discountStore == null")
     @GetMapping("/{memberId}")
     public ResponseEntity<?> getMemberBookmarkList(@Parameter(description = "사용자 ID") @PathVariable("memberId") String memberId) {
 
@@ -30,10 +34,26 @@ public class BookmarkController {
     }
 
 
-    @Operation(summary = "유저 북마크 삭제")
+    @Operation(summary = "사용자 북마크 삭제")
     @DeleteMapping("/{bookmarkId}")
     public ResponseEntity<?> deleteMemberBookmark(@Parameter(description = "북마크 ID") @PathVariable("bookmarkId") Long bookmarkId) {
         return bookmarkService.deleteMemberBookmark(bookmarkId);
+    }
+
+    @Operation(summary = "사용자 북마크 확인", description = "북마크 존재하는 경우 bookmarkId 반환")
+    @GetMapping("/check")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "북마크 존재",
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = @ExampleObject(name = "북마크 Id", value = "{\"bookmarkId\": \"value\"}")
+                    )),
+            @ApiResponse(responseCode = "400", description = "북마크 존재하지 않음", content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
+    })
+    public ResponseEntity<?> checkMemberBookmark(@Parameter(description = "사용자 ID") @RequestParam("memberId") String memberId,
+                                                  @Parameter(description = "DISCOUNT_STORE | RESTAURANT") @RequestParam("bookmarkType") BookmarkType type,
+                                                  @Parameter(description = "가게 ID") @RequestParam("storeId") Long storeId) {
+        return bookmarkService.checkMemberBookmark(memberId, type, storeId);
     }
 
 }
