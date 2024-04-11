@@ -39,7 +39,7 @@ public class DiscountStoreController {
     }
 
     @Operation(summary = "특정 필터 할인매장 조회 - List",
-            description = "Category 종류 - LEISURE: 여가/레저, SERVICES: 서비스업, FOOD: 음식, GOODS: 잡화, ETC: 기타, FOOD_BEVERAGE: 식품/음료, BOOKS_STATIONERY: 도서/문구 RETAIL: 도소매, EDUCATION: 교육, AUTOMOTIVE: 자동차/주유")
+            description = "Category 종류 - LEISURE: 여가/레저, SERVICES: 서비스업, FOOD: 음식, GOODS: 잡화, ETC: 기타, FOOD_BEVERAGE: 식품/음료, RETAIL: 도소매 RETAIL: 도소매, EDUCATION: 교육, LIFE: 생활")
     @GetMapping("/list/{category}")
     public ResponseEntity<Page<DiscountStore>> getDiscountStoreByCategoryPage(@Parameter(description = "페이지 번호") @RequestParam(value = "page") int page,
                                                                               @Parameter(description = "카테고리") @PathVariable(value = "category") BusinessCategory category) {
@@ -56,7 +56,7 @@ public class DiscountStoreController {
     }
 
     @Operation(summary = "기준점(위도, 경도) 반경 내, 특정 필터 할인매장 조회 - Map",
-            description = "Category 종류 - LEISURE: 여가/레저, SERVICES: 서비스업, FOOD: 음식, GOODS: 잡화, ETC: 기타, FOOD_BEVERAGE: 식품/음료, BOOKS_STATIONERY: 도서/문구 RETAIL: 도소매, EDUCATION: 교육, AUTOMOTIVE: 자동차/주유")
+            description = "Category 종류 - LEISURE: 여가/레저, SERVICES: 서비스업, FOOD: 음식, GOODS: 잡화, ETC: 기타, FOOD_BEVERAGE: 식품/음료, RETAIL: 도소매 RETAIL: 도소매, EDUCATION: 교육, LIFE: 생활")
     @GetMapping("/map/{category}")
     public ResponseEntity<Map<String, List<DiscountStore>>> getDiscountStoreByCategoryWithinRadius(@Parameter(description = "카테고리") @PathVariable(value = "category") BusinessCategory category,
                                                                                                    @Parameter(description = "위도") @RequestParam("latitude") float latitude,

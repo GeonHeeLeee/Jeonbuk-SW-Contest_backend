@@ -1,13 +1,14 @@
 package Jeonbuk.contest.entity.safeReturn;
 
 
+import Jeonbuk.contest.entity.enumType.SafeReturnType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @Entity
@@ -28,5 +29,7 @@ public class CCTV extends SafeReturn {
     private int storageDays;
 
     private LocalDate installDate;
+    @Transient
+    private SafeReturnType type = SafeReturnType.CCTV;
 
 }
