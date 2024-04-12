@@ -53,4 +53,9 @@ public class RestaurantService {
         response.put("content", restaurantRepository.findByPromotionWithinRadius(latitude, longitude, radius, promotion));
         return ResponseEntity.ok().body(response);
     }
+
+    public ResponseEntity<List<Restaurant>> searchRestaurantByStoreName(String storeName) {
+        List<Restaurant> restaurantList = restaurantRepository.findByStoreNameContaining(storeName);
+        return ResponseEntity.ok().body(restaurantList);
+    }
 }

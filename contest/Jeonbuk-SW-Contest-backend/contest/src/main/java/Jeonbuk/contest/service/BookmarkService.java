@@ -102,4 +102,6 @@ public class BookmarkService {
         return ResponseEntity.ok().body(Collections.singletonMap("bookmarkId", bookmark.getId()));
     }
 
+
+
 }
