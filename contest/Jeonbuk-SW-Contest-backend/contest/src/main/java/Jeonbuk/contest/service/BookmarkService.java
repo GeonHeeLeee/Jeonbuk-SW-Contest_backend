@@ -91,9 +91,14 @@ public class BookmarkService {
     }
 
     public ResponseEntity<?> checkMemberBookmark(String memberId, BookmarkType bookmarkType, Long storeId) {
-        Bookmark bookmark = bookmarkRepository.findByMember_IdAndTypeAndId(memberId, bookmarkType, storeId)
-                .orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.BOOKMARK_NOT_FOUND_ID));
-
+        Bookmark bookmark;
+        switch (bookmarkType) {
+            case DISCOUNT_STORE -> bookmark = bookmarkRepository.findByMember_IdAndDiscountStore_Id(memberId, storeId)
+                    .orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.BOOKMARK_NOT_FOUND_ID));
+            case RESTAURANT -> bookmark = bookmarkRepository.findByMember_IdAndRestaurant_Id(memberId, storeId)
+                    .orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.BOOKMARK_NOT_FOUND_ID));
+            default -> throw new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.BOOKMARK_TYPE_UNSUPPORTED);
+        }
         return ResponseEntity.ok().body(Collections.singletonMap("bookmarkId", bookmark.getId()));
     }
 
