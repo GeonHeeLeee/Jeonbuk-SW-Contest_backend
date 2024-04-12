@@ -1,6 +1,7 @@
 package Jeonbuk.contest.csv;
 
 import Jeonbuk.contest.entity.DiscountStore;
+import Jeonbuk.contest.entity.TownStroll;
 import Jeonbuk.contest.entity.enumType.BusinessCategory;
 import Jeonbuk.contest.entity.enumType.Promotion;
 import Jeonbuk.contest.entity.Restaurant;
@@ -23,8 +24,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static Jeonbuk.contest.csv.FILE_LOCATION.SAFE_RETURN;
-import static Jeonbuk.contest.csv.FILE_LOCATION.STORE;
+import static Jeonbuk.contest.csv.FILE_LOCATION.*;
 
 
 @Slf4j
@@ -37,6 +37,7 @@ public class CSVService {
     private final WarningBellRepository warningBellRepository;
     private final DiscountStoreRepository discountStoreRepository;
     private final RestaurantRepository restaurantRepository;
+    private final TownStrollRepository townStrollRepository;
 
     @Transactional
     public void saveCCTV() throws IOException, CsvException {
@@ -133,6 +134,26 @@ public class CSVService {
             discountStoreList.add(discountStore);
         }
         discountStoreRepository.saveAll(discountStoreList);
+    }
+
+    public void saveTownStroll() throws IOException, CsvException {
+        List<String[]> rows = readCSV(TOWN_STROLL.getLocation() + "townstroll.csv");
+        List<TownStroll> townStrollList = new ArrayList<>();
+        for (String[] row : rows) {
+            TownStroll townStroll = TownStroll.builder()
+                    .overview(row[1])
+                    .image(row[2])
+                    .holiday(row[3])
+                    .name(row[4])
+                    .telephone(row[5])
+                    .category(row[6])
+                    .address(row[7])
+                    .latitude(row[8])
+                    .longitude(row[9])
+                    .build();
+            townStrollList.add(townStroll);
+        }
+        townStrollRepository.saveAll(townStrollList);
     }
 
     public List<String[]> readCSV(String fileLocation) throws IOException, CsvException {

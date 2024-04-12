@@ -27,6 +27,7 @@ public class ContestApplication implements CommandLineRunner {
         csvService.saveWarningBell();
         csvService.saveRestaurant();
         csvService.saveDiscountStore();
+        csvService.saveTownStroll();
         Member member = Member.builder()
                 .id("abcd1234")
                 .password(passwordEncoder.encode("abcd1234"))
