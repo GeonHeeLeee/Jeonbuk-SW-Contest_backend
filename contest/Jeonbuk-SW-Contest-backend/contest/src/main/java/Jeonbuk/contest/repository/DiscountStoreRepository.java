@@ -24,4 +24,5 @@ public interface DiscountStoreRepository extends JpaRepository<DiscountStore, Lo
     @Query(value = "SELECT d FROM DiscountStore d WHERE ((6371000 * acos(cos(radians(:latitude)) * cos(radians(d.latitude)) * cos(radians(d.longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(d.latitude)))) <= :radius) AND d.category = :category")
     List<DiscountStore> findByCategoryWithinRadius(@Param("latitude") float latitude, @Param("longitude") float longitude, @Param("radius") float radius, @Param("category") BusinessCategory category);
 
+    List<DiscountStore> findByStoreNameContaining(String storeName);
 }

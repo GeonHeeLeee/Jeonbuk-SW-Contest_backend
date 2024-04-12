@@ -2,6 +2,7 @@ package Jeonbuk.contest.controller;
 
 import Jeonbuk.contest.domain.BookmarkRegisterDTO;
 import Jeonbuk.contest.entity.DiscountStore;
+import Jeonbuk.contest.entity.Restaurant;
 import Jeonbuk.contest.entity.enumType.BusinessCategory;
 import Jeonbuk.contest.exception.ErrorDTO;
 import Jeonbuk.contest.service.BookmarkService;
@@ -78,4 +79,10 @@ public class DiscountStoreController {
         return bookmarkService.registerBookmark(bookmarkRegisterDTO);
     }
 
+    @Operation(summary = "할인매장 검색", description = "storeName(할인매장 이름) 한글자씩 요청하여 검색")
+    @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = DiscountStore.class)))
+    @GetMapping("/search")
+    public ResponseEntity<List<DiscountStore>> searchRestaurantByStoreName(@Parameter(description = "storeName") @RequestParam("storeName") String storeName) {
+        return discountStoreService.searchDiscountStoreByStoreName(storeName);
+    }
 }

@@ -1,6 +1,7 @@
 package Jeonbuk.contest.service;
 
 import Jeonbuk.contest.entity.DiscountStore;
+import Jeonbuk.contest.entity.Restaurant;
 import Jeonbuk.contest.entity.enumType.BusinessCategory;
 import Jeonbuk.contest.exception.CustomException;
 import Jeonbuk.contest.repository.DiscountStoreRepository;
@@ -51,5 +52,10 @@ public class DiscountStoreService {
         Map<String, List<DiscountStore>> response = new HashMap<>();
         response.put("content", discountStoreRepository.findByCategoryWithinRadius(latitude, longitude, radius, category));
         return ResponseEntity.ok().body(response);
+    }
+
+    public ResponseEntity<List<DiscountStore>> searchDiscountStoreByStoreName(String storeName) {
+        List<DiscountStore> restaurantList = discountStoreRepository.findByStoreNameContaining(storeName);
+        return ResponseEntity.ok().body(restaurantList);
     }
 }
