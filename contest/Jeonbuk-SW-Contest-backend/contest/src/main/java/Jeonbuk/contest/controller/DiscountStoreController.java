@@ -82,7 +82,7 @@ public class DiscountStoreController {
     @Operation(summary = "할인매장 검색", description = "storeName(할인매장 이름) 한글자씩 요청하여 검색")
     @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = DiscountStore.class)))
     @GetMapping("/search")
-    public ResponseEntity<List<DiscountStore>> searchRestaurantByStoreName(@Parameter(description = "storeName") @RequestParam("storeName") String storeName) {
+    public ResponseEntity<Map<String, List<DiscountStore>>> searchRestaurantByStoreName(@Parameter(description = "storeName") @RequestParam("storeName") String storeName) {
         return discountStoreService.searchDiscountStoreByStoreName(storeName);
     }
 }

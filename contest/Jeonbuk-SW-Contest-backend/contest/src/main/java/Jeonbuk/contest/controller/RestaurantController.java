@@ -85,7 +85,7 @@ public class RestaurantController {
     @Operation(summary = "식당 검색", description = "storeName(식당 이름) 한글자씩 요청하여 검색")
     @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Restaurant.class)))
     @GetMapping("/search")
-    public ResponseEntity<List<Restaurant>> searchRestaurantByStoreName(@Parameter(description = "storeName") @RequestParam("storeName") String storeName) {
+    public ResponseEntity<Map<String, List<Restaurant>>> searchRestaurantByStoreName(@Parameter(description = "storeName") @RequestParam("storeName") String storeName) {
         return restaurantService.searchRestaurantByStoreName(storeName);
     }
 }

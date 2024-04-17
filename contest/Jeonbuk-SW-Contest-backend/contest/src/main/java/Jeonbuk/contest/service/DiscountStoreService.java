@@ -1,7 +1,6 @@
 package Jeonbuk.contest.service;
 
 import Jeonbuk.contest.entity.DiscountStore;
-import Jeonbuk.contest.entity.Restaurant;
 import Jeonbuk.contest.entity.enumType.BusinessCategory;
 import Jeonbuk.contest.exception.CustomException;
 import Jeonbuk.contest.repository.DiscountStoreRepository;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static Jeonbuk.contest.exception.ErrorCode.DISCOUNT_STORE_NOT_FOUND_ID;
 
@@ -54,8 +52,10 @@ public class DiscountStoreService {
         return ResponseEntity.ok().body(response);
     }
 
-    public ResponseEntity<List<DiscountStore>> searchDiscountStoreByStoreName(String storeName) {
-        List<DiscountStore> restaurantList = discountStoreRepository.findByStoreNameContaining(storeName);
-        return ResponseEntity.ok().body(restaurantList);
+    public ResponseEntity<Map<String, List<DiscountStore>>> searchDiscountStoreByStoreName(String storeName) {
+        List<DiscountStore> discountStoreList = discountStoreRepository.findByStoreNameContaining(storeName);
+        Map<String, List<DiscountStore>> response = new HashMap<>();
+        response.put("content", discountStoreList);
+        return ResponseEntity.ok().body(response);
     }
 }

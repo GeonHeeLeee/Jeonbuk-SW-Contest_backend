@@ -54,8 +54,10 @@ public class RestaurantService {
         return ResponseEntity.ok().body(response);
     }
 
-    public ResponseEntity<List<Restaurant>> searchRestaurantByStoreName(String storeName) {
+    public ResponseEntity<Map<String, List<Restaurant>>> searchRestaurantByStoreName(String storeName) {
         List<Restaurant> restaurantList = restaurantRepository.findByStoreNameContaining(storeName);
-        return ResponseEntity.ok().body(restaurantList);
+        Map<String, List<Restaurant>> response = new HashMap<>();
+        response.put("content", restaurantList);
+        return ResponseEntity.ok().body(response);
     }
 }
