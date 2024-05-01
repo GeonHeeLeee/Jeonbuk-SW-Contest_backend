@@ -66,7 +66,7 @@ public class BookmarkService {
     @Transactional
     public ResponseEntity getMemberBookmarkList(String memberId) {
         List<BookmarkDTO> bookmarkList = bookmarkRepository.findBookmarkByMember_Id(memberId)
-                .stream().map(BookmarkDTO::new).collect(Collectors.toList());
+                .stream().map(BookmarkDTO::new).toList();
         return ResponseEntity.ok().body(bookmarkList);
     }
 
