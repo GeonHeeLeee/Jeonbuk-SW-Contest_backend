@@ -46,10 +46,20 @@ public class AccountService {
     public ResponseEntity<Void> checkDuplicateId(String memberId) {
         if (memberRepository.existsById(memberId)) {
             log.info("[checkDuplicateId] 중복 ID 검사 실패 - memberId: {}", memberId);
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().build();
         } else {
             log.info("[checkDuplicateId] 중복 ID 검사 성공 - memberId: {}", memberId);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return ResponseEntity.ok().build();
         }
+    }
+
+    @Transactional
+    public ResponseEntity<Void> modifyUserInfo(MemberInfoDTO memberInfoDTO) {
+        Member member = memberRepository.findById(memberInfoDTO.getId())
+                .orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.MEMBER_NOT_FOUND_ID));
+        member.setEmergencyNumber(memberInfoDTO.getEmergencyNumber());
+        member.setPhoneNumber(memberInfoDTO.getPhoneNumber());
+        member.setName(member.getName());
+        return ResponseEntity.ok().build();
     }
 }
