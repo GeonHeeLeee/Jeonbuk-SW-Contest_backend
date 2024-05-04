@@ -1,24 +1,29 @@
 package Jeonbuk.contest.entity.safeReturn;
 
+import Jeonbuk.contest.entity.Member;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+import lombok.*;
 
 @Entity
-@SuperBuilder
+@Builder
+@Setter
 @Getter
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "type")
 @NoArgsConstructor
+@AllArgsConstructor
 public class SafeReturn {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
-    private float latitude;
+    @ManyToOne()
+    @JoinColumn(name = "memberId")
+    private Member member;
 
-    private float longitude;
+    private String name;
 
+    private float startLatitude;
+    private float startLongitude;
+    private float endLatitude;
+    private float endLongitude;
 }

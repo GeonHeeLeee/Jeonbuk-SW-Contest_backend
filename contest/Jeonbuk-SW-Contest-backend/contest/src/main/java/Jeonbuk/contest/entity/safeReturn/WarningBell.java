@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @SuperBuilder
 @NoArgsConstructor
-public class WarningBell extends SafeReturn {
+public class WarningBell extends MySafeReturn {
 
     private String managementNumber;
 

@@ -1,9 +1,6 @@
 package Jeonbuk.contest.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -21,6 +18,7 @@ public class Festival {
     private String subtitle;
     private String title;
     private String schedule;
+    @Column(length = 1000)
     private String content;
     private String image;
     private String address;

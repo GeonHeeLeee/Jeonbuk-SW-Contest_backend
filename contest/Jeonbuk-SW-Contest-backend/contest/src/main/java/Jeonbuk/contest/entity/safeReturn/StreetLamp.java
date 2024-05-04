@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @SuperBuilder
 @NoArgsConstructor
-public class StreetLamp extends SafeReturn {
+public class StreetLamp extends MySafeReturn {
 
     private String administrativeCode;
     @Transient

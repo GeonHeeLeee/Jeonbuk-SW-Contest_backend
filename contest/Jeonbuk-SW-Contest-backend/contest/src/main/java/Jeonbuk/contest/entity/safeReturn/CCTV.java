@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Entity
 @SuperBuilder
 @NoArgsConstructor
-public class CCTV extends SafeReturn {
+public class CCTV extends MySafeReturn {
 
     private String roadAddress;
 
