@@ -18,6 +18,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 @Tag(name = "북마크")
 @Slf4j
 @Controller
@@ -26,9 +29,17 @@ import org.springframework.web.bind.annotation.*;
 public class BookmarkController {
     private final BookmarkService bookmarkService;
 
-    @Operation(summary = "사용자의 북마크 리스트 확인", description = "할인매장인 경우 restaurant == null, 식당인 경우 discountStore == null")
+    @Operation(summary = "사용자의 북마크 리스트 확인", description = "사용자의 Id로 북마크 조회")
     @GetMapping("/{memberId}")
-    public ResponseEntity<?> getMemberBookmarkList(@Parameter(description = "사용자 ID") @PathVariable("memberId") String memberId) {
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Json 형태 type마다 리스트로 북마크 반환 - key: RESTAURANT, TOWN_STROLL, DISCOUNT_STORE, FESTIVAL value: List",
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = @ExampleObject(name = "Json 리스트", value = "{\"RESTAURANT\": \"[]\"," +
+                                    "\"RESTAURANT\": \"[]\"}")
+                    ))
+    })
+    public ResponseEntity<Map<String, List<>>> getMemberBookmarkList(@Parameter(description = "사용자 ID") @PathVariable("memberId") String memberId) {
 
         return bookmarkService.getMemberBookmarkList(memberId);
     }
@@ -51,9 +62,9 @@ public class BookmarkController {
             @ApiResponse(responseCode = "400", description = "북마크 존재하지 않음", content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
     })
     public ResponseEntity<?> checkMemberBookmark(@Parameter(description = "사용자 ID") @RequestParam("memberId") String memberId,
-                                                  @Parameter(description = "DISCOUNT_STORE | RESTAURANT") @RequestParam("bookmarkType") BookmarkType type,
-                                                  @Parameter(description = "가게 ID") @RequestParam("storeId") Long storeId) {
-        return bookmarkService.checkMemberBookmark(memberId, type, storeId);
+                                                 @Parameter(description = "DISCOUNT_STORE | RESTAURANT | FESTIVAL | TOWN_STROLL") @RequestParam("bookmarkType") BookmarkType type,
+                                                 @Parameter(description = "type(식당, 할인 매장, 축제 등)의 ID") @RequestParam("typeId") Long typeId) {
+        return bookmarkService.checkMemberBookmark(memberId, type, typeId);
     }
 
 }

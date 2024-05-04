@@ -13,6 +13,8 @@ public enum ErrorCode {
     BOOKMARK_NOT_FOUND_ID("해당 Id의 북마크가 존재하지 않습니다."),
     BOOKMARK_ALREADY_EXISTS("해당 북마크는 이미 존재합니다."),
     BOOKMARK_TYPE_UNSUPPORTED("지원되지 않은 북마크 Type 입니다."),
+    FESTIVAL_NOT_FOUND_ID("해당 Id의 축제가 존재하지 않습니다."),
+    TOWN_STROLL_NOT_FOUND_ID("해당 Id의 동네 마실이 존재하지 않습니다"),
     SAFE_RETURN_NOT_FOUND_ID("해당 Id의 안심 귀가가 존재하지 않습니다.");
     private final String errorMessage;
 

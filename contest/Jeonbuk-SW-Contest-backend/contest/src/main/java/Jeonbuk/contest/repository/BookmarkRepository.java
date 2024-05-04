@@ -14,8 +14,7 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
 
     List<Bookmark> findBookmarkByMember_Id(@Param("memberId") String memberId);
 
-    Boolean existsByRestaurant_IdAndMember_Id(Long restaurantId, String memberId);
-    Boolean existsByDiscountStore_IdAndMember_Id(Long discountStoreId, String memberId);
-    Optional<Bookmark> findByMember_IdAndRestaurant_Id(String memberId,  Long id);
-    Optional<Bookmark> findByMember_IdAndDiscountStore_Id(String memberId, Long id);
+    Boolean existsByTypeAndTypeIdAndMember_Id(BookmarkType bookmarkType, Long typeId, String memberId);
+
+    Optional<Bookmark> findByTypeAndTypeIdAndMember_Id(BookmarkType bookmarkType, Long typeId, String memberId);
 }

@@ -24,13 +24,7 @@ public class Bookmark {
 
     private BookmarkType type;
 
-    @ManyToOne
-    @JoinColumn(name = "restaurantId")
-    private Restaurant restaurant;
-
-    @ManyToOne
-    @JoinColumn(name = "discountStoreId")
-    private DiscountStore discountStore;
+    private Long typeId;
 
     //TODO- 별점, 리뷰 남기기
 }

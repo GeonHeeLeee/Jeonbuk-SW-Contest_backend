@@ -66,7 +66,7 @@ public class DiscountStoreController {
         return discountStoreService.getDiscountStoreByCategoryWithinRadius(latitude, longitude, radius, category);
     }
 
-    @Operation(summary = "할인매장 즐겨찾기 등록", description = "memberId: 사용자ID, storeId: 해당 할인매장의 Id, bookmarkType: RESTAURANT(식당), DISCOUNT_STORE(할인매장)")
+    @Operation(summary = "할인매장 즐겨찾기 등록", description = "memberId: 사용자ID, typeId: 해당 할인매장의 Id, bookmarkType: RESTAURANT(식당), DISCOUNT_STORE(할인매장), FESTIVAL(축제), TOWN_STROLL(동네 마실)")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "북마크 등록 성공",
                     content = @Content(

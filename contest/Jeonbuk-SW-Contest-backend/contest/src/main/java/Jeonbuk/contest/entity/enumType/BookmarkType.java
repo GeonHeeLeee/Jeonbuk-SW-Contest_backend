@@ -4,5 +4,5 @@ import lombok.Getter;
 
 @Getter
 public enum BookmarkType {
-    RESTAURANT, DISCOUNT_STORE;
+    RESTAURANT, DISCOUNT_STORE, FESTIVAL, TOWN_STROLL;
 }

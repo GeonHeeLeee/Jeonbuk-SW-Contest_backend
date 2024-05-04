@@ -12,16 +12,15 @@ import lombok.Setter;
 public class BookmarkDTO {
     private Long id;
     private BookmarkType type;
+    private Long typeId;
     private String memberId;
-    private Restaurant restaurant;
-    private DiscountStore discountStore;
+
 
     public BookmarkDTO(Bookmark bookmark) {
         this.id = bookmark.getId();
         this.memberId = bookmark.getMember().getId();
         this.type = bookmark.getType();
-        this.restaurant = bookmark.getRestaurant();
-        this.discountStore = bookmark.getDiscountStore();
+        this.typeId = bookmark.getTypeId();
     }
 
 }
