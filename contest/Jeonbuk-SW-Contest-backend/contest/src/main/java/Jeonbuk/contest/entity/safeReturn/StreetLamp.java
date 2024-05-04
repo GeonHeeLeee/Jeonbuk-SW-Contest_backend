@@ -1,6 +1,6 @@
 package Jeonbuk.contest.entity.safeReturn;
 
-import Jeonbuk.contest.entity.enumType.SafeReturnType;
+import Jeonbuk.contest.entity.enumType.MySafeReturnType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Transient;
 import lombok.Data;
@@ -15,5 +15,5 @@ public class StreetLamp extends MySafeReturn {
 
     private String administrativeCode;
     @Transient
-    private SafeReturnType type = SafeReturnType.STREET_LAMP;
+    private MySafeReturnType type = MySafeReturnType.STREET_LAMP;
 }

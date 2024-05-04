@@ -1,6 +1,6 @@
 package Jeonbuk.contest.entity.safeReturn;
 
-import Jeonbuk.contest.entity.enumType.SafeReturnType;
+import Jeonbuk.contest.entity.enumType.MySafeReturnType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Transient;
 import lombok.Data;
@@ -36,5 +36,5 @@ public class WarningBell extends MySafeReturn {
     private String managingOfficePhoneNumber;
 
     @Transient
-    private SafeReturnType type = SafeReturnType.WARNING_BELL;
+    private MySafeReturnType type = MySafeReturnType.WARNING_BELL;
 }
