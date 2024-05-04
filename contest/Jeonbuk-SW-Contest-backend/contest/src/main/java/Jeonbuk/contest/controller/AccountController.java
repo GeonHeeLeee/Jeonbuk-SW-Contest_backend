@@ -70,11 +70,22 @@ public class AccountController {
 
     @Operation(summary = "사용자 로그인")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "로그인 성공-Authorization Header에 JWT 응답", content = @Content(schema = @Schema(hidden = true))),
+            @ApiResponse(responseCode = "200", description = "로그인 성공-Authorization Header에 JWT 응답", content = @Content(schema = @Schema(implementation = MemberInfoDTO.class))),
             @ApiResponse(responseCode = "401", description = "로그인 실패", content = @Content(schema = @Schema(hidden = true)))})
     @PostMapping("/login")
     public void login(@RequestBody MemberAuthDTO memberAuthDTO) {
         //Login은 Security Filter에서 처리
+    }
+
+
+    @Operation(summary = "이름, 전화번호, 비상연락망 수정")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "정보 등록 성공", content = @Content(schema = @Schema(implementation = MemberInfoDTO.class))),
+            @ApiResponse(responseCode = "400", description = "핸드폰 번호, 비상 연락망 형식 일치하지 않거나 해당 Id의 사용자가 존재하지 않음", content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
+    })
+    @PostMapping("/modify")
+    public ResponseEntity<Void> modifyUserInfo(@Valid @RequestBody MemberInfoDTO memberInfoDTO) {
+        return accountService.modifyUserInfo(memberInfoDTO);
     }
 
 }
