@@ -141,15 +141,14 @@ public class CSVService {
         List<TownStroll> townStrollList = new ArrayList<>();
         for (String[] row : rows) {
             TownStroll townStroll = TownStroll.builder()
-                    .overview(row[1])
-                    .image(row[2])
-                    .holiday(row[3])
-                    .name(row[4])
-                    .telephone(row[5])
-                    .category(row[6])
-                    .address(row[7])
-                    .latitude(row[8])
-                    .longitude(row[9])
+                    .name(row[1])
+                    .region(row[2])
+                    .largeCategory(row[3])
+                    .middleCategory(row[4])
+                    .smallCategory(row[5])
+                    .address(row[6])
+                    .latitude(row[7])
+                    .longitude(row[8])
                     .build();
             townStrollList.add(townStroll);
         }
