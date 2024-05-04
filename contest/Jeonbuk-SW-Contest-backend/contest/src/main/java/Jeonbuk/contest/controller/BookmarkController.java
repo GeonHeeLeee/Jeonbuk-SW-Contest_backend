@@ -39,7 +39,7 @@ public class BookmarkController {
                                     "\"RESTAURANT\": \"[]\"}")
                     ))
     })
-    public ResponseEntity<Map<String, List<>>> getMemberBookmarkList(@Parameter(description = "사용자 ID") @PathVariable("memberId") String memberId) {
+    public ResponseEntity<Map<String, List>> getMemberBookmarkList(@Parameter(description = "사용자 ID") @PathVariable("memberId") String memberId) {
 
         return bookmarkService.getMemberBookmarkList(memberId);
     }

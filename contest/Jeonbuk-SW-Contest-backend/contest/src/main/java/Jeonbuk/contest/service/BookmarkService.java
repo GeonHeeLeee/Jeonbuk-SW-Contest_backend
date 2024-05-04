@@ -57,9 +57,9 @@ public class BookmarkService {
 
 
     @Transactional
-    public ResponseEntity<Map<String, List<>>> getMemberBookmarkList(String memberId) {
+    public ResponseEntity<Map<String, List>> getMemberBookmarkList(String memberId) {
         List<Bookmark> bookmarkList = bookmarkRepository.findBookmarkByMember_Id(memberId);
-        Map<String, List<>> response = new HashMap<>();
+        Map<String, List> response = new HashMap<>();
         response.put("RESTAURANT", new ArrayList<>());
         response.put("DISCOUNT_STORE", new ArrayList<>());
         response.put("FESTIVAL", new ArrayList<>());
