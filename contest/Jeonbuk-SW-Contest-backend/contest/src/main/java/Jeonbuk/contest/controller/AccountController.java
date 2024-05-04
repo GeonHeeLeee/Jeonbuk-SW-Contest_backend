@@ -83,7 +83,7 @@ public class AccountController {
             @ApiResponse(responseCode = "200", description = "정보 등록 성공", content = @Content(schema = @Schema(implementation = MemberInfoDTO.class))),
             @ApiResponse(responseCode = "400", description = "핸드폰 번호, 비상 연락망 형식 일치하지 않거나 해당 Id의 사용자가 존재하지 않음", content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
     })
-    @PostMapping("/modifygit pull")
+    @PostMapping("/modify")
     public ResponseEntity<Void> modifyUserInfo(@Valid @RequestBody MemberInfoDTO memberInfoDTO) {
         return accountService.modifyUserInfo(memberInfoDTO);
     }
