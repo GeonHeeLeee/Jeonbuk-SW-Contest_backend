@@ -8,7 +8,7 @@ import lombok.ToString;
 public enum FILE_LOCATION {
     SAFE_RETURN("csv/safeReturn/"),
     STORE("csv/store/"),
-    TOWN_STROLL("csv/");
+    BASEDIR("csv/");
     private String location;
 
     FILE_LOCATION(String location) {

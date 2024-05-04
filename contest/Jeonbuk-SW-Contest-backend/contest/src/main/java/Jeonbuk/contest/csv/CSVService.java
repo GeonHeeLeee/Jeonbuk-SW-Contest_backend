@@ -1,6 +1,7 @@
 package Jeonbuk.contest.csv;
 
 import Jeonbuk.contest.entity.DiscountStore;
+import Jeonbuk.contest.entity.Festival;
 import Jeonbuk.contest.entity.TownStroll;
 import Jeonbuk.contest.entity.enumType.BusinessCategory;
 import Jeonbuk.contest.entity.enumType.Promotion;
@@ -38,6 +39,7 @@ public class CSVService {
     private final DiscountStoreRepository discountStoreRepository;
     private final RestaurantRepository restaurantRepository;
     private final TownStrollRepository townStrollRepository;
+    private final FestivalRepository festivalRepository;
 
     @Transactional
     public void saveCCTV() throws IOException, CsvException {
@@ -137,7 +139,7 @@ public class CSVService {
     }
 
     public void saveTownStroll() throws IOException, CsvException {
-        List<String[]> rows = readCSV(TOWN_STROLL.getLocation() + "townstroll.csv");
+        List<String[]> rows = readCSV(BASEDIR.getLocation() + "townstroll.csv");
         List<TownStroll> townStrollList = new ArrayList<>();
         for (String[] row : rows) {
             TownStroll townStroll = TownStroll.builder()
@@ -154,6 +156,26 @@ public class CSVService {
         }
         townStrollRepository.saveAll(townStrollList);
     }
+
+    public void saveFestival() throws IOException, CsvException {
+        List<String[]> rows = readCSV(BASEDIR.getLocation() + "festival.csv");
+        List<Festival> festivalList = new ArrayList<>();
+        for (String[] row : rows) {
+            Festival festival = Festival.builder()
+                    .subtitle(row[0])
+                    .title(row[1])
+                    .schedule(row[2])
+                    .content(row[3])
+                    .image(row[4])
+                    .address(row[5])
+                    .latitude(row[6])
+                    .longitude(row[7])
+                    .build();
+            festivalList.add(festival);
+        }
+        festivalRepository.saveAll(festivalList);
+    }
+
 
     public List<String[]> readCSV(String fileLocation) throws IOException, CsvException {
         ClassPathResource resource = new ClassPathResource(fileLocation);
