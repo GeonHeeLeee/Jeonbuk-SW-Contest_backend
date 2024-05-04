@@ -1,11 +1,9 @@
 package Jeonbuk.contest.service;
 
+
 import Jeonbuk.contest.domain.BookmarkDTO;
-import Jeonbuk.contest.domain.BookmarkRegisterDTO;
 import Jeonbuk.contest.entity.Bookmark;
-import Jeonbuk.contest.entity.DiscountStore;
 import Jeonbuk.contest.entity.Member;
-import Jeonbuk.contest.entity.Restaurant;
 import Jeonbuk.contest.entity.enumType.BookmarkType;
 import Jeonbuk.contest.exception.CustomException;
 import Jeonbuk.contest.exception.ErrorCode;
@@ -35,21 +33,20 @@ public class BookmarkService {
         return bookmarkRepository.existsByTypeAndTypeIdAndMember_Id(bookmarkType, typeId, memberId);
     }
 
-    public ResponseEntity<?> registerBookmark(BookmarkRegisterDTO bookmarkRegisterDTO) {
-        if (isBookmarkAlreadyRegistered(bookmarkRegisterDTO.getBookmarkType(), bookmarkRegisterDTO.getMemberId(), bookmarkRegisterDTO.getTypeId())) {
+    public ResponseEntity<?> registerBookmark(BookmarkDTO bookmarkDTO) {
+        if (isBookmarkAlreadyRegistered(bookmarkDTO.getBookmarkType(), bookmarkDTO.getMemberId(), bookmarkDTO.getTypeId())) {
             throw new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.BOOKMARK_ALREADY_EXISTS);
         }
-
-        Bookmark bookmark = createAndSaveBookmark(bookmarkRegisterDTO);
+        Bookmark bookmark = createAndSaveBookmark(bookmarkDTO);
         return ResponseEntity.ok().body(Collections.singletonMap("bookmark", bookmark.getId()));
     }
 
-    private Bookmark createAndSaveBookmark(BookmarkRegisterDTO bookmarkRegisterDTO) {
-        Member member = memberService.findById(bookmarkRegisterDTO.getMemberId());
+    private Bookmark createAndSaveBookmark(BookmarkDTO bookmarkDTO) {
+        Member member = memberService.findById(bookmarkDTO.getMemberId());
         Bookmark bookmark = Bookmark.builder()
                 .member(member)
-                .type(bookmarkRegisterDTO.getBookmarkType())
-                .typeId(bookmarkRegisterDTO.getTypeId())
+                .type(bookmarkDTO.getBookmarkType())
+                .typeId(bookmarkDTO.getTypeId())
                 .build();
         bookmarkRepository.save(bookmark);
         return bookmark;
@@ -59,11 +56,7 @@ public class BookmarkService {
     @Transactional
     public ResponseEntity<Map<String, List>> getMemberBookmarkList(String memberId) {
         List<Bookmark> bookmarkList = bookmarkRepository.findBookmarkByMember_Id(memberId);
-        Map<String, List> response = new HashMap<>();
-        response.put("RESTAURANT", new ArrayList<>());
-        response.put("DISCOUNT_STORE", new ArrayList<>());
-        response.put("FESTIVAL", new ArrayList<>());
-        response.put("TOWN_STROLL", new ArrayList<>());
+        Map<String, List> response = initBookmarkResponseMap();
 
         bookmarkList.forEach(bookmark -> {
                     Long typeId = bookmark.getTypeId();
@@ -78,9 +71,18 @@ public class BookmarkService {
         return ResponseEntity.ok().body(response);
     }
 
+    private static Map<String, List> initBookmarkResponseMap() {
+        Map<String, List> initMap = new HashMap<>();
+        initMap.put("RESTAURANT", new ArrayList<>());
+        initMap.put("DISCOUNT_STORE", new ArrayList<>());
+        initMap.put("FESTIVAL", new ArrayList<>());
+        initMap.put("TOWN_STROLL", new ArrayList<>());
+        return initMap;
+    }
 
-    public ResponseEntity<?> deleteMemberBookmark(Long bookmarkId) {
-        Bookmark bookmark = bookmarkRepository.findById(bookmarkId)
+
+    public ResponseEntity<?> deleteMemberBookmark(BookmarkDTO bookmarkDTO) {
+        Bookmark bookmark = bookmarkRepository.findByTypeAndTypeIdAndMember_Id(bookmarkDTO.getBookmarkType(), bookmarkDTO.getTypeId(), bookmarkDTO.getMemberId())
                 .orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.BOOKMARK_NOT_FOUND_ID));
         bookmarkRepository.delete(bookmark);
         return ResponseEntity.ok().build();

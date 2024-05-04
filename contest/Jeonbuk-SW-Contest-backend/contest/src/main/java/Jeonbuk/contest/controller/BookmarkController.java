@@ -1,6 +1,7 @@
 package Jeonbuk.contest.controller;
 
 
+import Jeonbuk.contest.domain.BookmarkDTO;
 import Jeonbuk.contest.entity.enumType.BookmarkType;
 import Jeonbuk.contest.exception.ErrorDTO;
 import Jeonbuk.contest.service.BookmarkService;
@@ -46,9 +47,9 @@ public class BookmarkController {
 
 
     @Operation(summary = "사용자 북마크 삭제")
-    @DeleteMapping("/{bookmarkId}")
-    public ResponseEntity<?> deleteMemberBookmark(@Parameter(description = "북마크 ID") @PathVariable("bookmarkId") Long bookmarkId) {
-        return bookmarkService.deleteMemberBookmark(bookmarkId);
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteMemberBookmark(@RequestBody BookmarkDTO bookmarkDTO) {
+        return bookmarkService.deleteMemberBookmark(bookmarkDTO);
     }
 
     @Operation(summary = "사용자 북마크 확인", description = "북마크 존재하는 경우 bookmarkId 반환")

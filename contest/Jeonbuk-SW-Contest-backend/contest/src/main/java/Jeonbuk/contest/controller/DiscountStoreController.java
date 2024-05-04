@@ -1,8 +1,7 @@
 package Jeonbuk.contest.controller;
 
-import Jeonbuk.contest.domain.BookmarkRegisterDTO;
+import Jeonbuk.contest.domain.BookmarkDTO;
 import Jeonbuk.contest.entity.DiscountStore;
-import Jeonbuk.contest.entity.Restaurant;
 import Jeonbuk.contest.entity.enumType.BusinessCategory;
 import Jeonbuk.contest.exception.ErrorDTO;
 import Jeonbuk.contest.service.BookmarkService;
@@ -75,8 +74,8 @@ public class DiscountStoreController {
                     ))})
     @ApiResponse(responseCode = "400", description = "북마크 중복 등록/BookmarkType 요청 오류", content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
     @PostMapping("/bookmark")
-    public ResponseEntity<?> bookmarkDiscountStore(@RequestBody BookmarkRegisterDTO bookmarkRegisterDTO) {
-        return bookmarkService.registerBookmark(bookmarkRegisterDTO);
+    public ResponseEntity<?> bookmarkDiscountStore(@RequestBody BookmarkDTO bookmarkDTO) {
+        return bookmarkService.registerBookmark(bookmarkDTO);
     }
 
     @Operation(summary = "할인매장 검색", description = "storeName(할인매장 이름) 한글자씩 요청하여 검색")
