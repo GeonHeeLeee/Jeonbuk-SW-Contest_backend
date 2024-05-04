@@ -15,7 +15,7 @@ public class MySafeReturn {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     private float latitude;
 
