@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,7 @@ public class SafeReturnService {
     private final SafeReturnRepository safeReturnRepository;
     private final MemberService memberService;
 
-    public ResponseEntity<SafeReturnRequestDTO> addSafeReturn(SafeReturnRequestDTO safeReturnRequestDTO) {
+    public ResponseEntity<Map<String, Long>> addSafeReturn(SafeReturnRequestDTO safeReturnRequestDTO) {
         Member member = memberService.findById(safeReturnRequestDTO.getMemberId());
         SafeReturn safeReturn = SafeReturn.builder()
                 .name(safeReturnRequestDTO.getName())
@@ -35,7 +36,7 @@ public class SafeReturnService {
                 .endLongitude(safeReturnRequestDTO.getEndLongitude())
                 .build();
         safeReturnRepository.save(safeReturn);
-        return ResponseEntity.ok().body(safeReturnRequestDTO);
+        return ResponseEntity.ok().body(Collections.singletonMap("safeReturnId", safeReturn.getId()));
     }
 
     public ResponseEntity<Map<String, List<SafeReturnResponseDTO>>> getSafeReturnList(String memberId) {

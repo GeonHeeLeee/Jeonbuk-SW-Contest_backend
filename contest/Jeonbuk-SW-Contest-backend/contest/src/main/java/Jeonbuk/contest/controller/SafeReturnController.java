@@ -36,7 +36,7 @@ public class SafeReturnController {
                     )),
             @ApiResponse(responseCode = "400", description = "해당 MemberId의 사용자 존재하지 않음", content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
     })
-    public ResponseEntity<SafeReturnRequestDTO> addSafeReturn(SafeReturnRequestDTO safeReturnRequestDTO) {
+    public ResponseEntity<Map<String, Long>> addSafeReturn(SafeReturnRequestDTO safeReturnRequestDTO) {
         return safeReturnService.addSafeReturn(safeReturnRequestDTO);
     }
 
