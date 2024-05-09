@@ -28,4 +28,14 @@ public class MySafeReturnController {
                                                  @Parameter(description = "반지름(미터)") @RequestParam("radius") float radius) {
         return mySafeReturnService.getSafeReturnAround(latitude, longitude, radius);
     }
+
+    @Operation(summary = "기준점(위도, 경도) 반경 내, 전체 CCTV, 가로등, 비상벨 필터링 조회",
+            description = "Type을 키로하여 반환 (CCTV, StreetLamp, WarningBell)")
+    @GetMapping("/filter")
+    public ResponseEntity<?> getSafeReturnAround(@Parameter(description = "위도") @RequestParam("latitude") float latitude,
+                                                 @Parameter(description = "경도") @RequestParam("longitude") float longitude,
+                                                 @Parameter(description = "반지름(미터)") @RequestParam("radius") float radius,
+                                                 @Parameter(description = "타입: CCTV, StreetLamp, WarningBell") @RequestParam("type") String type) {
+        return mySafeReturnService.getSafeReturnAroundByType(latitude, longitude, radius, type);
+    }
 }

@@ -13,4 +13,7 @@ public interface MySafeReturnRepository extends JpaRepository<MySafeReturn, Long
     @Query(value = "SELECT s FROM MySafeReturn s WHERE (6371000 * acos(cos(radians(:latitude)) * cos(radians(s.latitude)) * cos(radians(s.longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(s.latitude)))) <= :radius")
     List<MySafeReturn> findWithinRadius(@Param("latitude") float latitude, @Param("longitude") float longitude, @Param("radius") float radius);
 
+    @Query(value = "SELECT s FROM MySafeReturn s WHERE ((6371000 * acos(cos(radians(:latitude)) * cos(radians(s.latitude)) * cos(radians(s.longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(s.latitude)))) <= :radius) AND TYPE(s) = :type")
+    List<MySafeReturn> findWithinRadiusByType(@Param("latitude") float latitude, @Param("longitude") float longitude, @Param("radius") float radius,@Param("type") Class<?> classType);
+
 }

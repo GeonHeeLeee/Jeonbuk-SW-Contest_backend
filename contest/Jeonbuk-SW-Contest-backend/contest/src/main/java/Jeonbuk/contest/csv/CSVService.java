@@ -93,8 +93,8 @@ public class CSVService {
         List<StreetLamp> streetLampList = new ArrayList<>();
         for (String[] row : rows) {
             StreetLamp streetLamp = StreetLamp.builder()
-                    .latitude(parseFloatOrDefault(row[1]))
-                    .longitude(parseFloatOrDefault(row[2]))
+                    .latitude(parseFloatOrDefault(row[2]))
+                    .longitude(parseFloatOrDefault(row[1]))
                     .administrativeCode(row[3])
                     .build();
             streetLampList.add(streetLamp);
