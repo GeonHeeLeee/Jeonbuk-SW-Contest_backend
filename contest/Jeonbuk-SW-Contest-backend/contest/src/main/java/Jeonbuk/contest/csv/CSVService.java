@@ -89,7 +89,7 @@ public class CSVService {
     }
 
     public void saveStreetLamp() throws IOException, CsvException {
-        List<String[]> rows = readCSV(SAFE_RETURN.getLocation() + "streetlamp.csv");
+        List<String[]> rows = readCSV(SAFE_RETURN.getLocation() + "streetLamp(Update.5_2).csv");
         List<StreetLamp> streetLampList = new ArrayList<>();
         for (String[] row : rows) {
             StreetLamp streetLamp = StreetLamp.builder()
