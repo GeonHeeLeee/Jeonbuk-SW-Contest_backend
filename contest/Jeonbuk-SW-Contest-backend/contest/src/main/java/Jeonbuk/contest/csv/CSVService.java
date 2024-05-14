@@ -89,7 +89,7 @@ public class CSVService {
     }
 
     public void saveStreetLamp() throws IOException, CsvException {
-        List<String[]> rows = readCSV(SAFE_RETURN.getLocation() + "streetLamp(Update.5_2).csv");
+        List<String[]> rows = readCSV(SAFE_RETURN.getLocation() + "streetLamp_0502.csv");
         List<StreetLamp> streetLampList = new ArrayList<>();
         for (String[] row : rows) {
             StreetLamp streetLamp = StreetLamp.builder()
@@ -103,7 +103,7 @@ public class CSVService {
     }
 
     public void saveRestaurant() throws IOException, CsvException {
-        List<String[]> rows = readCSV(STORE.getLocation() + "restaurant_0403.csv");
+        List<String[]> rows = readCSV(STORE.getLocation() + "restaurant_0502.csv");
         List<Restaurant> restaurantList = new ArrayList<>();
         for (String[] row : rows) {
             Restaurant restaurant = Restaurant.builder()
