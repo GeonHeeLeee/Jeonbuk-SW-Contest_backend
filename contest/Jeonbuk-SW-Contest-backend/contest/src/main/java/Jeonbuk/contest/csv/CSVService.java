@@ -120,7 +120,7 @@ public class CSVService {
     }
 
     public void saveDiscountStore() throws IOException, CsvException {
-        List<String[]> rows = readCSV(STORE.getLocation() + "discountStore_0403.csv");
+        List<String[]> rows = readCSV(STORE.getLocation() + "discountStore_0511.csv");
         List<DiscountStore> discountStoreList = new ArrayList<>();
         for (String[] row : rows) {
             DiscountStore discountStore = DiscountStore.builder()

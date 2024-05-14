@@ -6,8 +6,6 @@ public enum BusinessCategory {
     SERVICES("서비스업"),
     GOODS("잡화"),
     ETC("기타"),
-    FOOD_BEVERAGE("식품/음료"),
-    RETAIL("도소매"),
     EDUCATION("교육"),
     LIFE("생활");
 
