@@ -4,8 +4,7 @@ public enum Promotion {
     GOOD_PRICE("착한가격업소"),
     CHILD_LIKE("아이조아카드"),
     CHILD_MEAL("아동급식카드"),
-    MODEL("모범음식점"),
-    CULTURE_NURI("문화누리카드");
+    MODEL("모범음식점");
 
     private String value;
 
