@@ -25,7 +25,7 @@ public class TownStroll {
     private String smallCategory;
 
     private String address;
-    private String latitude;
-    private String longitude;
+    private float latitude;
+    private float longitude;
 
 }

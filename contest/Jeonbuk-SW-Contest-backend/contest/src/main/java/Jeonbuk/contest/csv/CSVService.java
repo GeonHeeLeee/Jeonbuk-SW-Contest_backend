@@ -149,8 +149,8 @@ public class CSVService {
                     .middleCategory(row[4])
                     .smallCategory(row[5])
                     .address(row[6])
-                    .latitude(row[7])
-                    .longitude(row[8])
+                    .latitude(parseFloatOrDefault(row[7]))
+                    .longitude(parseFloatOrDefault(row[8]))
                     .build();
             townStrollList.add(townStroll);
         }
