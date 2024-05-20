@@ -30,4 +30,6 @@ public class TownStrollService {
         response.put("townStrollList", townStrollRepository.findWithinRadius(latitude, longitude, radius));
         return ResponseEntity.ok().body(response);
     }
+
+
 }
