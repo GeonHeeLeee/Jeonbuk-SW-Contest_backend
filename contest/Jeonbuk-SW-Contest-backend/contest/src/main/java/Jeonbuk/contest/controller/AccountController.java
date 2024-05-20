@@ -107,7 +107,7 @@ public class AccountController {
                             examples = @ExampleObject(name = "비밀번호 응답 예시", value = "{\"password\": \"value\"}")
                     )),
             @ApiResponse(responseCode = "400", description = "비밀번호 찾기 실패(회원정보 불일치)", content = @Content(schema = @Schema(hidden = true)))})
-    @PostMapping("/delete")
+    @PostMapping("/password/find")
     public ResponseEntity<Object> findPassword(@RequestBody MemberDTO memberDTO) {
         return accountService.findPassword(memberDTO);
     }
