@@ -101,11 +101,7 @@ public class AccountController {
 
     @Operation(summary = "비밀번호 찾기")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "비밀번호 찾기 성공",
-                    content = @Content(
-                            mediaType = "application/json",
-                            examples = @ExampleObject(name = "비밀번호 응답 예시", value = "{\"password\": \"value\"}")
-                    )),
+            @ApiResponse(responseCode = "200", description = "비밀번호 변경 성공", content = @Content(schema = @Schema(hidden = true))),
             @ApiResponse(responseCode = "400", description = "비밀번호 찾기 실패(회원정보 불일치)", content = @Content(schema = @Schema(hidden = true)))})
     @PostMapping("/password/find")
     public ResponseEntity<Object> findPassword(@RequestBody MemberDTO memberDTO) {
