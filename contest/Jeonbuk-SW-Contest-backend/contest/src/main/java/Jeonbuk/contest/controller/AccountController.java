@@ -1,5 +1,6 @@
 package Jeonbuk.contest.controller;
 
+import Jeonbuk.contest.domain.MemberDTO;
 import Jeonbuk.contest.domain.MemberInfoDTO;
 import Jeonbuk.contest.domain.MemberAuthDTO;
 import Jeonbuk.contest.exception.CustomException;
@@ -96,6 +97,19 @@ public class AccountController {
     @PostMapping("/delete")
     public ResponseEntity<Map<String, String>> deleteAccount(@RequestBody MemberAuthDTO memberAuthDTO) {
         return accountService.deleteAccount(memberAuthDTO);
+    }
+
+    @Operation(summary = "비밀번호 찾기")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "비밀번호 찾기 성공",
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = @ExampleObject(name = "비밀번호 응답 예시", value = "{\"password\": \"value\"}")
+                    )),
+            @ApiResponse(responseCode = "400", description = "비밀번호 찾기 실패(회원정보 불일치)", content = @Content(schema = @Schema(hidden = true)))})
+    @PostMapping("/delete")
+    public ResponseEntity<Object> deleteAccount(@RequestBody MemberDTO memberDTO) {
+        return accountService.findPassword(memberDTO);
     }
 
 

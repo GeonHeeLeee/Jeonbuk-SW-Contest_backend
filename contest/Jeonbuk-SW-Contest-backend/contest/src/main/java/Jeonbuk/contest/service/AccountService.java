@@ -1,5 +1,6 @@
 package Jeonbuk.contest.service;
 
+import Jeonbuk.contest.domain.MemberDTO;
 import Jeonbuk.contest.domain.MemberInfoDTO;
 import Jeonbuk.contest.domain.MemberAuthDTO;
 import Jeonbuk.contest.entity.Member;
@@ -46,7 +47,15 @@ public class AccountService {
         }
     }
 
-
+    public ResponseEntity<Object> findPassword(MemberDTO memberDTO) {
+        Member member = memberRepository.findById(memberDTO.getId()).orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.MEMBER_NOT_FOUND_ID));
+        if(member.getName().equals(memberDTO.getName()) && member.getPhoneNumber().equals(memberDTO.getPhoneNumber()) && member.getEmergencyNumber().equals(memberDTO.getEmergencyNumber())) {
+            member.setPassword(passwordEncoder.encode(memberDTO.getPassword()));
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.badRequest().body(Collections.singletonMap("errorMessage", "회원정보가 일치하지 않습니다."));
+        }
+    }
 
     @Transactional
     public ResponseEntity<Void> registerMemberInfo(MemberInfoDTO memberInfoDTO) {
