@@ -168,8 +168,8 @@ public class CSVService {
                     .content(row[3])
                     .image(row[4])
                     .address(row[5])
-                    .latitude(row[6])
-                    .longitude(row[7])
+                    .latitude(parseFloatOrDefault(row[6]))
+                    .longitude(parseFloatOrDefault(row[7]))
                     .build();
             festivalList.add(festival);
         }

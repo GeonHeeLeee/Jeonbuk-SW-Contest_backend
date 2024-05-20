@@ -14,6 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
+import java.util.Map;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -31,6 +34,19 @@ public class AccountService {
         log.info("[registerUser] 회원가입 성공 - memberId: {}", member.getId());
         return memberAuthDTO.getId();
     }
+
+    public ResponseEntity<Map<String, String>> deleteAccount(MemberAuthDTO memberAuthDTO){
+        Member member = memberRepository.findById(memberAuthDTO.getId())
+                .orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.MEMBER_NOT_FOUND_ID));
+        if(member.getPassword().matches(memberAuthDTO.getPassword())) {
+            memberRepository.delete(member);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.badRequest().body(Collections.singletonMap("errorMessage", "비밀번호가 일치하지 않습니다."));
+        }
+    }
+
+
 
     @Transactional
     public ResponseEntity<Void> registerMemberInfo(MemberInfoDTO memberInfoDTO) {

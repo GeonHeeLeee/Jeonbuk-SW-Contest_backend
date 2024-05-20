@@ -22,6 +22,6 @@ public class Festival {
     private String content;
     private String image;
     private String address;
-    private String latitude;
-    private String longitude;
+    private float latitude;
+    private float longitude;
 }
