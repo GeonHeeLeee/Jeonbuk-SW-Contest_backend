@@ -1,8 +1,8 @@
 package Jeonbuk.contest.service;
 
+import Jeonbuk.contest.domain.MemberAuthDTO;
 import Jeonbuk.contest.domain.MemberDTO;
 import Jeonbuk.contest.domain.MemberInfoDTO;
-import Jeonbuk.contest.domain.MemberAuthDTO;
 import Jeonbuk.contest.entity.Member;
 import Jeonbuk.contest.exception.CustomException;
 import Jeonbuk.contest.exception.ErrorCode;
@@ -36,10 +36,10 @@ public class AccountService {
         return memberAuthDTO.getId();
     }
 
-    public ResponseEntity<Map<String, String>> deleteAccount(MemberAuthDTO memberAuthDTO){
+    public ResponseEntity<Map<String, String>> deleteAccount(MemberAuthDTO memberAuthDTO) {
         Member member = memberRepository.findById(memberAuthDTO.getId())
                 .orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.MEMBER_NOT_FOUND_ID));
-        if(passwordEncoder.matches(member.getPassword(), memberAuthDTO.getPassword())) {
+        if (passwordEncoder.matches(memberAuthDTO.getPassword(), member.getPassword())) {
             memberRepository.delete(member);
             return ResponseEntity.ok().build();
         } else {
@@ -49,7 +49,7 @@ public class AccountService {
 
     public ResponseEntity<Object> findPassword(MemberDTO memberDTO) {
         Member member = memberRepository.findById(memberDTO.getId()).orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.MEMBER_NOT_FOUND_ID));
-        if(member.getName().equals(memberDTO.getName()) && member.getPhoneNumber().equals(memberDTO.getPhoneNumber()) && member.getEmergencyNumber().equals(memberDTO.getEmergencyNumber())) {
+        if (member.getName().equals(memberDTO.getName()) && member.getPhoneNumber().equals(memberDTO.getPhoneNumber()) && member.getEmergencyNumber().equals(memberDTO.getEmergencyNumber())) {
             member.setPassword(passwordEncoder.encode(memberDTO.getPassword()));
             return ResponseEntity.ok().build();
         } else {
