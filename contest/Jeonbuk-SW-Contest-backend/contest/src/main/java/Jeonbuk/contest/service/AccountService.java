@@ -39,7 +39,7 @@ public class AccountService {
     public ResponseEntity<Map<String, String>> deleteAccount(MemberAuthDTO memberAuthDTO){
         Member member = memberRepository.findById(memberAuthDTO.getId())
                 .orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.MEMBER_NOT_FOUND_ID));
-        if(member.getPassword().matches(memberAuthDTO.getPassword())) {
+        if(member.getPassword().matches(passwordEncoder.encode(memberAuthDTO.getPassword()))) {
             memberRepository.delete(member);
             return ResponseEntity.ok().build();
         } else {
