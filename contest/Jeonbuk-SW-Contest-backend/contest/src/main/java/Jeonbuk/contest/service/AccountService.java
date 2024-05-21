@@ -41,7 +41,7 @@ public class AccountService {
                 .build();
         memberRepository.save(member);
         log.info("[registerUser] 회원가입 성공 - memberId: {}", member.getId());
-        ResponseEntity.ok(Collections.singletonMap("memberId", memberDTO.getId()));
+        return ResponseEntity.ok(Collections.singletonMap("memberId", memberDTO.getId()));
     }
 
     public ResponseEntity<Map<String, String>> deleteAccount(MemberAuthDTO memberAuthDTO) {
