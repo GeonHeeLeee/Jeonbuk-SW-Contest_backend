@@ -26,14 +26,22 @@ public class AccountService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public String registerMember(MemberAuthDTO memberAuthDTO) {
+    @Transactional
+    public ResponseEntity<Map<String, String>> registerMember(MemberDTO memberDTO) {
+        boolean isRegistered = memberRepository.existsById(memberDTO.getId());
+        if (isRegistered) {
+            return ResponseEntity.badRequest().body(Collections.singletonMap("errorMessage", "이미 등록된 사용자입니다."));
+        }
         Member member = Member.builder()
-                .id(memberAuthDTO.getId())
-                .password(passwordEncoder.encode(memberAuthDTO.getPassword()))
+                .id(memberDTO.getId())
+                .password(passwordEncoder.encode(memberDTO.getPassword()))
+                .name(memberDTO.getName())
+                .emergencyNumber(memberDTO.getEmergencyNumber())
+                .phoneNumber(memberDTO.getPhoneNumber())
                 .build();
         memberRepository.save(member);
         log.info("[registerUser] 회원가입 성공 - memberId: {}", member.getId());
-        return memberAuthDTO.getId();
+        ResponseEntity.ok(Collections.singletonMap("memberId", memberDTO.getId()));
     }
 
     public ResponseEntity<Map<String, String>> deleteAccount(MemberAuthDTO memberAuthDTO) {
@@ -47,6 +55,7 @@ public class AccountService {
         }
     }
 
+    @Transactional
     public ResponseEntity<Object> findPassword(MemberDTO memberDTO) {
         Member member = memberRepository.findById(memberDTO.getId()).orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.MEMBER_NOT_FOUND_ID));
         if (member.getName().equals(memberDTO.getName()) && member.getPhoneNumber().equals(memberDTO.getPhoneNumber()) && member.getEmergencyNumber().equals(memberDTO.getEmergencyNumber())) {

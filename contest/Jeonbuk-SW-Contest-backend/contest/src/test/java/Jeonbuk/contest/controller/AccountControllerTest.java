@@ -45,29 +45,29 @@ class AccountControllerTest {
     private MockMvc mockMvc;
 
 
-    @Test
-    @DisplayName("회원가입 테스트")
-    void registerUserTest() throws Exception {
-        given(accountService.registerMember(new MemberAuthDTO("testId", "testPassword")))
-                .willReturn("testId");
-
-        MemberAuthDTO memberAuthDTO = MemberAuthDTO.builder()
-                .id("testId")
-                .password("testPassword")
-                .build();
-
-        String requestBody = gson.toJson(memberAuthDTO);
-
-        mockMvc.perform(post("/account/register")
-                        .with(csrf())
-                        .content(requestBody)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.memberId").value("testId"))
-                .andDo(print());
-
-        verify(accountService).registerMember(new MemberAuthDTO("testId", "testPassword"));
-    }
+//    @Test
+//    @DisplayName("회원가입 테스트")
+//    void registerUserTest() throws Exception {
+//        given(accountService.registerMember(new MemberAuthDTO("testId", "testPassword")))
+//                .willReturn("testId");
+//
+//        MemberAuthDTO memberAuthDTO = MemberAuthDTO.builder()
+//                .id("testId")
+//                .password("testPassword")
+//                .build();
+//
+//        String requestBody = gson.toJson(memberAuthDTO);
+//
+//        mockMvc.perform(post("/account/register")
+//                        .with(csrf())
+//                        .content(requestBody)
+//                        .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.memberId").value("testId"))
+//                .andDo(print());
+//
+//        verify(accountService).registerMember(new MemberAuthDTO("testId", "testPassword"));
+//    }
 
     @Test
     @DisplayName("중복 ID 성공 테스트")

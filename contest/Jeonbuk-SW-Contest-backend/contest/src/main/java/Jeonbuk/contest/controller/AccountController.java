@@ -1,8 +1,8 @@
 package Jeonbuk.contest.controller;
 
+import Jeonbuk.contest.domain.MemberAuthDTO;
 import Jeonbuk.contest.domain.MemberDTO;
 import Jeonbuk.contest.domain.MemberInfoDTO;
-import Jeonbuk.contest.domain.MemberAuthDTO;
 import Jeonbuk.contest.exception.CustomException;
 import Jeonbuk.contest.exception.ErrorCode;
 import Jeonbuk.contest.exception.ErrorDTO;
@@ -23,7 +23,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.Map;
 
 @Slf4j
@@ -43,9 +42,8 @@ public class AccountController {
                             examples = @ExampleObject(name = "회원가입 응답 예시", value = "{\"memberId\": \"value\"}")
                     ))})
     @PostMapping("/register")
-    public ResponseEntity<Object> registerUser(@RequestBody MemberAuthDTO memberAuthDTO) {
-        String memberId = accountService.registerMember(memberAuthDTO);
-        return ResponseEntity.ok(Collections.singletonMap("memberId", memberId));
+    public ResponseEntity<Map<String, String>> registerUser(@RequestBody MemberDTO memberDTO) {
+        return accountService.registerMember(memberDTO);
     }
 
     @Operation(summary = "중복 아이디 검사")

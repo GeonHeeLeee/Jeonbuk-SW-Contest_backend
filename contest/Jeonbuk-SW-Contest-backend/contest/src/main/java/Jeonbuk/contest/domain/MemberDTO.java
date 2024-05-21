@@ -1,14 +1,12 @@
 package Jeonbuk.contest.domain;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter @Setter
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
 @Schema(description = "사용자")
 public class MemberDTO {
     @Schema(description = "사용자 ID - 최소 6자 이상")
