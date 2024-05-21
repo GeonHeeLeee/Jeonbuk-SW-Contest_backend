@@ -94,7 +94,7 @@ public class AccountController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "회원 탈퇴 성공", content = @Content(schema = @Schema(hidden = true))),
             @ApiResponse(responseCode = "400", description = "회원 탈퇴 실패(아이디 존재하지 않음, 비밀번호 불일치)", content = @Content(schema = @Schema(hidden = true)))})
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity<Map<String, String>> deleteAccount(@RequestBody MemberAuthDTO memberAuthDTO) {
         return accountService.deleteAccount(memberAuthDTO);
     }
