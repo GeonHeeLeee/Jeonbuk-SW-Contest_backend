@@ -3,6 +3,7 @@ package Jeonbuk.contest.config;
 import Jeonbuk.contest.jwt.JWTFilter;
 import Jeonbuk.contest.jwt.JWTUtils;
 import Jeonbuk.contest.jwt.LoginFilter;
+import Jeonbuk.contest.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +29,7 @@ public class SecurityConfig {
     //AuthenticationManager가 인자로 받을 AuthenticationConfiguraion 객체 생성자 주입
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JWTUtils jwtUtils;
+    private final CustomUserDetailsService userDetailsService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -51,10 +53,10 @@ public class SecurityConfig {
 
         httpSecurity
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/account/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/", "/account/register/**", "/account/login", "/account/password/find", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated())
 //                        .anyRequest().permitAll()) //개발용 모든 접근 허용
-                .addFilterBefore(new JWTFilter(jwtUtils), LoginFilter.class);
+                .addFilterBefore(new JWTFilter(jwtUtils, userDetailsService), LoginFilter.class);
 
 
         httpSecurity.cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {

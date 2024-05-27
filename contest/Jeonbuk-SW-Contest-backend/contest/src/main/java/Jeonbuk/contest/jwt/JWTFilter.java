@@ -22,11 +22,11 @@ import java.io.IOException;
 public class JWTFilter extends OncePerRequestFilter {
     private final JWTUtils jwtUtils;
 
-    @Autowired
-    private CustomUserDetailsService userDetailsService;
+    private final CustomUserDetailsService userDetailsService;
 
-    public JWTFilter(JWTUtils jwtUtils) {
+    public JWTFilter(JWTUtils jwtUtils, CustomUserDetailsService userDetailsService) {
         this.jwtUtils = jwtUtils;
+        this.userDetailsService = userDetailsService;
     }
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

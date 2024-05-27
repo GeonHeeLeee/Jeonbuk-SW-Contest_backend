@@ -1,7 +1,6 @@
 package Jeonbuk.contest;
 
 import Jeonbuk.contest.csv.CSVService;
-import Jeonbuk.contest.entity.Member;
 import Jeonbuk.contest.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -22,27 +21,27 @@ public class ContestApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        csvService.saveCCTV();
-        csvService.saveStreetLamp();
-        csvService.saveWarningBell();
-        csvService.saveRestaurant();
-        csvService.saveDiscountStore();
-        csvService.saveTownStroll();
-        csvService.saveFestival();
-        Member member = Member.builder()
-                .id("abcd1234")
-                .password(passwordEncoder.encode("abcd1234"))
-                .phoneNumber("01012341234")
-                .emergencyNumber("01012341234")
-                .name("이승훈")
-                .build();
-        Member memberString = Member.builder()
-                .id("string")
-                .password(passwordEncoder.encode("string"))
-                .name("string")
-                .build();
-        memberRepository.save(memberString);
-        memberRepository.save(member);
+//        csvService.saveCCTV();
+//        csvService.saveStreetLamp();
+//        csvService.saveWarningBell();
+//        csvService.saveRestaurant();
+//        csvService.saveDiscountStore();
+//        csvService.saveTownStroll();
+//        csvService.saveFestival();
+//        Member member = Member.builder()
+//                .id("abcd1234")
+//                .password(passwordEncoder.encode("abcd1234"))
+//                .phoneNumber("01012341234")
+//                .emergencyNumber("01012341234")
+//                .name("이승훈")
+//                .build();
+//        Member memberString = Member.builder()
+//                .id("string")
+//                .password(passwordEncoder.encode("string"))
+//                .name("string")
+//                .build();
+//        memberRepository.save(memberString);
+//        memberRepository.save(member);
     }
 
 }
