@@ -53,9 +53,9 @@ public class SecurityConfig {
 
         httpSecurity
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/account/register/**", "/account/login", "/account/password/find", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        .anyRequest().authenticated())
-//                        .anyRequest().permitAll()) //개발용 모든 접근 허용
+//                        .requestMatchers("/", "/account/register/**", "/account/login", "/account/password/find", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+//                        .anyRequest().authenticated())
+                        .anyRequest().permitAll()) //개발용 모든 접근 허용
                 .addFilterBefore(new JWTFilter(jwtUtils, userDetailsService), LoginFilter.class);
 
 

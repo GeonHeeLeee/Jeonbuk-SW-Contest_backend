@@ -3,10 +3,13 @@ package Jeonbuk.contest.service;
 import Jeonbuk.contest.domain.MemberAuthDTO;
 import Jeonbuk.contest.domain.MemberDTO;
 import Jeonbuk.contest.domain.MemberInfoDTO;
+import Jeonbuk.contest.domain.ReturnRouteResponseDTO;
 import Jeonbuk.contest.entity.Member;
 import Jeonbuk.contest.exception.CustomException;
 import Jeonbuk.contest.exception.ErrorCode;
+import Jeonbuk.contest.repository.BookmarkRepository;
 import Jeonbuk.contest.repository.MemberRepository;
+import Jeonbuk.contest.repository.ReturnRouteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,6 +28,8 @@ public class AccountService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ReturnRouteRepository returnRouteRepository;
+    private final BookmarkRepository bookmarkRepository;
 
     @Transactional
     public ResponseEntity<Map<String, String>> registerMember(MemberDTO memberDTO) {
@@ -44,10 +49,13 @@ public class AccountService {
         return ResponseEntity.ok(Collections.singletonMap("memberId", memberDTO.getId()));
     }
 
+    @Transactional
     public ResponseEntity<Map<String, String>> deleteAccount(MemberAuthDTO memberAuthDTO) {
         Member member = memberRepository.findById(memberAuthDTO.getId())
                 .orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.MEMBER_NOT_FOUND_ID));
         if (passwordEncoder.matches(memberAuthDTO.getPassword(), member.getPassword())) {
+            bookmarkRepository.deleteByMember_Id(memberAuthDTO.getId());
+            returnRouteRepository.deleteByMember_Id(memberAuthDTO.getId());
             memberRepository.delete(member);
             return ResponseEntity.ok().build();
         } else {

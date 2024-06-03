@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SafeReturn {
+public class ReturnRoute {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
