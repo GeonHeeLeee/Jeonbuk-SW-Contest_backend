@@ -20,6 +20,7 @@ public class Festival {
     private String schedule;
     @Column(length = 1000)
     private String content;
+    @Column(length = 1000)
     private String image;
     private String address;
     private float latitude;

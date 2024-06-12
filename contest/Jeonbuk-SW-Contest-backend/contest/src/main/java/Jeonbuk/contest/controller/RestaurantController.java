@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-@Tag(name = "음식점", description = "page 번호 처음엔 0, 이후 pageable의 PageNumber + 1로 요청")
+@Tag(name = "음식점", description = "전북의 다양한 음식점")
 @Slf4j
 @Controller
 @RequestMapping("/restaurant")
@@ -35,14 +35,15 @@ public class RestaurantController {
     private final BookmarkService bookmarkService;
 
     //전체 조회
-    @Operation(summary = "전체 식당 조회 - List")
+    @Operation(summary = "전체 식당 조회 - List", description = "page 번호 처음엔 0, 이후 pageable의 PageNumber + 1로 요청")
     @GetMapping("/list/all")
     public ResponseEntity<Page<Restaurant>> getAllRestaurantsPage(@Parameter(description = "페이지 번호") @RequestParam(value = "page") int page) {
         return restaurantService.getAllRestaurantsPage(page);
     }
 
     @Operation(summary = "특정 필터 음식점 조회 - List",
-            description = "Promotion Type 종류 - 착한가격업소: GOOD_PRICE, 아이조아카드: CHILD_LIKE, 아동급식카드: CHILD_MEAL, 모범음식점: MODEL, 문화누리카드: CULTURE_NURI")
+            description = "Promotion Type 종류 - 착한가격업소: GOOD_PRICE, 아이조아카드: CHILD_LIKE, 아동급식카드: CHILD_MEAL, 모범음식점: MODEL, 문화누리카드: CULTURE_NURI" +
+                    "<br>page 번호 처음엔 0, 이후 pageable의 PageNumber + 1로 요청")
     @GetMapping("/list/{promotion}")
     public ResponseEntity<Page<Restaurant>> getRestaurantsByPromotionPage(@Parameter(description = "Promotion Type") @PathVariable(value = "promotion") Promotion promotionType,
                                                                           @Parameter(description = "페이지 번호") @RequestParam(value = "page") int page) {
@@ -50,7 +51,7 @@ public class RestaurantController {
     }
 
     @Operation(summary = "기준점(위도, 경도) 반경 내, 전체 식당 조회 - Map",
-            description = "content에 넣어 전체 반환")
+            description = "Map으로 전체 반환 - key: content")
     @GetMapping("/map/all")
     public ResponseEntity<Map<String, List<Restaurant>>> getAllRestaurantsWithinRadius(@Parameter(description = "위도") @RequestParam("latitude") float latitude,
                                                                                        @Parameter(description = "경도") @RequestParam("longitude") float longitude,
@@ -59,7 +60,7 @@ public class RestaurantController {
     }
 
     @Operation(summary = "기준점(위도, 경도) 반경 내, 특정 필터 음식점 조회 - Map",
-            description = "Promotion Type 종류 - 착한가격업소: GOOD_PRICE, 아이조아카드: CHILD_LIKE, 아동급식카드: CHILD_MEAL, 모범음식점: MODEL, 문화누리카드: CULTURE_NURI")
+            description = "Map으로 반환 - key: content")
     @GetMapping("/map/{promotion}")
     public ResponseEntity<Map<String, List<Restaurant>>> getRestaurantsByPromotionTypeWithinRadius(@Parameter(description = "Promotion Type") @PathVariable(value = "promotion") Promotion promotionType,
                                                                                                    @Parameter(description = "위도") @RequestParam("latitude") float latitude,
@@ -83,7 +84,7 @@ public class RestaurantController {
     }
 
     @Operation(summary = "식당 검색", description = "storeName(식당 이름) 한글자씩 요청하여 검색")
-    @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Restaurant.class)))
+    @ApiResponse(responseCode = "200", description = "식당 검색 결과 Map<String, List<Restaurant>> 형태로 반환. key: content", content = @Content(schema = @Schema(implementation = Restaurant.class)))
     @GetMapping("/search")
     public ResponseEntity<Map<String, List<Restaurant>>> searchRestaurantByStoreName(@Parameter(description = "storeName") @RequestParam("storeName") String storeName) {
         return restaurantService.searchRestaurantByStoreName(storeName);

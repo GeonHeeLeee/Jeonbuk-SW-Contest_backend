@@ -30,7 +30,7 @@ import java.util.Map;
 public class BookmarkController {
     private final BookmarkService bookmarkService;
 
-    @Operation(summary = "사용자의 북마크 리스트 확인", description = "사용자의 Id로 북마크 조회")
+    @Operation(summary = "사용자의 북마크 리스트 확인", description = "사용자의 ID로 북마크 조회")
     @GetMapping("/{memberId}")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Json 형태 type마다 리스트로 북마크 반환 - key: RESTAURANT, TOWN_STROLL, DISCOUNT_STORE, FESTIVAL value: List",

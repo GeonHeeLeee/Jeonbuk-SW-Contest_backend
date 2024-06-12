@@ -3,8 +3,6 @@ package Jeonbuk.contest.controller;
 import Jeonbuk.contest.domain.MemberAuthDTO;
 import Jeonbuk.contest.domain.MemberDTO;
 import Jeonbuk.contest.domain.MemberInfoDTO;
-import Jeonbuk.contest.exception.CustomException;
-import Jeonbuk.contest.exception.ErrorCode;
 import Jeonbuk.contest.exception.ErrorDTO;
 import Jeonbuk.contest.service.AccountService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,9 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -49,24 +45,12 @@ public class AccountController {
     @Operation(summary = "중복 아이디 검사")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "중복 아이디 존재하지 않음", content = @Content(schema = @Schema(hidden = true))),
-            @ApiResponse(responseCode = "409", description = "중복 아이디 존재", content = @Content(schema = @Schema(hidden = true)))})
+            @ApiResponse(responseCode = "400", description = "중복 아이디 존재", content = @Content(schema = @Schema(hidden = true)))})
     @GetMapping("/register/{memberId}")
     public ResponseEntity<Void> checkDuplicateId(@Parameter(description = "검사할 ID") @PathVariable(value = "memberId") String memberId) {
         return accountService.checkDuplicateId(memberId);
     }
 
-    @Operation(summary = "이름, 전화번호, 비상연락망 등록")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "정보 등록 성공", content = @Content(schema = @Schema(hidden = true))),
-            @ApiResponse(responseCode = "400", description = "핸드폰 번호, 비상 연락망 형식 일치하지 않거나 해당 Id의 사용자가 존재하지 않음", content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
-    })
-    @PostMapping("/register/info")
-    public ResponseEntity<Void> registerInfo(@Valid @RequestBody MemberInfoDTO memberInfoDTO, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            throw new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.PHONE_NUMBER_NOT_VALID);
-        }
-        return accountService.registerMemberInfo(memberInfoDTO);
-    }
 
     @Operation(summary = "사용자 로그인")
     @ApiResponses(value = {
@@ -91,7 +75,7 @@ public class AccountController {
     @Operation(summary = "회원 탈퇴")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "회원 탈퇴 성공", content = @Content(schema = @Schema(hidden = true))),
-            @ApiResponse(responseCode = "400", description = "회원 탈퇴 실패(아이디 존재하지 않음, 비밀번호 불일치)", content = @Content(schema = @Schema(hidden = true)))})
+            @ApiResponse(responseCode = "400", description = "회원 탈퇴 실패(아이디 존재하지 않음, 비밀번호 불일치)", content = @Content(schema = @Schema(implementation = ErrorDTO.class)))})
     @DeleteMapping("/delete")
     public ResponseEntity<Map<String, String>> deleteAccount(@RequestBody MemberAuthDTO memberAuthDTO) {
         return accountService.deleteAccount(memberAuthDTO);
@@ -100,7 +84,7 @@ public class AccountController {
     @Operation(summary = "비밀번호 찾기")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "비밀번호 변경 성공", content = @Content(schema = @Schema(hidden = true))),
-            @ApiResponse(responseCode = "400", description = "비밀번호 찾기 실패(회원정보 불일치)", content = @Content(schema = @Schema(hidden = true)))})
+            @ApiResponse(responseCode = "400", description = "비밀번호 찾기 실패(회원정보 불일치)", content = @Content(schema = @Schema(implementation = ErrorDTO.class)))})
     @PostMapping("/password/find")
     public ResponseEntity<Object> findPassword(@RequestBody MemberDTO memberDTO) {
         return accountService.findPassword(memberDTO);

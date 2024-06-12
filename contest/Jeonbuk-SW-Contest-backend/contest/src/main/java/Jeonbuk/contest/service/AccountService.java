@@ -3,7 +3,6 @@ package Jeonbuk.contest.service;
 import Jeonbuk.contest.domain.MemberAuthDTO;
 import Jeonbuk.contest.domain.MemberDTO;
 import Jeonbuk.contest.domain.MemberInfoDTO;
-import Jeonbuk.contest.domain.ReturnRouteResponseDTO;
 import Jeonbuk.contest.entity.Member;
 import Jeonbuk.contest.exception.CustomException;
 import Jeonbuk.contest.exception.ErrorCode;

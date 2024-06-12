@@ -31,7 +31,7 @@ public class TownStrollController {
     private final BookmarkService bookmarkService;
 
     @Operation(summary = "기준점(위도, 경도) 반경 내, 전체 동네 마실 조회 - Map",
-            description = "townStrollList에 넣어 전체 반환")
+            description = "Map으로 반환. key: townStrollList, value: 동네 마실 리스트")
     @GetMapping("/map/all")
     public ResponseEntity<Map<String, List<TownStroll>>> getAllDiscountStoreWithinRadius(@Parameter(description = "위도") @RequestParam("latitude") float latitude,
                                                                                          @Parameter(description = "경도") @RequestParam("longitude") float longitude,

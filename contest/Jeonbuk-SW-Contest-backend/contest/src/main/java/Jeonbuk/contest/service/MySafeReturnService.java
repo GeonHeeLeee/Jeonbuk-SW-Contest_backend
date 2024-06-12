@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -23,12 +24,12 @@ public class MySafeReturnService {
 
     private final MySafeReturnRepository mySafeReturnRepository;
 
-    public ResponseEntity<?> getSafeReturnAround(float latitude, float longitude, float radius) {
+    public ResponseEntity<Map<String, List<MySafeReturn>>> getSafeReturnAround(float latitude, float longitude, float radius) {
         List<MySafeReturn> mySafeReturnList = mySafeReturnRepository.findWithinRadius(latitude, longitude, radius);
         return ResponseEntity.ok().body(Collections.singletonMap("content", mySafeReturnList));
     }
 
-    public ResponseEntity<?> getSafeReturnAroundByType(float latitude, float longitude, float radius, String type) {
+    public ResponseEntity<Map<String, List<MySafeReturn>>> getSafeReturnAroundByType(float latitude, float longitude, float radius, String type) {
         Class<?> classType;
         if (type.equals("CCTV")) {
             classType = CCTV.class;

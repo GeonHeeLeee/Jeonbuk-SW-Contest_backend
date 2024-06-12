@@ -143,14 +143,12 @@ public class CSVService {
         List<TownStroll> townStrollList = new ArrayList<>();
         for (String[] row : rows) {
             TownStroll townStroll = TownStroll.builder()
-                    .name(row[1])
-                    .region(row[2])
-                    .largeCategory(row[3])
-                    .middleCategory(row[4])
-                    .smallCategory(row[5])
-                    .address(row[6])
-                    .latitude(parseFloatOrDefault(row[7]))
-                    .longitude(parseFloatOrDefault(row[8]))
+                    .name(row[0])
+                    .middleCategory(row[1])
+                    .smallCategory(row[2])
+                    .address(row[3])
+                    .latitude(parseFloatOrDefault(row[4]))
+                    .longitude(parseFloatOrDefault(row[5]))
                     .build();
             townStrollList.add(townStroll);
         }

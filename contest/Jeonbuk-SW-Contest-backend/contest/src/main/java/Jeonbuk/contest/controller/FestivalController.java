@@ -1,7 +1,6 @@
 package Jeonbuk.contest.controller;
 
 import Jeonbuk.contest.domain.BookmarkDTO;
-import Jeonbuk.contest.entity.DiscountStore;
 import Jeonbuk.contest.entity.Festival;
 import Jeonbuk.contest.exception.ErrorDTO;
 import Jeonbuk.contest.service.BookmarkService;
@@ -20,7 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "축제", description = "page 번호 처음엔 0, 이후 pageable의 PageNumber + 1로 요청")
+@Tag(name = "축제", description = "전북의 축제 ")
 @Slf4j
 @RestController
 @RequestMapping("/festival")
@@ -30,7 +29,7 @@ public class FestivalController {
     private final BookmarkService bookmarkService;
     private final FestivalService festivalService;
 
-    @Operation(summary = "전체 축제 조회 - list")
+    @Operation(summary = "전체 축제 조회 - list", description = "page 번호 처음엔 0, 이후 pageable의 PageNumber + 1로 요청")
     @GetMapping("/list/all")
     public ResponseEntity<Page<Festival>> getAllFestivalPage(@Parameter(description = "페이지 번호") @RequestParam(value = "page") int page) {
         return festivalService.getAllFestivalPage(page);

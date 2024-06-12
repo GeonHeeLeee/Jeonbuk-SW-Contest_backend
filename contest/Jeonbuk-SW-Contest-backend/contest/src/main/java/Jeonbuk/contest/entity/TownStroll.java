@@ -16,9 +16,6 @@ public class TownStroll {
     private Long id;
 
     private String name;
-    private String region;
-
-    private String largeCategory;
 
     private String middleCategory;
 
