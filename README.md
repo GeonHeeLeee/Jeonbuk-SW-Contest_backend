@@ -6,5 +6,6 @@ MySQL: 8.0.37
 Spring Boot: 3.2.3    
 Java: 17    
 
-DB 테이블 생성은 Spring Entity를 이용하여 application.properties에 있는 DB 연결 정보(url, username, password)를 수정 후, ContestApplication 실행 시 자동으로 테이블이 생성됩니다.         
-또한 데이터 입력은 스프링에서 CSV를 불러와 저장됩니다. (현재는 ContestApplication에 주석 처리 되어 있습니다. 데이터 입력 시 주석 처리를 해제하고 ContestApplication을 실행하면 됩니다.)
+DB 테이블 생성은 Spring Entity를 이용하여 application.properties에 있는 DB 연결 정보(url, username, password)를 수정하고 spring.jpa.hibernate.ddl-auto를 create로 변경하고 ContestApplication 실행 시 자동으로 테이블이 생성됩니다.            
+또한 데이터 입력은 스프링에서 CSV를 불러와 저장됩니다. (현재는 ContestApplication에 주석 처리 되어 있습니다. 데이터 입력 시 주석 처리를 해제하고 ContestApplication을 실행하면 됩니다.)      
+만약 DB 테이블이 백업 파일 등으로 생성 되어 있고 데이터가 입력 되어 있다면 ContestApplication만 실행하면 됩니다.
