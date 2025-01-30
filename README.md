@@ -1,9 +1,9 @@
-![할인매장](https://github.com/user-attachments/assets/fedd3037-f651-43b0-bf39-5360ab8a5f74)# 전북 짹짹이
+# 전북 짹짹이
+
 24년상반기 SW개발공모전(SW개발아이디어 및 결과물)
+
+
 공모전 공식 링크 - https://www.contestkorea.com/sub/view.php?Txt_gbn=1&Txt_bcode=030510001&str_no=202401310029       
-
-
-- - - 
 
 
 ## 소개
